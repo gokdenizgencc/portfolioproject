@@ -5,6 +5,7 @@ import { User } from '../../models/user';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from '../../services/user.service';
 import { response } from 'express';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -16,11 +17,19 @@ import { response } from 'express';
 export class UserComponent implements OnInit {
   users:User[]=[];
   dataLoaded=false;
-  constructor(private userService:UserService){
+  constructor(private userService:UserService,private activatedRoute:ActivatedRoute){
 
   }
 ngOnInit(): void {
-this.getUsers();
+  this.activatedRoute.params.subscribe(params=>{
+    if(params["userId"]){
+      this.getUsersByCategory(params["userId"])
+
+    }
+    else{
+      this.getUsers()
+    }
+  })
  
 }
 getUsers(){
@@ -28,6 +37,13 @@ this.userService.getUsers().subscribe(response=>{
   this.users=response.data
   this.dataLoaded=true;
 });
+}
+
+getUsersByCategory(categoryId:number){
+  this.userService.getUsersByCategory(categoryId).subscribe(response=>{
+    this.users=response.data
+    this.dataLoaded=true;
+  })
 }
 
 
