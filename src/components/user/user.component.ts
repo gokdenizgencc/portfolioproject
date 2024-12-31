@@ -1,23 +1,33 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { User } from '../../models/user';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from '../../services/user.service';
 import { response } from 'express';
 import { ActivatedRoute } from '@angular/router';
-
+import { VatAddedPipe } from '../../app/pipes/vat-added.pipe';
+import { FormsModule } from '@angular/forms';
+import { FilterPipePipe } from '../../app/pipes/filter-pipe.pipe';
+import{ToastrModule, ToastrService} from "ngx-toastr";
+import { CartService } from '../../services/cart.service';
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [CommonModule,HttpClientModule],
+  imports: [CommonModule,HttpClientModule,VatAddedPipe, FormsModule,FilterPipePipe,ToastrModule],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
 export class UserComponent implements OnInit {
+addToCart(user: User) {
+
+  this.toastrService.success("Sepete eklendi",user.fullName)
+  this.cartService.addToCart(user);
+}
   users:User[]=[];
   dataLoaded=false;
-  constructor(private userService:UserService,private activatedRoute:ActivatedRoute){
+  filterText="";
+  constructor(private userService:UserService,private activatedRoute:ActivatedRoute,private toastrService:ToastrService,private cartService:CartService){
 
   }
 ngOnInit(): void {

@@ -1,19 +1,32 @@
 <div *ngIf="dataLoaded==false" class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
   </div>
+  <div class="form-group">
+    <label for="filterText">İsim ara</label>
+    <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" aria-describedby="emailHelp" placeholder="arama ifadesi giriniz">
+  </div>
+  <div *ngIf="filterText.length>2" class="alert alert-success">
+{{filterText}} aradiniz
+  </div>
 <table *ngIf="dataLoaded==true" class="table">
     <thead>
         <tr>
             <th>ID</th>
+            <th>KDV'LI ID</th>
             <th>ISIM</th>
             <th>MAIL</th>   
+            <th></th>
         </tr>
 
     </thead>
-    
-    <tr *ngFor="let user of users">
-    <td>{{user.userId}}</td>
-    <td> {{user.fullName}}</td>    
-    <td> {{user.email}} </td>
-    </tr>
+    <tbody>
+        <tr *ngFor="let user of users | filterPipe:filterText" >
+            <td>{{user.userId}}</td>
+            <td>{{user.userId| vatAdded:10 }}</td>
+            <td> {{user.fullName|uppercase}} </td>    
+            <td> {{user.email}} </td>
+            <td><button (click)="addToCart(user)" class="btn btn-success">Sepete Ekle</button></td>
+            </tr>
+    </tbody>
+
     </table>

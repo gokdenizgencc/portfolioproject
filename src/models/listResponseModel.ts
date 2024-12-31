@@ -1,5 +1,5 @@
 import { ResponseModel } from "./responsModel";
 
-export interface ListResponseModel<T> extends ResponseModel{
-      data:T[];
+export interface ListResponseModel<T> {
+    data:T[] 
 }
