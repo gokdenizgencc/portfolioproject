@@ -20,4 +20,5 @@ export class UserService {
         let newPath="https://localhost:44359/api/Users/getbyproject?getbyproject="+categoryId
     return this.httpClient.get<ListResponseModel<User>>(newPath);
   }
+
 }

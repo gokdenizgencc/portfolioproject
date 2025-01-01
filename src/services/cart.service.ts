@@ -27,4 +27,13 @@ export class CartService {
     list():CartItem[]{
       return CartItems;
   }
+  removeFromCart(user:User){
+    let item: CartItem | undefined = CartItems.find(u => u.user.userId == user.userId);
+
+    if (item) {
+      CartItems.splice(CartItems.indexOf(item), 1);
+    } else {
+      console.error("Item not found!");
+    }
+  }
 }
