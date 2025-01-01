@@ -1,0 +1,16 @@
+.form-control.input-small {
+    max-width: 300px; /* Genişlik 300px ile sınırlı */
+    margin: 0 auto;  /* Ortalamak için */
+  }
+  .form-control.input-small {
+    max-width: 300px; /* Genişlik 300px ile sınırlı */
+    margin: 0 auto;  /* Ortalamak için */
+  }
+
+  /* Buton için */
+  .btn-small {
+    max-width: 150px; /* Butonun genişliği */
+    font-size: 14px;  /* Yazı boyutunu küçült */
+    padding: 10px;    /* Buton içindeki boşluk */
+    margin: 0 auto;   /* Ortalamak için */
+  }

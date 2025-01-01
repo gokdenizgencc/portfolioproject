@@ -12,7 +12,7 @@ export class BlogService {
   constructor(private httpClient:HttpClient) { }
 
   add(blog:Blog):Observable<ResponseModel>{
-    var result=this.httpClient.post<ResponseModel>("https://localhost:44359/api/blogs/add",blog)
+    var result=this.httpClient.post<ResponseModel>("http://localhost:46772/api/blogs/add",blog)
     return result
   }
 }

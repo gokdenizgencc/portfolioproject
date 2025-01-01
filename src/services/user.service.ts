@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserResponseModel } from '../models/productResponseModel';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
-import { ListResponseModel } from '../models/ListResponseModel';
+import { ListResponseModel } from '../models/listResponseModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  apiUrl="https://localhost:44359/api/";
+  apiUrl="http://localhost:46772/api/";
   constructor(private httpClient:HttpClient) { }
   getUsers():Observable<ListResponseModel<User>>{
     let newPath=this.apiUrl+"Users/getall"
@@ -17,8 +16,9 @@ export class UserService {
       get<ListResponseModel<User>>(newPath);
   }
   getUsersByCategory(categoryId:number):Observable<ListResponseModel<User>>{
-        let newPath="https://localhost:44359/api/Users/getbyproject?getbyproject="+categoryId
+        let newPath="http://localhost:46772/api/Users/getbyproject?getbyproject="+categoryId
     return this.httpClient.get<ListResponseModel<User>>(newPath);
   }
+ 
 
 }

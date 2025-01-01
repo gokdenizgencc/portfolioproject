@@ -18,7 +18,7 @@ import { CartService } from '../../services/cart.service';
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
-export class UserComponent implements OnInit {
+export class UserComponent {
 addToCart(user: User) {
 
   this.toastrService.success("Sepete eklendi",user.fullName)

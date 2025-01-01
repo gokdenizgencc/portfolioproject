@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Project } from '../models/project';
 import { Observable } from 'rxjs';
-import { ListResponseModel } from '../models/ListResponseModel';
+import { ListResponseModel } from '../models/listResponseModel';
 
 
 
@@ -12,7 +12,7 @@ import { ListResponseModel } from '../models/ListResponseModel';
 })
 export class ProjectService {
 
- apiUrl="https://localhost:44359/api/Projects/getAll";
+ apiUrl="http://localhost:46772/api/Projects/getAll";
 
   constructor(private httpClient:HttpClient) { }
 
