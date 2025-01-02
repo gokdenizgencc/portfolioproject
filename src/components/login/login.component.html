@@ -1,16 +1,46 @@
-<div class="text-center">
+<div class="container" id="container">
+  <div class="form-container sign-up-container">
     <form [formGroup]="loginForm">
-      <h1 class="h3 mb-3 font-weight-normal">Giriş Yap</h1>
-      <label for="inputPassword" class="sr-only"></label>
-      <input formControlName="email"
-      type="email" id="inputEmail" class="form-control input-small" placeholder="Email" required autofocus>
-      <label for="inputPassword" class="sr-only"></label>
-      <input formControlName="password" type="password" id="inputPassword" class="form-control input-small" placeholder="Şifre" required>
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me"> Beni Hatırla
-        </label>
+      <h1>Hesap Oluştur</h1>
+      <div class="social-container">
+        <a class="social"><i class="fab fa-facebook-f"></i></a>
+        <a class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a class="social"><i class="fab fa-linkedin-in"></i></a>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" (click)="login()" type="submit">Giriş</button>
-
+      <span>ya da e-posta ile kayıt ol</span>
+      <input type="text" placeholder="İsim" />
+      <input type="email" placeholder="E-posta" />
+      <input type="password" placeholder="Şifre" />
+      <button>Kayıt Ol</button>
     </form>
+  </div>
+  <div class="form-container sign-in-container">
+    <form [formGroup]="loginForm">
+      <h1>Giriş Yap</h1>
+      <div class="social-container">
+        <a class="social"><i class="fab fa-facebook-f"></i></a>
+        <a class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <span>ya da e-posta ile giriş yap</span>
+      <input formControlName="email" type="email" placeholder="E-posta" />
+      <input formControlName="password" type="password" placeholder="Şifre" />
+      <a>Şifrenizi mi unuttunuz?</a>
+      <button (click)="login()" >Giriş Yap</button>
+    </form>
+  </div>
+  <div class="overlay-container">
+    <div class="overlay">
+      <div class="overlay-panel overlay-left">
+        <h1>Tekrar Hoş Geldiniz!</h1>
+        <p>Bağlantıda kalmak için lütfen kişisel bilgilerinizi kullanarak giriş yapın.</p>
+        <button class="ghost" id="signIn">Giriş Yap</button>
+      </div>
+      <div class="overlay-panel overlay-right">
+        <h1>Merhaba, Arkadaş!</h1>
+        <p>Kişisel bilgilerinizi girin ve bizimle yolculuğa başlayın.</p>
+        <button class="ghost" id="signUp">Kayıt Ol</button>
+      </div>
+    </div>
+  </div>
+</div>

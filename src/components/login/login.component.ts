@@ -5,6 +5,7 @@ import { FormGroup,FormControl,Validators,FormBuilder, FormsModule, ReactiveForm
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
 import { response } from 'express';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -14,7 +15,7 @@ import { response } from 'express';
 })
 export class LoginComponent {
 loginForm:FormGroup;
-constructor(private formBuilder:FormBuilder,private authService:AuthService,private toastrService:ToastrService){
+constructor(private formBuilder:FormBuilder,private authService:AuthService,private toastrService:ToastrService,  private router:Router){
 
 }
 ngOnInit():void{
@@ -33,11 +34,14 @@ login(){
     let loginModel=Object.assign({},this.loginForm.value)
 
     this.authService.login(loginModel).subscribe(result=>{
-      this.toastrService.info(result.message)
+      this.toastrService.success(result.message)
       localStorage.setItem("token",result.data.token.toString())
+      this.router.navigate(["users"]);
     },responseError=>{
-      this.toastrService.error(responseError.error)
+      this.toastrService.error(responseError.error.message)
     })
   }
+
 }
+
 }
