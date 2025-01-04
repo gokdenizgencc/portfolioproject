@@ -1,0 +1,39 @@
+/* app.component.css */
+.container {
+  height: 200vh; /* Sayfa uzunluğunu uzatarak kaydırma efekti yaratıyoruz */
+
+}
+
+.text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: #333;
+  opacity: 1;
+  transition: opacity 1s ease-out;
+}
+
+.image {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}
+
+.image img {
+  width: 100%;
+  height: auto;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
