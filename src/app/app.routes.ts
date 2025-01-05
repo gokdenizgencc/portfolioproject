@@ -5,6 +5,8 @@ import { LoginComponent } from '../components/login/login.component';
 import { loginGuard } from '../guards/login.guard';
 import { HomepageComponent } from '../components/homepage/homepage.component';
 import { FirstpageComponent } from '../components/firstpage/firstpage.component';
+import { NavinComponent } from '../components/navin/navin.component';
+import { NaviComponent } from '../components/navi/navi.component';
 
 export const routes: Routes = [
     
@@ -13,13 +15,19 @@ export const routes: Routes = [
     {path:"first",component:FirstpageComponent},
     {
       path: '',
-      component: HomepageComponent, // Navbar ve yan menü içeren layout
+      component: NaviComponent, // Navbar ve yan menü içeren layout
+      children: [
+     
+        {path:"",component:FirstpageComponent},
+      ],
+    },
+    {
+      path: '',
+      component: NavinComponent, // Navbar ve yan menü içeren layout
       children: [
         {path:'users/project/:userId',component:UserComponent},
-        // Diğer içerikli sayfalar
         {path:"users",component:UserComponent},
         {path:'blogs/add',component:UserAddComponent,canActivate:[loginGuard]},
-        {path:"",component:FirstpageComponent},
       ],
     },
 ];

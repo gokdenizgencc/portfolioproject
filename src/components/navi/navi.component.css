@@ -12,7 +12,7 @@ body{
 nav{
     height: 6rem;
     width: 100%;
-    background-color: #131418;
+    background-color: #006400;
     box-shadow: 0 3px 20px rgba(0, 0, 0, 0.2);
     display: flex;
     margin-bottom: 1%;
@@ -51,7 +51,7 @@ nav{
     margin: 0 0.7vw;
 }
 .nav-links li a:hover {
-    color: #61DAFB;
+    color: #000000;
 }
 .nav-links li {
     position: relative;
@@ -61,7 +61,7 @@ nav{
     display: block;
     height: 3px;
     width: 0%;
-    background-color: #61DAFB;
+    background-color: #000000;
     position: absolute;
     transition: all ease-in-out 250ms;
     margin: 0 0 0 10%;
@@ -70,7 +70,7 @@ nav{
     width: 80%;
 }
 
-/*Styling Buttons*/
+
 .login-button{
     background-color: transparent;
     border: 1.5px solid #f2f5f7;
@@ -89,20 +89,34 @@ nav{
 }
 .join-button{
     color: #131418;
-    background-color: #61DAFB;
-    border: 1.5px solid #61DAFB;
+    background-color: #ffffff;
+    border: 1.5px solid #000000;
     border-radius: 2em;
     padding: 0.6rem 0.8rem;
     font-size: 1rem;
     cursor: pointer;
 }
+.join-buttonn{
+    color: #131418;
+    background-color: #ffffff;
+    border: 1.5px solid #000000;
+    border-radius: 0.5em;
+    padding: 0.1rem 0.4rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
 .join-button:hover {
     color: #f2f5f7;
-    background-color: transparent;
+    background-color: #000000;
     border:1.5px solid #f2f5f7;
     transition: all ease-in-out 350ms;
 }
-
+.join-buttonn:hover {
+    color: #f2f5f7;
+    background-color: #000000;
+    border:1.5px solid #f2f5f7;
+    transition: all ease-in-out 350ms;
+}
 
 .hamburger div{
     width: 30px;
@@ -114,7 +128,11 @@ nav{
 .hamburger{
     display: none;
 }
+input:focus {
 
+ 
+    border-color: #000000; /* Sınır rengini değiştirmek isterseniz burayı ayarlayabilirsiniz */
+  }
 
 
 .toggle .line1{
