@@ -36,7 +36,7 @@ login(){
     this.authService.login(loginModel).subscribe(result=>{
       this.toastrService.success(result.message)
       localStorage.setItem("token",result.data.token.toString())
-      this.router.navigate(["users"]);
+      this.router.navigate(["homepage"]);
     },responseError=>{
       this.toastrService.error(responseError.error.message)
     })

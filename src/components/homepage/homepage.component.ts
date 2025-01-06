@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [ NaviComponent,RouterModule],
+  imports: [ RouterModule],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
