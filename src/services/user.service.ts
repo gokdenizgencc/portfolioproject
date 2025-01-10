@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
 import { ListResponseModel } from '../models/listResponseModel';
+import { ResponseModel } from '../models/responsModel';
+import { UserAllInfo } from '../models/userAllInfo';
+import { SingleResponseModel } from '../models/singleResponseModel';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +21,11 @@ export class UserService {
   getUsersByCategory(categoryId:number):Observable<ListResponseModel<User>>{
         let newPath="http://localhost:46772/api/Users/getbyproject?getbyproject="+categoryId
     return this.httpClient.get<ListResponseModel<User>>(newPath);
+  }
+  getAllUserİnformartion(id:number):Observable<SingleResponseModel<UserAllInfo>>{
+    let path="http://localhost:46772/api/Users/getAllInfo?id="+id
+
+    return this.httpClient.get<SingleResponseModel<UserAllInfo>>(path);
   }
  
 

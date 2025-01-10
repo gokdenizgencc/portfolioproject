@@ -97,7 +97,6 @@
 }
 .comments-section {
 
-  
   padding: 20px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
@@ -158,18 +157,38 @@
 
 .projects,
 .blogs {
-  margin-bottom: 10px;
-}
-.blogs {
-  background-color: #f8f9fa;
-  padding: 20px;
-  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .blog {
-  margin-bottom: 15px;
-  padding: 15px;
-  background-color: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 1 1 30%; /* Her blog için %30 genişlik, esnek büyüme */
+  max-width: 30%; /* Maksimum genişlik sınırlaması */
+  min-height: 250px; /* Sabit bir yükseklik değeri */
+  border: 1px solid #ddd; /* Bloglara kenarlık */
+  padding: 15px; /* İçeriğe biraz boşluk */
+  box-sizing: border-box; /* Padding ve border'ın genişlikten sayılması için */
+  background-color: #f9f9f9; /* Arka plan rengi */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.blog h4 {
+  margin-top: 0;
+}
+
+.blog p {
+  flex-grow: 1; /* Metin içeriklerinin esnek olmasını sağlar */
+}
+
+.blog a {
+  margin-top: auto; /* Blog yazısının altına "Devamını Oku" butonunu yerleştirir */
+  text-decoration: none;
+  color: #007bff;
+}
+
+.blog a:hover {
+  text-decoration: underline;
 }
