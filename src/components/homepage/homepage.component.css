@@ -14,7 +14,25 @@
   border-radius: 50%;
   object-fit: cover;
 }
+.loading-overlay {
+  position: fixed; /* Ekranın tamamını kaplamasını sağlar */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex; /* İçeriği flexbox ile ortalar */
+  justify-content: center; /* Yatayda ortalar */
+  align-items: center; /* Dikeyde ortalar */
+  background-color: rgba(0, 0, 0, 0.5); /* Arka planda yarı saydam siyah bir zemin ekler */
+  z-index: 9999; /* Diğer öğelerin üstünde görünmesini sağlar */
+}
 
+.spinner-border {
+  width: 100px; /* Boyutunu büyütmek için genişliği ayarla */
+  height: 100px; /* Boyutunu büyütmek için yüksekliği ayarla */
+  border-width: 8px; /* Çizgi kalınlığını artırarak spinner'ı büyüt */
+  color: white; /* Spinner rengini beyaz yap */
+}
 .edit-profile-button {
   margin-top: 10px;
   padding: 10px 20px;
@@ -70,14 +88,19 @@
   margin-top: 20px;
 }
 
-.skills, .certificates {
+.skills{
+  width: 48%;
+  text-align: left;
+  margin-left: 10%;
+}
+ .certificates {
   width: 48%;
   text-align: left;
 }
 
 .skills h3, .certificates h3 {
   margin-bottom: 10px;
-  margin-left: 20%;
+
 }
 
 .skills ul, .certificates ul {
@@ -87,7 +110,7 @@
 
 .skills li, .certificates li {
   margin-bottom: 5px;
-  margin-left: 34%;
+
 }
 .blogs {
   display: flex;

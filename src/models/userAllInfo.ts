@@ -7,9 +7,11 @@ import { SocialLink } from "./socialLink";
 
 export interface UserAllInfo {
   name: string;
+  github:string;
+  linkedIn:string;
+  website:string;
   skills: Skill[];
   certificates: Certificate[];
-  socialLinks: SocialLink[];
   projects: Project[];
   blogs: Blog[];
   comments: Comments[];

@@ -1,18 +1,25 @@
+<div *ngIf="dataLoaded==false">
+  <span class="sr-only">Yükleniyor...</span>
+  <div  class="spinner-border" role="status">
+    
+    </div>
+</div>
+<div *ngIf="dataLoaded==true">
 <div class="profile-container">
   <div class="profile-left">
     <img src="https://cdn.pixabay.com/photo/2023/12/05/08/14/woman-8431035_1280.jpg" alt="Profile Picture" class="profile-image">
-    <h2>Gökdeniz Genç</h2>
+    <h2>{{userinfo.name}}</h2>
     <button class="edit-profile-button">Profili Düzenle</button>
     
     <div class="social-media-links">
       <div class="social-link">
-        <a href="#" class="social"><i class="fab fa-github"></i> Github</a>
+        <a href="{{userinfo.github}}" class="social"><i class="fab fa-github"></i> Github</a>
       </div>
       <div class="social-link">
-        <a href="#"><i class="fas fa-globe"></i> Website</a>
+        <a href="{{userinfo.website}}"><i class="fas fa-globe"></i> Website</a>
       </div>
       <div class="social-link">
-        <a href="https://www.linkedin.com/in/gknz/"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+        <a href="{{userinfo.linkedIn}}"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
       </div>
     </div>
     
@@ -20,20 +27,13 @@
       <div class="skills">
         <h3>Yetenekler</h3>
         <ul>
-          <li>C#</li>
-          <li>.NET</li>
-          <li>Angular</li>
-          <li>Flutter</li>
-          <li>SQL</li>
-          <li>JavaScript</li>
+          <li *ngFor="let skill of userinfo.skills">{{ skill.name }}</li>
         </ul>
       </div>
       <div class="certificates">
         <h3>Sertifikalar</h3>
         <ul>
-          <li>Sertifika 1</li>
-          <li>Sertifika 2</li>
-          <li>Sertifika 3</li>
+          <li *ngFor="let certificate of userinfo.certificates">{{ certificate.title }}</li>
         </ul>
       </div>
     </div>
@@ -42,69 +42,30 @@
   <div class="profile-right">
     <h3>Projeler</h3>
     <div class="projects">
-      <div class="project">
-        <h4>Proje 1</h4>
-        <p>Proje açıklaması...</p>
-      </div>
-      <div class="project">
-        <h4>Proje 2</h4>
-        <p>Proje açıklaması...</p>
-      </div>
-      <div class="project">
-        <h4>Proje 3</h4>
-        <p>Proje açıklaması...</p>
-      </div>
-      <div class="project">
-        <h4>Proje 4</h4>
-        <p>Proje açıklaması...</p>
-      </div>
-      <div class="project">
-        <h4>Proje 5</h4>
-        <p>Proje açıklaması...</p>
-      </div>
-      <div class="project">
-        <h4>Proje 6</h4>
-        <p>Proje açıklaması...</p>
-      </div>
+    <div class="project" *ngFor="let project of userinfo.projects">
+      <h4>{{ project.title }}</h4>
+      <p>{{ project.description }}</p>
+    </div>
     </div>
     <button class="add-project-button">Proje Ekle</button>
 
     <h3>Bloglar</h3>
     <div class="blogs">
-      <div class="blog">
-        <h4>Blog Başlık 1</h4>
-        <p>Bu blogda teknolojinin günümüzdeki yeri hakkında konuşuyoruz...</p>
-        <a href="#">Devamını Oku</a>
-      </div>
-      <div class="blog">
-        <h4>Blog Başlık 2</h4>
-        <p>Mobil uygulama geliştirme süreçlerine derinlemesine bir bakış...</p>
-        <a href="#">Devamını Oku</a>
-      </div>
-      <div class="blog">
-        <h4>Blog Başlık 3</h4>
-        <p>Yeni başlayanlar için Flutter framework'ünün temelleri...</p>
-        <a href="#">Devamını Oku</a>
+      <div class="blog" *ngFor="let blog of userinfo.blogs">
+        <h4>{{ blog.title }}</h4>
+        <p>{{ truncate(blog.conte) }}</p>
+        <a  target="_blank">Devamını Oku</a>
       </div>
     </div>
     <button class="add-blog-button">Blog Ekle</button>
-
-    <div class="comments-section">
-      <div class="comment">
-        <p><strong>Ali Yılmaz:</strong> Bu projeyi gerçekten çok beğendim, özellikle detaylara verilen önem harika!</p>
-      </div>
-      <div class="comment">
-        <p><strong>Ayşe Kaya:</strong> Blog yazısı oldukça bilgilendiriciydi. Daha fazla bu tarz içerikler görmek isteriz.</p>
-      </div>
-      <div class="comment">
-        <p><strong>Mehmet Can:</strong> Sertifikalarınız gerçekten etkileyici. Tebrikler!</p>
-      </div>
-
-      <h4>Yorum Yap</h4>
-      <form class="comment-form">
-        <textarea placeholder="Yorumunuzu buraya yazın..." rows="4"></textarea>
-        <button type="submit">Gönder</button>
-      </form>
+<div *ngIf="!userinfo.comments">
+  <div class="comments-section">
+    <div *ngFor="let comment of userinfo.comments" class="comment">
+      <p><strong>{{ comment.userId }}:</strong> {{ comment.conte }}</p>
     </div>
   </div>
+</div>
+   
+  </div>
+</div>
 </div>
