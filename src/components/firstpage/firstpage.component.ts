@@ -1,4 +1,5 @@
 import { Component, HostListener } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-firstpage',
@@ -9,8 +10,14 @@ import { Component, HostListener } from '@angular/core';
 })
 export class FirstpageComponent {
   showImage: boolean = false;
-  
+constructor( private authService:AuthService){
+
+}
   @HostListener('window:scroll', [])
+
+  ngOnInit(){
+      this.authService.checklogin();
+  }
   onScroll(): void {
     const scrollPosition = window.scrollY;
     const textElement = document.querySelector('.text') as HTMLElement;

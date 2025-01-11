@@ -20,6 +20,7 @@ constructor(private formBuilder:FormBuilder,private authService:AuthService,priv
 }
 ngOnInit():void{
   this.createLoginForm();
+  this.authService.checklogin();
 
 }
 createLoginForm(){

@@ -7,6 +7,7 @@ import { SocialLink } from "./socialLink";
 
 export interface UserAllInfo {
   name: string;
+  profilePhoto:string;
   github:string;
   linkedIn:string;
   website:string;

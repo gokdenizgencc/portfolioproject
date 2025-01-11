@@ -31,7 +31,19 @@
   width: 100px; /* Boyutunu büyütmek için genişliği ayarla */
   height: 100px; /* Boyutunu büyütmek için yüksekliği ayarla */
   border-width: 8px; /* Çizgi kalınlığını artırarak spinner'ı büyüt */
-  color: white; /* Spinner rengini beyaz yap */
+  color: black; /* Spinner rengini beyaz yap */
+}
+.sr-only{
+  color: black;
+}
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.centered div {
+  text-align: center;
 }
 .edit-profile-button {
   margin-top: 10px;

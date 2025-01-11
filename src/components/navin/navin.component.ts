@@ -8,7 +8,7 @@ import { ToastrModule } from 'ngx-toastr';
 @Component({
   selector: 'app-navin',
   standalone: true,
-  imports: [CommonModule,HttpClientModule, FormsModule,ToastrModule, ReactiveFormsModule,RouterModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule,RouterModule],
   templateUrl: './navin.component.html',
   styleUrl: './navin.component.css'
 })

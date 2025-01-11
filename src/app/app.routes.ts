@@ -25,9 +25,9 @@ export const routes: Routes = [
       path: '',
       component: NavinComponent, // Navbar ve yan menü içeren layout
       children: [
-        {path:'homepage',component:HomepageComponent},
-        {path:'users/project/:userId',component:UserComponent},
-        {path:"users",component:UserComponent},
+        {path:'homepage',component:HomepageComponent,canActivate:[loginGuard]},
+        {path:'users/project/:userId',component:UserComponent,canActivate:[loginGuard]},
+        {path:"users",component:UserComponent,canActivate:[loginGuard]},
         {path:'blogs/add',component:UserAddComponent,canActivate:[loginGuard]},
       ],
     },

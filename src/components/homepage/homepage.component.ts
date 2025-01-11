@@ -4,14 +4,14 @@ import { ProjectComponent } from '../project/project.component';
 import { LoginComponent } from '../login/login.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { UserAllInfo } from '../../models/userAllInfo';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
+import {  ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [ RouterModule,CommonModule,ToastrModule],
+  imports: [ RouterModule,CommonModule],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
@@ -31,7 +31,12 @@ export class HomepageComponent {
       this.dataLoaded=true;
 
 
-    });
+    },  responseError => {
+      this.toastrService.error(responseError.error, 'Hata', {
+
+      });
+    }
+  );
 
   }
   truncate(content: string, wordLimit: number = 40): string {
@@ -40,5 +45,8 @@ export class HomepageComponent {
       return words.slice(0, wordLimit).join(' ') + '...';
     }
     return content;
+  }
+  getProfileImage(photoUrl: string): string {
+    return photoUrl ? photoUrl : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
   }
 }
