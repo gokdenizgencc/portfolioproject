@@ -6,7 +6,7 @@
 <div class="profile-container">
   <div class="profile-left">
     <img src="{{userinfo.profilePhoto}}" alt="Profile Picture" class="profile-image">
-    <h2>{{userinfo.name}}</h2>
+    <h2>{{userinfo.nickName}}</h2>
     <button class="edit-profile-button">Profili Düzenle</button>
     
     <div class="social-media-links">
@@ -59,7 +59,7 @@
         <a  target="_blank">Devamını Oku</a>
       </div>
     </div>
-    <button class="add-blog-button">Blog Ekle</button>
+    <button (click)="goBlock()" class="add-blog-button">Bloglara Git</button>
 <div *ngIf="!userinfo.comments">
   <div class="comments-section">
     <div *ngFor="let comment of userinfo.comments" class="comment">

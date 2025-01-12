@@ -7,6 +7,8 @@ import { HomepageComponent } from '../components/homepage/homepage.component';
 import { FirstpageComponent } from '../components/firstpage/firstpage.component';
 import { NavinComponent } from '../components/navin/navin.component';
 import { NaviComponent } from '../components/navi/navi.component';
+import { BlogsComponent } from '../components/blogs/blogs.component';
+import { BlogComponent } from '../components/blog/blog.component';
 
 export const routes: Routes = [
     
@@ -29,6 +31,8 @@ export const routes: Routes = [
         {path:'users/project/:userId',component:UserComponent,canActivate:[loginGuard]},
         {path:"users",component:UserComponent,canActivate:[loginGuard]},
         {path:'blogs/add',component:UserAddComponent,canActivate:[loginGuard]},
+        {path:'blogs',component:BlogsComponent,canActivate:[loginGuard]},
+        {path:'blogs/:id',component:BlogComponent,canActivate:[loginGuard]},
       ],
     },
 ];

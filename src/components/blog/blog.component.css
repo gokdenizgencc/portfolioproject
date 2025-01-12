@@ -1,0 +1,30 @@
+.blog-container {
+    max-width: 500px; /* Genişlik daraltıldı */
+    margin: 2rem auto;
+    padding: 1rem;
+
+    border-radius: 8px;
+
+    text-align: center;
+  }
+  
+  .blog-title {
+    font-size: 1.8rem; /* Başlık boyutu küçültüldü */
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0.8rem; /* Alt marjin daraltıldı */
+  }
+  
+  .blog-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 0.8rem; /* Alt marjin daraltıldı */
+  }
+  
+  .blog-content {
+    font-size: 0.9rem; /* Yazı boyutu küçültüldü */
+    color: #555;
+    line-height: 1.5; /* Satır yüksekliği daraltıldı */
+  }
+  

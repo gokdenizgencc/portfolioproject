@@ -1,0 +1,8 @@
+<div class="blog-container">
+    <div *ngFor="let blog of blogs" class="blog-card">
+      <img [src]="blog.blogPhoto" alt="{{ blog.title }}" class="blog-image">
+      <h3 class="blog-title">{{ blog.title }}</h3>
+      <p class="blog-text">{{ blog.conte | slice:0:100 }}...</p>
+      <button (click)="goToBlogDetail(blog)" class="read-more-btn">Devamını Oku</button>
+    </div>
+  </div>

@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { NaviComponent } from '../navi/navi.component';
 import { ProjectComponent } from '../project/project.component';
 import { LoginComponent } from '../login/login.component';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UserAllInfo } from '../../models/userAllInfo';
 import {  ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-homepage',
@@ -18,7 +19,7 @@ import { CommonModule } from '@angular/common';
 export class HomepageComponent {
   userinfo:UserAllInfo;
   dataLoaded=false;
-    constructor(private userService:UserService,private activatedRoute:ActivatedRoute,private toastrService:ToastrService){
+    constructor(private userService:UserService,private activatedRoute:ActivatedRoute,private toastrService:ToastrService,private router:Router){
   
     }
   ngOnInit():void{
@@ -48,5 +49,8 @@ export class HomepageComponent {
   }
   getProfileImage(photoUrl: string): string {
     return photoUrl ? photoUrl : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+  }
+  goBlock(){
+    this.router.navigate(["blogs"]);
   }
 }

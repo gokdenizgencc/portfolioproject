@@ -27,6 +27,9 @@ export class UserService {
 
     return this.httpClient.get<SingleResponseModel<UserAllInfo>>(path);
   }
- 
+  getUser(id:number):Observable<SingleResponseModel<User>>{
+    let path="http://localhost:46772/api/Users/getById?id="+id
+    return this.httpClient.get<SingleResponseModel<User>>(path);
+  }
 
 }

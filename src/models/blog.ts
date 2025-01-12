@@ -4,5 +4,5 @@ export interface Blog {
     title: string;
     conte: string;
     publishedAt: Date;
-  
+    blogPhoto:string;
   }
