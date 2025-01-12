@@ -13,11 +13,12 @@ export class FirstpageComponent {
 constructor( private authService:AuthService){
 
 }
-  @HostListener('window:scroll', [])
+
 
   ngOnInit(){
       this.authService.checklogin();
   }
+  @HostListener('window:scroll', [])
   onScroll(): void {
     const scrollPosition = window.scrollY;
     const textElement = document.querySelector('.text') as HTMLElement;

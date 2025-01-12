@@ -38,7 +38,7 @@ checklogin() {
   if (this.isAuthenticated()) {
     this.router.navigate(['homepage']);
   } else {
-    this.router.navigate(['login']); 
+
   }
 }
 }

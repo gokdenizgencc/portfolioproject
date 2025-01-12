@@ -11,7 +11,7 @@
     
     <div class="social-media-links">
       <div class="social-link">
-        <a href="{{userinfo.github}}" class="social"><i class="fab fa-github"></i> Github</a>
+        <a  href="{{userinfo.github}}" class="social"><i class="fab fa-github"></i> Github</a>
       </div>
       <div class="social-link">
         <a href="{{userinfo.website}}"><i class="fas fa-globe"></i> Website</a>
@@ -19,22 +19,26 @@
       <div class="social-link">
         <a href="{{userinfo.linkedIn}}"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
       </div>
-    </div>
-    
-    <div class="skills-certificates">
-      <div class="skills">
-        <h3>Yetenekler</h3>
-        <ul>
-          <li *ngFor="let skill of userinfo.skills">{{ skill.name }}</li>
-        </ul>
+      <div class="social-linkk">
+        <div class="skills">
+          <h3>Yetenekler</h3>
+          <ul>
+            <li *ngFor="let skill of userinfo.skills">{{ skill.name }}</li>
+          </ul>
+        </div>
+
       </div>
-      <div class="certificates">
-        <h3>Sertifikalar</h3>
-        <ul>
-          <li *ngFor="let certificate of userinfo.certificates">{{ certificate.title }}</li>
-        </ul>
+      <div class="social-linkk">
+        <div class="certificates">
+          <h3>Sertifikalar</h3>
+          <ul>
+            <li *ngFor="let certificate of userinfo.certificates">{{ certificate.title }}</li>
+          </ul>
+        </div>
       </div>
+     
     </div>
+   
   </div>
   
   <div class="profile-right">

@@ -7,12 +7,13 @@ body {
 nav {
     height: 6rem;
     width: 100%;
-    background-color: #006400;
-    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    border-bottom: 0.4px solid #dddddd; /* Siyah border ekler */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 2rem;
+    box-shadow: none; /* Gölgeyi kaldırır */
 }
 
 .left-section {
@@ -43,7 +44,7 @@ nav {
 	width: 40px;
 }
 .logo-text {
-    color: #f2f5f7;
+    color: #000000;
     font-size: 1.1rem;
     font-weight: bold;
 }
@@ -70,6 +71,20 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
+    color: white;
+    background-color: #000000;
+    border: 1.5px solid ;
+
+    border-radius: 0.5em;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+.join-button:hover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #131418;
     background-color: #ffffff;
     border: 1.5px solid #000000;
@@ -79,10 +94,23 @@ nav {
     cursor: pointer;
     margin-left: 0.5rem;
 }
-
 .join-button i {
     font-size: 1rem; /* İkonun boyutunu ayarlar */
 }.join-buttonn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    background-color: #000000;
+    border: 1.5px solid #000000;
+    border-radius: 0.5em;
+    padding: 0.2rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+.join-buttonn:hover {
     display: flex;
     align-items: center;
     justify-content: center;
