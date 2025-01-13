@@ -56,7 +56,7 @@
       <div class="blog" *ngFor="let blog of userinfo.blogs">
         <h4>{{ blog.title }}</h4>
         <p>{{ truncate(blog.conte) }}</p>
-        <a  target="_blank">Devamını Oku</a>
+        <a  (click)="goToBlog(blog)" target="_blank">Devamını Oku</a>
       </div>
     </div>
     <button (click)="goBlock()" class="add-blog-button">Bloglara Git</button>

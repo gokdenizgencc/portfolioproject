@@ -7,6 +7,8 @@ import { UserAllInfo } from '../../models/userAllInfo';
 import {  ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
+import { BlogService } from '../../services/blog.service';
+import { Blog } from '../../models/blog';
 
 
 @Component({
@@ -19,13 +21,17 @@ import { CommonModule } from '@angular/common';
 export class HomepageComponent {
   userinfo:UserAllInfo;
   dataLoaded=false;
-    constructor(private userService:UserService,private activatedRoute:ActivatedRoute,private toastrService:ToastrService,private router:Router){
+    constructor(private userService:UserService,private activatedRoute:ActivatedRoute,private toastrService:ToastrService,private router:Router,private blogService:BlogService){
   
     }
   ngOnInit():void{
     this.getinfo();
   }
-
+  goToBlog(blog:Blog){
+  
+    this.blogService.setBlogData(blog);
+    this.router.navigate([`/blogs/${blog.blogId}`]);
+  }
   getinfo(){
     this.userService.getAllUserİnformartion(1).subscribe(response=>{
       this.userinfo=response.data;
@@ -40,7 +46,7 @@ export class HomepageComponent {
   );
 
   }
-  truncate(content: string, wordLimit: number = 40): string {
+  truncate(content: string, wordLimit: number = 10): string {
     const words = content.split(' ');
     if (words.length > wordLimit) {
       return words.slice(0, wordLimit).join(' ') + '...';
@@ -53,4 +59,5 @@ export class HomepageComponent {
   goBlock(){
     this.router.navigate(["blogs"]);
   }
+
 }

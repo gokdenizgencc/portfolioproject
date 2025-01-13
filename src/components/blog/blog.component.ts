@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BlogService } from '../../services/blog.service';
 import { Blog } from '../../models/blog';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-blog',
@@ -11,11 +12,11 @@ import { Blog } from '../../models/blog';
 })
 export class BlogComponent {
   blog: Blog | null = null;
-
-  constructor(private route: ActivatedRoute, private blogService: BlogService) {}
+  safeUrl: SafeUrl;
+  constructor(private route: ActivatedRoute, private blogService: BlogService,private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-
+  this.safeUrl = this.sanitizer.bypassSecurityTrustUrl('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQt5W73rRvSZr46YQUvS0aK4R7mlJlvMMzoqQ&s');
     const savedBlog = this.getBlogDataFromStorage();
     if (savedBlog) {
       this.blog = savedBlog; 

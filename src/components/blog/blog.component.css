@@ -1,30 +1,66 @@
 .blog-container {
-    max-width: 500px; /* Genişlik daraltıldı */
-    margin: 2rem auto;
-    padding: 1rem;
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
 
-    border-radius: 8px;
+.blog-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.8rem;
+}
 
-    text-align: center;
-  }
-  
-  .blog-title {
-    font-size: 1.8rem; /* Başlık boyutu küçültüldü */
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 0.8rem; /* Alt marjin daraltıldı */
-  }
-  
-  .blog-image {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 0.8rem; /* Alt marjin daraltıldı */
-  }
-  
-  .blog-content {
-    font-size: 0.9rem; /* Yazı boyutu küçültüldü */
-    color: #555;
-    line-height: 1.5; /* Satır yüksekliği daraltıldı */
-  }
-  
+.blog-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+}
+
+.author-section {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+  margin: 0.5rem 0;
+}
+
+.author-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.author-photo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.author-name {
+  font-size: 0.9rem;
+  color: #555;
+  flex-grow: 1;
+}
+
+.plus-sign {
+  font-size: 2rem; /* Büyük boyut */
+  color: #000; /* Siyah renk */
+}
+
+.blog-content {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.5;
+  text-align: justify;
+  text-indent: 0; /* Satır başından başlayacak */
+}
