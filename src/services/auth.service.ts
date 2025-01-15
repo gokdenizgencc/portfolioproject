@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { jwtDecode } from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,17 @@ export class AuthService {
     return this.httpClient.post<SingleResponseModel<TokenModel>>(this.apiUrl+"login",loginModel)
    
   }
-
+  decodejwt(){
+    const token=localStorage.getItem('token')!;
+    const decoded:any  = jwtDecode(token);
+    const role = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    const nameIdentifier = decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+    const name = decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+    localStorage.setItem('role', role || 'defaultRole');
+    localStorage.setItem('nameIdentifier', nameIdentifier || 'defaultNameIdentifier');
+    localStorage.setItem('name', name || 'defaultName');
+    return decoded;
+  }
   
   isAuthenticated() {
     if (typeof window !== 'undefined' && localStorage) { // Tarayıcıda çalıştığını kontrol et
