@@ -33,13 +33,20 @@ export class AuthService {
     localStorage.setItem('role', role || 'defaultRole');
     localStorage.setItem('nameIdentifier', nameIdentifier || 'defaultNameIdentifier');
     localStorage.setItem('name', name || 'defaultName');
-    return decoded;
   }
-  
-  isAuthenticated() {
+  getIntFromLocalStorage(key: string, defaultValue: number = 0): string |null {
     if (typeof window !== 'undefined' && localStorage) { // Tarayıcıda çalıştığını kontrol et
+      const value = localStorage.getItem(key) ?? defaultValue.toString();
+      return value; // `result` varsa true, yoksa false döner
+    } 
+    else{
+      return null;
+    }
+  }
+  isAuthenticated() {
+    if (typeof window !== 'undefined' && localStorage) { 
       const result = localStorage.getItem("token");
-      return !!result; // `result` varsa true, yoksa false döner
+      return !!result; 
     } else {
       return false;
     }

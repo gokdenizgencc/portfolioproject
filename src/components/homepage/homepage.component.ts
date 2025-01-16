@@ -9,6 +9,7 @@ import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { BlogService } from '../../services/blog.service';
 import { Blog } from '../../models/blog';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -20,20 +21,28 @@ import { Blog } from '../../models/blog';
 })
 export class HomepageComponent {
   userinfo:UserAllInfo;
+  id:number;
   dataLoaded=false;
-    constructor(private userService:UserService,private activatedRoute:ActivatedRoute,private toastrService:ToastrService,private router:Router,private blogService:BlogService){
+    constructor(private userService:UserService,private activatedRoute:ActivatedRoute,private toastrService:ToastrService,private router:Router,private blogService:BlogService,private authService:AuthService){
   
     }
   ngOnInit():void{
+    this.getid();
     this.getinfo();
+
+  }
+  getid(){
+    const idString = this.authService.getIntFromLocalStorage("nameIdentifier", 0);
+    this.id = idString !== null ? parseInt(idString, 10) : 0;
   }
   goToBlog(blog:Blog){
   
     this.blogService.setBlogData(blog);
     this.router.navigate([`/blogs/${blog.blogId}`]);
   }
+
   getinfo(){
-    this.userService.getAllUserİnformartion(1).subscribe(response=>{
+    this.userService.getAllUserİnformartion(this.id).subscribe(response=>{
       this.userinfo=response.data;
       this.dataLoaded=true;
 

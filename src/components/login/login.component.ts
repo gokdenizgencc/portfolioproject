@@ -6,7 +6,6 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
 import { response } from 'express';
 import { Router } from '@angular/router';
-import { jwtDecode } from 'jwt-decode';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -38,11 +37,7 @@ login(){
     this.authService.login(loginModel).subscribe(result=>{
       this.toastrService.success(result.message)
       localStorage.setItem("token",result.data.token.toString())
-      let decoded: any=this.authService.decodejwt();
-
-
-
-
+      this.authService.decodejwt();
       this.router.navigate(["homepage"]);
    
     },responseError=>{
