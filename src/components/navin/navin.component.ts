@@ -24,14 +24,14 @@ export class NavinComponent {
   ngOnInit():void{
     this.islogin()
     this.getid()
-    this.getuser();
+
   }
   getid(){
     const idString = this.authService.getIntFromLocalStorage("nameIdentifier", 0);
     this.id = idString !== null ? parseInt(idString, 10) : 0;
   }
   getuser(){
-    this.userService.getUser(this.id).subscribe(response=>{
+    this.userService.getUser().subscribe(response=>{
       this.user=response.data;
 
 

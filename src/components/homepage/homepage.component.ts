@@ -27,14 +27,10 @@ export class HomepageComponent {
   
     }
   ngOnInit():void{
-    this.getid();
     this.getinfo();
 
   }
-  getid(){
-    const idString = this.authService.getIntFromLocalStorage("nameIdentifier", 0);
-    this.id = idString !== null ? parseInt(idString, 10) : 0;
-  }
+ 
   goToBlog(blog:Blog){
   
     this.blogService.setBlogData(blog);
@@ -42,7 +38,7 @@ export class HomepageComponent {
   }
 
   getinfo(){
-    this.userService.getAllUserİnformartion(this.id).subscribe(response=>{
+    this.userService.getAllUserİnformartion().subscribe(response=>{
       this.userinfo=response.data;
       this.dataLoaded=true;
 

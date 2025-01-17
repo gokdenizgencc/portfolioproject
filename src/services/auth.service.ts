@@ -15,7 +15,7 @@ import { jwtDecode } from "jwt-decode";
 })
 export class AuthService {
   apiUrl="http://localhost:46772/api/auth/";
-
+  id:number;
   constructor(private httpClient:HttpClient,@Inject(DOCUMENT) private document: Document,private toastrService:ToastrService,  private router:Router) {
     const localStorage = document.defaultView?.localStorage;
    }
@@ -27,12 +27,9 @@ export class AuthService {
   decodejwt(){
     const token=localStorage.getItem('token')!;
     const decoded:any  = jwtDecode(token);
-    const role = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
     const nameIdentifier = decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
-    const name = decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
-    localStorage.setItem('role', role || 'defaultRole');
-    localStorage.setItem('nameIdentifier', nameIdentifier || 'defaultNameIdentifier');
-    localStorage.setItem('name', name || 'defaultName');
+    this.id = nameIdentifier !== null ? parseInt(nameIdentifier, 10) : 0;
+    return this.id;
   }
   getIntFromLocalStorage(key: string, defaultValue: number = 0): string |null {
     if (typeof window !== 'undefined' && localStorage) { // Tarayıcıda çalıştığını kontrol et

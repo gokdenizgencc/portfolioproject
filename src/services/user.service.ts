@@ -22,13 +22,13 @@ export class UserService {
         let newPath="http://localhost:46772/api/Users/getbyproject?getbyproject="+categoryId
     return this.httpClient.get<ListResponseModel<User>>(newPath);
   }
-  getAllUserİnformartion(id:number):Observable<SingleResponseModel<UserAllInfo>>{
-    let path="http://localhost:46772/api/Users/getAllInfo?id="+id
+  getAllUserİnformartion():Observable<SingleResponseModel<UserAllInfo>>{
+    let path="http://localhost:46772/api/Users/getAllInfo"
 
     return this.httpClient.get<SingleResponseModel<UserAllInfo>>(path);
   }
-  getUser(id:number):Observable<SingleResponseModel<User>>{
-    let path="http://localhost:46772/api/Users/getById?id="+id
+  getUser():Observable<SingleResponseModel<User>>{
+    let path="http://localhost:46772/api/Users/getById"
     return this.httpClient.get<SingleResponseModel<User>>(path);
   }
 
