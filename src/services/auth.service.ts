@@ -9,6 +9,7 @@ import { DOCUMENT } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { jwtDecode } from "jwt-decode";
+import { RegisterModel } from '../models/registerModel';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,9 @@ export class AuthService {
   login(loginModel:LoginModel):Observable<SingleResponseModel<TokenModel>>{
     return this.httpClient.post<SingleResponseModel<TokenModel>>(this.apiUrl+"login",loginModel)
    
+  }
+  register(registerModel:RegisterModel):Observable<SingleResponseModel<TokenModel>>{
+    return this.httpClient.post<SingleResponseModel<TokenModel>>(this.apiUrl+"register",registerModel)
   }
   decodejwt(){
     const token=localStorage.getItem('token')!;

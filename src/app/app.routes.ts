@@ -8,10 +8,12 @@ import { FirstpageComponent } from '../components/firstpage/firstpage.component'
 import { NavinComponent } from '../components/navin/navin.component';
 import { BlogsComponent } from '../components/blogs/blogs.component';
 import { BlogComponent } from '../components/blog/blog.component';
+import { RegisterComponent } from '../components/register/register.component';
 
 export const routes: Routes = [
     {path: "login", component: LoginComponent},
     {path: "first", component: FirstpageComponent},
+    {path: "register", component: RegisterComponent},
     {
       path: '',
       component: NavinComponent, 

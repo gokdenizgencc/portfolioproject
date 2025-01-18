@@ -1,0 +1,26 @@
+<div class="container" id="container">
+    <div class="form-container sign-up-container">
+      <form [formGroup]="registerForm">
+        <h1 class="textbir">Hesap Oluştur</h1> 
+        <input formControlName="fullName" type="text" placeholder="Ad Soyad" />
+        <input formControlName="nickName" type="text" placeholder="Kullanıcı Adı" />
+        <input formControlName="email" type="email" placeholder="E-posta" />
+        <input formControlName="password" type="password" placeholder="Şifre" />
+        <button class="buton-cont" (click)="register()">Kayıt Ol</button>
+      </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>Tekrar Hoş Geldiniz!</h1>
+            <p>Bağlantıda kalmak için lütfen kişisel bilgilerinizi kullanarak giriş yapın.</p>
+            <button class="ghost" id="signIn">Giriş Yap</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>Kayıt Ol ve Bize Katıl</h1>
+            <p>Zaten hesabın var mı ?</p>
+            <button class="ghost" (click)="gotologin()" id="signUp">GİRİS YAP</button>
+          </div>
+        </div>
+      </div>
+  </div>

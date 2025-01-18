@@ -29,9 +29,11 @@ this.loginForm=this.formBuilder.group({
   password:["",Validators.required]
 })
 }
+gotoregister(){
+  this.router.navigate(["register"]);
+}
 login(){
   if(this.loginForm.valid){
-    console.log(this.loginForm.value);
     let loginModel=Object.assign({},this.loginForm.value)
 
     this.authService.login(loginModel).subscribe(result=>{
