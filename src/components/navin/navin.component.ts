@@ -45,4 +45,7 @@ export class NavinComponent {
   islogin(){
     this.isUserLoggedIn= this.authService.isAuthenticated();
   }
+  routeregister(){
+    this.router.navigate(["register"]); 
+  }
 }

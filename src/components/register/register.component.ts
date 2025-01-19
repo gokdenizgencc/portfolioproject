@@ -32,8 +32,8 @@ export class RegisterComponent {
     this.registerForm = this.formBuilder.group({
       fullName: ["", Validators.required],
       nickName: ["", Validators.required],
-      email: ["", [Validators.required, Validators.email]],
-      password: ["", [Validators.required, Validators.minLength(6)]]
+      email: ["", [Validators.required]],
+      password: ["", [Validators.required]]
     });
   }
   
@@ -44,9 +44,7 @@ export class RegisterComponent {
       this.authService.register(registerModel).subscribe(
         result => {
           this.toastrService.success(result.message);
-          localStorage.setItem("token", result.data.token.toString());
-          this.authService.decodejwt();
-          this.router.navigate(["homepage"]);
+          this.router.navigate(["login"]);
         },
         responseError => {
           this.toastrService.error(responseError.error.message);
