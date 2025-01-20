@@ -2,72 +2,77 @@
   <span class="sr-only">Yükleniyor...</span>
   <div class="spinner-border" role="status"></div>
 </div>
+
 <div *ngIf="dataLoaded==true">
-<div class="profile-container">
-  <div class="profile-left">
-    <img src="{{userinfo.profilePhoto}}" alt="Profile Picture" class="profile-image">
-    <h2>{{userinfo.nickName}}</h2>
-    <button class="edit-profile-button">Profili Düzenle</button>
+  <div class="profile-container">
+    <div class="profile-left">
+      <img src="{{userinfo.profilePhoto}}" alt="Profile Picture" class="profile-image">
+      <h2>{{userinfo.nickName}}</h2>
+      <button class="edit-profile-button">Profili Düzenle</button>
+      
+      <div class="social-media-links">
+        <div  *ngIf="userinfo.github !== 'No GitHub'" class="social-link">
+          <a href="{{userinfo.github}}" class="social"><i class="fab fa-github"></i> Github</a>
+        </div>
+        <div *ngIf="userinfo.website !== 'No Website'" class="social-link">
+          <a href="{{userinfo.website}}"><i class="fas fa-globe"></i> Website</a>
+        </div>
+        <div *ngIf="userinfo.linkedIn !== 'No LinkedIn'" class="social-link">
+          <a href="{{userinfo.linkedIn}}"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+        </div>
+
+        <!-- Hide skills section if there are no skills -->
+        <div *ngIf="userinfo.skills && userinfo.skills.length > 0" class="social-linkk">
+          <div class="skills">
+            <h3>Yetenekler</h3>
+            <ul>
+              <li *ngFor="let skill of userinfo.skills">{{ skill.name }}</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Hide certificates section if there are no certificates -->
+        <div *ngIf="userinfo.certificates && userinfo.certificates.length > 0" class="social-linkk">
+          <div class="certificates">
+            <h3>Sertifikalar</h3>
+            <ul>
+              <li *ngFor="let certificate of userinfo.certificates">{{ certificate.title }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
     
-    <div class="social-media-links">
-      <div class="social-link">
-        <a  href="{{userinfo.github}}" class="social"><i class="fab fa-github"></i> Github</a>
-      </div>
-      <div class="social-link">
-        <a href="{{userinfo.website}}"><i class="fas fa-globe"></i> Website</a>
-      </div>
-      <div class="social-link">
-        <a href="{{userinfo.linkedIn}}"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-      </div>
-      <div class="social-linkk">
-        <div class="skills">
-          <h3>Yetenekler</h3>
-          <ul>
-            <li *ngFor="let skill of userinfo.skills">{{ skill.name }}</li>
-          </ul>
-        </div>
+    <div class="profile-right">
+      <h3>Projeler</h3>
+      <div class="projects">
+        <div *ngIf="userinfo.projects.length === 0" class="no-data-container">
+          <i class="fas fa-box-open no-data-icon"></i>
 
-      </div>
-      <div class="social-linkk">
-        <div class="certificates">
-          <h3>Sertifikalar</h3>
-          <ul>
-            <li *ngFor="let certificate of userinfo.certificates">{{ certificate.title }}</li>
-          </ul>
+        </div>
+        <div class="project" *ngFor="let project of userinfo.projects">
+          <h4>{{ project.title }}</h4>
+          <p>{{ project.description }}</p>
         </div>
       </div>
-     
-    </div>
-   
-  </div>
-  
-  <div class="profile-right">
-    <h3>Projeler</h3>
-    <div class="projects">
-    <div class="project" *ngFor="let project of userinfo.projects">
-      <h4>{{ project.title }}</h4>
-      <p>{{ project.description }}</p>
-    </div>
-    </div>
-    <button class="add-project-button">Proje Ekle</button>
+      <button  *ngIf="userinfo.blogs.length !== 0" class="add-project-button">Projelere Git</button>
+    
+      <h3>Bloglar</h3>
+      <div class="blogs">
+        <div *ngIf="userinfo.blogs.length === 0" class="no-data-container">
+          <i class="fas fa-box-open no-data-icon"></i>
 
-    <h3>Bloglar</h3>
-    <div class="blogs">
-      <div class="blog" *ngFor="let blog of userinfo.blogs">
-        <h4>{{ blog.title }}</h4>
-        <p>{{ truncate(blog.conte) }}</p>
-        <a  (click)="goToBlog(blog)" target="_blank">Devamını Oku</a>
+        </div>
+        <div class="blog" *ngFor="let blog of userinfo.blogs">
+          <h4>{{ blog.title }}</h4>
+          <p>{{ truncate(blog.conte) }}</p>
+          <a (click)="goToBlog(blog)" target="_blank">Devamını Oku</a>
+        </div>
       </div>
-    </div>
-    <button (click)="goBlock()" class="add-blog-button">Bloglara Git</button>
-<div *ngIf="!userinfo.comments">
-  <div class="comments-section">
-    <div *ngFor="let comment of userinfo.comments" class="comment">
-      <p><strong>{{ comment.userId }}:</strong> {{ comment.conte }}</p>
-    </div>
-  </div>
-</div>
+      <div  *ngIf="userinfo.blogs.length !== 0">
+        <button  (click)="goBlock()" class="add-blog-button">Bloglara Git</button>
+      </div>
    
+    </div>
   </div>
-</div>
 </div>

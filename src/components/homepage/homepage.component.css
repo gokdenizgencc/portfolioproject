@@ -213,3 +213,24 @@
 .blog a:hover {
   text-decoration: underline;
 }
+.no-data-container {
+  padding: 20% 40%;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  margin: 20px 0;
+  position: relative;
+}
+
+.no-data-message {
+  font-size: 18px;
+  color: #666;
+  margin: 0;
+}
+
+.no-data-icon {
+  font-size: 48px; 
+  color: #000000;
+  margin-right: 10px;
+}

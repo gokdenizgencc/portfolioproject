@@ -16,8 +16,8 @@ export class BlogService {
     return result
   }
 
-  getAllBlogById(id:number){
-    let path="http://localhost:46772/api/Blogs/getAllByUserId?id="+id;
+  getAllBlogById(){
+    let path="http://localhost:46772/api/Blogs/getAllByUserId";
 
     return this.httpClient.get<ListResponseModel<Blog>>(path)
   }

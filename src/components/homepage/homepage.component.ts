@@ -41,10 +41,11 @@ export class HomepageComponent {
     this.userService.getAllUserİnformartion().subscribe(response=>{
       this.userinfo=response.data;
       this.dataLoaded=true;
-
-
+      console.log(this.userinfo.github);
+      console.log(this.userinfo.linkedIn);
+      console.log(this.userinfo.website);
     },  responseError => {
-      this.toastrService.error(responseError.error, 'Hata', {
+      this.toastrService.error(responseError.error.Message, 'Hata', {
 
       });
     }

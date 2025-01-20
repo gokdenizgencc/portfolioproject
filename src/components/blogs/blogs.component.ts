@@ -24,11 +24,9 @@ export class BlogsComponent {
     this.getBlogs();
   }
   getBlogs(){
-    this.blogService.getAllBlogById(1).subscribe(response=>{
+    this.blogService.getAllBlogById().subscribe(response=>{
       this.blogs=response.data;
       this.dataLoaded=true;
-
-
     },  responseError => {
       this.toastrService.error(responseError.error, 'Hata', {
 
