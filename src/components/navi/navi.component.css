@@ -1,16 +1,9 @@
-*{
-    margin: 0;
-    padding: 0;
-    color: #f2f5f7;
 
-}
-body{
-    overflow-x: hidden;
-}
+
 nav{
     height: 6rem;
     width: 100%;
-    background-color: #006400;
+    background-color: #ffffff;
     box-shadow: 0 3px 20px rgba(0, 0, 0, 0.2);
     display: flex;
     margin-bottom: 1%;
@@ -115,16 +108,6 @@ nav{
     }
 }
 
-.join-buttonn{
-    color: #ffffff;
-    background-color: #000000;
-    border: 1.5px solid #000000;
-    border-radius: 0.5em;
-    padding: 0.1rem 0.4rem;
-    font-size: 1rem;
-    cursor: pointer;
-
-}
 .join-button:hover {
     color: #ffffff;
     background-color: #000000;
@@ -159,3 +142,129 @@ input:focus {
 .toggle .line3{
     transform: rotate(45deg) translate(-5px,-6px);
 }
+
+
+body {
+    overflow-x: hidden;
+}
+
+nav {
+    height: 6rem;
+    width: 100%;
+
+    border-bottom: 0.4px solid #dddddd; /* Siyah border ekler */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    box-shadow: none; /* Gölgeyi kaldırır */
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    padding-right: 1rem;
+}
+
+.logo img {
+    height: 5rem;
+    width: 5rem;
+}
+.social-container {
+	margin: 20px 0;
+}
+
+.social-container a {
+	border: 1px solid #DDDDDD;
+	border-radius: 50%;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 5px;
+	height: 40px;
+	width: 40px;
+}
+.logo-text {
+    color: #000000;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.right-section {
+    display: flex;
+    align-items: center;
+}
+
+.search form {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.search .form-control {
+    margin-right: 10px;
+}
+.custom-focus:focus {
+    border-color: #000000; /* Siyah renk */
+    box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.1); /* Siyah gölge */
+  }
+.join-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: #000000;
+    border: 1.5px solid ;
+
+    border-radius: 0.5em;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+.join-button:hover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #131418;
+    background-color: #ffffff;
+    border: 1.5px solid #000000;
+    border-radius: 0.5em;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+.join-button i {
+    font-size: 1rem; /* İkonun boyutunu ayarlar */
+}.join-buttonn {
+
+
+
+    color: white;
+    background-color: #000000;
+    border: 1.5px solid #000000;
+    border-radius: 0.5em;
+    padding: 0.2rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+.join-buttonn:hover {
+
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+    background-color: #ffffff;
+    border: 1.5px solid #000000;
+    border-radius: 0.5em;
+    padding: 0.2rem 1rem;
+    font-size: 1rem;
+ 
+    margin-left: 0.5rem;
+}
+
+

@@ -1,31 +1,25 @@
-
-
-    <nav>
-        <div class="logo">
-            <img src="https://cdn-icons-png.flaticon.com/512/8347/8347432.png" alt="Logo Image">
+<nav id="navbar-guest">
+    <div class="logo">
+        <img src="https://cdn-icons-png.flaticon.com/512/8347/8347432.png" alt="Logo Image">
+    </div>
+    <div class="hamburger">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+    </div>
+    <ul class="nav-links">
+        <li><a>Hizmet</a></li>
+        <li><a>Hakkımızda</a></li>
+        <li><a>Kaynaklar</a></li>
+        <li><a>Sayfalar</a></li>
+        <div class="search">
+          <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Takma İsim" aria-label="Search">
+            <button class="join-buttonn"><i class="fas fa-search"></i></button>
+          </form>
         </div>
-        <div class="hamburger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
-        </div>
-        <ul class="nav-links">
-            <li><a >Hizmet</a></li>
-            <li><a >Hakkımızda</a></li>
-            <li><a >Kaynaklar</a></li>
-            <li><a>Sayfalar</a></li>
-            <div class="search">
-              <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Takma İsim" aria-label="Search">
-                <button class="join-buttonn"><i class="fas fa-search"></i></button>
-              </form>
-          
-            </div>
-       
-            <button class="join-button" (click)="route()">Giriş</button>
-            <button class="join-button" >Kayıt Ol</button>
-   
-        </ul>
-    </nav>
-    <router-outlet></router-outlet>
-
+        <button class="join-button" (click)="route()">Giriş</button>
+        <button class="join-button" (click)="routeregister()">Kayıt Ol</button>
+    </ul>
+</nav>
+<router-outlet></router-outlet>

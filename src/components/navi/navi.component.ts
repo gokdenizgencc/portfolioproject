@@ -20,4 +20,7 @@ ngOnInit(){
 route(){
   this.router.navigate(["login"]); 
 }
+routeregister(){
+  this.router.navigate(["register"]); 
+}
 }
