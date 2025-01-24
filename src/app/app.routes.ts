@@ -31,6 +31,7 @@ export const routes: Routes = [
         {path: 'users', component: UserComponent, canActivate: [loginGuard]},
         {path: 'blogs/add', component: UserAddComponent, canActivate: [loginGuard]},
         {path: 'blogs', component: BlogsComponent, canActivate: [loginGuard]},
+        {path: 'projects', component: BlogsComponent, canActivate: [loginGuard]},
         {path: 'blogs/:id', component: BlogComponent, canActivate: [loginGuard]},
       ]
     },

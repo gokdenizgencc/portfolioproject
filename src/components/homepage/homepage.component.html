@@ -50,12 +50,13 @@
           <i class="fas fa-box-open no-data-icon"></i>
 
         </div>
-        <div class="project" *ngFor="let project of userinfo.projects">
+        <div class="blog" *ngFor="let project of userinfo.projects">
           <h4>{{ project.title }}</h4>
-          <p>{{ project.description }}</p>
+          <p>{{ truncate(project.description) }}</p>
+          <a  target="_blank">Devamını Oku</a>
         </div>
       </div>
-      <button  *ngIf="userinfo.blogs.length !== 0" class="add-project-button">Projelere Git</button>
+      <button (click)="goToProject()" *ngIf="userinfo.blogs.length !== 0" class="add-project-button">Projelere Git</button>
     
       <h3>Bloglar</h3>
       <div class="blogs">

@@ -1,8 +1,30 @@
-<div class="blog-container">
-    <div *ngFor="let blog of blogs" class="blog-card">
-      <img [src]="blog.blogPhoto" alt="{{ blog.title }}" class="blog-image">
-      <h3 class="blog-title">{{ blog.title }}</h3>
-      <p class="blog-text">{{ blog.conte | slice:0:100 }}...</p>
-      <button (click)="goToBlogDetail(blog)" class="read-more-btn">Devamını Oku</button>
+<div class="container">
+  <!-- Blog sayfasıysa blogları göster -->
+  <div *ngIf="isBlogPage; else showProjects">
+
+    <div class="blog-container">
+      <div *ngFor="let blog of blogs" class="blog-card">
+        <img [src]="blog.blogPhoto" alt="{{ blog.title }}" class="blog-image" />
+        <h3 class="blog-title">{{ blog.title }}</h3>
+        <p class="blog-text">{{ blog.conte | slice: 0:100 }}...</p>
+        <button (click)="goToBlogDetail(blog)" class="read-more-btn">
+          Devamını Oku
+        </button>
+      </div>
     </div>
   </div>
+
+
+  <ng-template #showProjects>
+    <div class="blog-container">
+      <div *ngFor="let project of projects" class="blog-card">
+        <img [src]="project.projectPhotoUrl" alt="{{ project.title }}" class="blog-image" />
+        <h3 class="blog-title">{{ project.title }}</h3>
+        <p class="blog-text">{{ project.description | slice: 0:100 }}</p>
+        <button   class="read-more-btn">
+          Devamını Oku
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</div>

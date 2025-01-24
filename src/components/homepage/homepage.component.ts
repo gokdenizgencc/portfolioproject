@@ -36,7 +36,10 @@ export class HomepageComponent {
     this.blogService.setBlogData(blog);
     this.router.navigate([`/blogs/${blog.blogId}`]);
   }
-
+ 
+  goToProject(){
+    this.router.navigate(["projects"]);
+  }
   getinfo(){
     this.userService.getAllUserİnformartion().subscribe(response=>{
       this.userinfo=response.data;

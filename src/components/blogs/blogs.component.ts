@@ -4,7 +4,10 @@ import { Blog } from '../../models/blog';
 import { UserService } from '../../services/user.service';
 import { BlogService } from '../../services/blog.service';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProjectService } from '../../services/project.service';
+import { ProjectWithPhotoDto } from '../../models/ProjectWithPhotoDto';
+import { response } from 'express';
 
 
 @Component({
@@ -16,12 +19,23 @@ import { Router } from '@angular/router';
 })
 export class BlogsComponent {
   dataLoaded:Boolean
+  projects:ProjectWithPhotoDto[];
+  isBlogPage: boolean = false; 
   blogs:Blog[];
-    constructor(private blogService:BlogService,private toastrService:ToastrService,private router:Router){
+    constructor(private blogService:BlogService,private projectService:ProjectService,private toastrService:ToastrService,private router:Router,private activatedRoute: ActivatedRoute){
   
     }
   ngOnInit():void{
-    this.getBlogs();
+    this.activatedRoute.url.subscribe(urlSegment => {
+      const firstSegment = urlSegment[0]?.path; // URL'nin ilk segmenti
+      if (firstSegment === 'blogs') {
+        this.isBlogPage = true;
+        this.getBlogs();
+      } else {
+        this.isBlogPage = false;
+        this.getProject();
+      }
+    });
   }
   getBlogs(){
     this.blogService.getAllBlogById().subscribe(response=>{
@@ -37,5 +51,17 @@ export class BlogsComponent {
   goToBlogDetail( blog: Blog){
     this.blogService.setBlogData(blog);
     this.router.navigate([`/blogs/${blog.blogId}`]);
+  }
+  getProject(){
+    this.projectService.getProjectWithDetail().subscribe(response=>{
+      this.projects=response.data;
+      this.dataLoaded=true;
+    },
+    responseError => {
+      this.toastrService.error(responseError.error, 'Hata', {
+
+      });
+    }
+  )
   }
 }
