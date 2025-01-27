@@ -43,7 +43,7 @@ export class BlogsComponent {
       this.dataLoaded=true;
     },  responseError => {
       this.toastrService.error(responseError.error, 'Hata', {
-
+        
       });
     }
   );
