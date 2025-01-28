@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { BlogService } from '../../services/blog.service';
 import { Blog } from '../../models/blog';
 import { AuthService } from '../../services/auth.service';
+import { ProjectService } from '../../services/project.service';
+import { ProjectDto } from '../../models/projectDto';
 
 
 @Component({
@@ -23,23 +25,15 @@ export class HomepageComponent {
   userinfo:UserAllInfo;
   id:number;
   dataLoaded=false;
-    constructor(private userService:UserService,private activatedRoute:ActivatedRoute,private toastrService:ToastrService,private router:Router,private blogService:BlogService,private authService:AuthService){
-  
+    constructor(private userService:UserService,private projectService:ProjectService,private activatedRoute:ActivatedRoute,private toastrService:ToastrService,private router:Router,private blogService:BlogService,private authService:AuthService){
     }
   ngOnInit():void{
     this.getinfo();
 
   }
  
-  goToBlog(blog:Blog){
   
-    this.blogService.setBlogData(blog);
-    this.router.navigate([`/blogs/${blog.blogId}`]);
-  }
- 
-  goToProject(){
-    this.router.navigate(["projects"]);
-  }
+
   getinfo(){
     this.userService.getAllUserİnformartion().subscribe(response=>{
       this.userinfo=response.data;
@@ -65,8 +59,22 @@ export class HomepageComponent {
   getProfileImage(photoUrl: string): string {
     return photoUrl ? photoUrl : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
   }
-  goBlock(){
+  goBlock(blogs:Blog[]){
+    this.blogService.setBlogsData(blogs);
     this.router.navigate(["blogs"]);
   }
-
+  goToBlog(blog:Blog){
+  
+    this.blogService.setBlogData(blog);
+    this.router.navigate([`/blogs/${blog.blogId}`]);
+  }
+  goToProject(project:ProjectDto){
+    this.projectService.setProjectData(project);
+    this.router.navigate([`/projects/${project.projectId}`]);
+  }
+  goProject(projects:ProjectDto[]){
+    this.projectService.setProjectsData(projects);
+    this.router.navigate(["projects"]);
+  }
+ 
 }

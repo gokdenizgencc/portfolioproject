@@ -33,6 +33,7 @@ export const routes: Routes = [
         {path: 'blogs', component: BlogsComponent, canActivate: [loginGuard]},
         {path: 'projects', component: BlogsComponent, canActivate: [loginGuard]},
         {path: 'blogs/:id', component: BlogComponent, canActivate: [loginGuard]},
+        {path: 'projects/:id', component: BlogComponent, canActivate: [loginGuard]},
       ]
     },
     {path: '**', redirectTo: '/first'}

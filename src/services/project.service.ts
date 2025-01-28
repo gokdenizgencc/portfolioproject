@@ -4,6 +4,7 @@ import { Project } from '../models/project';
 import { Observable } from 'rxjs';
 import { ListResponseModel } from '../models/listResponseModel';
 import { ProjectWithPhotoDto } from '../models/ProjectWithPhotoDto';
+import { ProjectDto } from '../models/projectDto';
 
 
 
@@ -12,7 +13,8 @@ import { ProjectWithPhotoDto } from '../models/ProjectWithPhotoDto';
   providedIn: 'root'
 })
 export class ProjectService {
-
+  private project: ProjectDto | null = null;
+  private projects:  ProjectDto[] | null = null;
  apiUrl="http://localhost:46772/api/Projects/";
   constructor(private httpClient:HttpClient) { }
 
@@ -24,4 +26,17 @@ export class ProjectService {
     return this.httpClient.
     get<ListResponseModel<ProjectWithPhotoDto>>(this.apiUrl+"getAllProjectDetailById");
   }
+    setProjectData(project: ProjectDto): void {
+      this.project = project;
+    }
+    setProjectsData(project:ProjectDto[]):void{
+      this.projects=project;
+    }
+  
+    getProjectData(): ProjectDto | null {
+      return this.project;
+    }
+    getProjectsData(): ProjectDto[] | null {
+      return this.projects;
+    }
 }

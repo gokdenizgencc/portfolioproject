@@ -9,6 +9,7 @@ import { ListResponseModel } from '../models/listResponseModel';
 })
 export class BlogService {
   private blog: Blog | null = null;
+  private blogs: Blog[] | null = null;
   constructor(private httpClient:HttpClient) { }
 
   add(blog:Blog):Observable<ResponseModel>{
@@ -26,8 +27,14 @@ export class BlogService {
   setBlogData(blog: Blog): void {
     this.blog = blog;
   }
+  setBlogsData(blogs:Blog[]):void{
+    this.blogs=blogs;
+  }
 
   getBlogData(): Blog | null {
     return this.blog;
+  }
+  getBlogsData(): Blog[] | null {
+    return this.blogs;
   }
 }

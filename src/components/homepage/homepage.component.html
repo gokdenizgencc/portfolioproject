@@ -53,10 +53,10 @@
         <div class="blog" *ngFor="let project of userinfo.projects">
           <h4>{{ project.title }}</h4>
           <p>{{ truncate(project.description) }}</p>
-          <a  target="_blank">Devamını Oku</a>
+          <a  (click)="goToProject(project)" target="_blank">Devamını Oku</a>
         </div>
       </div>
-      <button (click)="goToProject()" *ngIf="userinfo.blogs.length !== 0" class="add-project-button">Projelere Git</button>
+      <button (click)="goProject(userinfo.projects)" *ngIf="userinfo.blogs.length !== 0" class="add-project-button">Projelere Git</button>
     
       <h3>Bloglar</h3>
       <div class="blogs">
@@ -71,7 +71,7 @@
         </div>
       </div>
       <div  *ngIf="userinfo.blogs.length !== 0">
-        <button  (click)="goBlock()" class="add-blog-button">Bloglara Git</button>
+        <button  (click)="goBlock(userinfo.blogs)" class="add-blog-button">Bloglara Git</button>
       </div>
    
     </div>
