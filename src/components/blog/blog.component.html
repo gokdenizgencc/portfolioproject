@@ -1,22 +1,30 @@
 <div *ngIf="isBlogPage; else showProjects">
-
+  <div   class="blog-container">
+    <h1 class="blog-title">{{ blog?.title }}</h1>
+    <img [src]="blog?.blogPhoto" alt="{{ blog?.title }}" class="blog-image">
+  
+    <div class="line"></div>
+  
+    <p class="blog-content">{{ blog?.conte }}</p>
+  </div>
 </div>
-<div   class="blog-container">
-  <h1 class="blog-title">{{ blog?.title }}</h1>
-  <img [src]="blog?.blogPhoto" alt="{{ blog?.title }}" class="blog-image">
 
-  <div class="line"></div>
-
-  <p class="blog-content">{{ blog?.conte }}</p>
-</div>
 
 <ng-template #showProjects>
-  <div   class="blog-container">
-  <h1 class="blog-title">{{ project?.title }}</h1>
-  <img [src]="project!.photosUrls[0].projectPhotoUrl" alt="{{ project?.title }}" class="blog-image">
+  <div class="blog-container">
+    <h1 class="blog-title">{{ project?.title }}</h1>
 
-  <div class="line"></div>
+    <div class="blog-gallery">
+      <img
+        *ngFor="let photo of project?.photosUrls; let i = index"
+        [src]="photo.projectPhotoUrl"
+        [alt]="'Photo ' + (i + 1)"
+        class="blog-image"
+      />
+    </div>
 
-  <p class="blog-content">{{project?.description }}</p>
-</div>
+    <div class="line"></div>
+
+    <p class="blog-content">{{ project?.description }}</p>
+  </div>
 </ng-template>
