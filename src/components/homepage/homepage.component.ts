@@ -76,5 +76,7 @@ export class HomepageComponent {
     this.projectService.setProjectsData(projects);
     this.router.navigate(["projects"]);
   }
- 
+  goToInfo(){
+    this.router.navigate(["userinfo"]);
+  }
 }

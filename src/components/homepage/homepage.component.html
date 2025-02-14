@@ -8,7 +8,7 @@
     <div class="profile-left">
       <img src="{{userinfo.profilePhoto}}" alt="Profile Picture" class="profile-image">
       <h2>{{userinfo.nickName}}</h2>
-      <button class="edit-profile-button">Profili Düzenle</button>
+      <button (click)="goToInfo()" class="edit-profile-button">Kullanıcı Bilgileri</button>
       
       <div class="social-media-links">
         <div  *ngIf="userinfo.github !== 'No GitHub'" class="social-link">
@@ -21,25 +21,7 @@
           <a href="{{userinfo.linkedIn}}"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
         </div>
 
-        <!-- Hide skills section if there are no skills -->
-        <div *ngIf="userinfo.skills && userinfo.skills.length > 0" class="social-linkk">
-          <div class="skills">
-            <h3>Yetenekler</h3>
-            <ul>
-              <li *ngFor="let skill of userinfo.skills">{{ skill.name }}</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Hide certificates section if there are no certificates -->
-        <div *ngIf="userinfo.certificates && userinfo.certificates.length > 0" class="social-linkk">
-          <div class="certificates">
-            <h3>Sertifikalar</h3>
-            <ul>
-              <li *ngFor="let certificate of userinfo.certificates">{{ certificate.title }}</li>
-            </ul>
-          </div>
-        </div>
+ 
       </div>
     </div>
     
