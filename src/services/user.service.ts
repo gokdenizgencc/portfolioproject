@@ -6,11 +6,13 @@ import { ListResponseModel } from '../models/listResponseModel';
 import { ResponseModel } from '../models/responsModel';
 import { UserAllInfo } from '../models/userAllInfo';
 import { SingleResponseModel } from '../models/singleResponseModel';
+import { UserInfo } from 'os';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+    private userAllInfo: UserAllInfo | null = null;
   apiUrl="http://localhost:46772/api/";
   constructor(private httpClient:HttpClient) { }
   getUsers():Observable<ListResponseModel<User>>{
@@ -31,5 +33,11 @@ export class UserService {
     let path="http://localhost:46772/api/Users/getById"
     return this.httpClient.get<SingleResponseModel<User>>(path);
   }
+    setUserAllInfoData(userAllInfo: UserAllInfo): void {
+      this.userAllInfo=userAllInfo
+    }
+    getUserAllInfoData(): UserAllInfo | null {
+      return this.userAllInfo;
+    }
 
 }

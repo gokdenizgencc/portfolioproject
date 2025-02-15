@@ -1,174 +1,157 @@
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: white;
-  }
-  
-  .card-wrapper {
-    width: 620px;
-  }
-  
-  .card {
-    background-color: #f5f5f5;
-    border: 1px solid white;
-    padding: 25px;
-    margin-bottom: 16px;
-    text-align: center;
-  }
-  .cardd {
-    position: relative;
-    width: 620px;  
-    height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #fff;
+  padding: 20px;
+}
 
-    margin-bottom: 16px;
-    overflow: hidden;
+.card-wrapper {
+  width: 100%;
+  max-width: 850px;
+}
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-  }
-  
-  .cardd::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 50%;
-    background-color: black; 
-    top: 0;
-    left: 0;
-    z-index: 0;
-  }
-  
-  .cardd::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 50%;
-    background-color: #f5f5f5;
-    bottom: 0;
-    left: 0;
-    z-index: 0;
-  }
-  
-  .profile-img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 4px solid white;
-    z-index: 1;
-  }
-  
-  .name {
-    position: absolute;
-    top: calc(50% + 50px); 
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 16px;
-    font-weight: bold;
-    color: black;
-    z-index: 2;
-  }
-  
-  .text {
-    position: absolute;
-    bottom: 10px;
-    color: black;
-    font-size: 14px;
-    font-weight: bold;
-    text-align: center;
-    width: 100%;
-    z-index: 2;
-  }
-  .about-section {
-    width: 620px;
-    padding: 20px;
-    margin-bottom: 16px;
-    background: #f5f5f5;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  h3 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
-  .edit-btn {
-    background: black;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border: 1px solid white;
-    cursor: pointer;
-  }
-  
-  .edit-btn:hover {
-    background: white;
-    color: black;
-    border: 1px solid black;
-  }
-  
-  .description {
-    margin-top: 10px;
-    font-size: 12px;
-    color: #333;
-  }
-  
-  .education {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  
+.cardd {
+  position: relative;
+  width: 100%;  
+  height: 220px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.cardd::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  background-color: #333;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.profile-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 4px solid white;
+  z-index: 1;
+}
+
+.name {
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+}
+
+.text {
+  color: #777;
+  font-size: 14px;
+  font-weight: normal;
+  text-align: center;
+}
+
+.about-section {
+  background: white;
+  padding: 20px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.edit-btn {
+  background: #000;
+  color: white;
+  border: 1px solid black;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.edit-btn:hover {
+  background: white;
+  color: black;
+  border: 1px solid black;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.description {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.5;
+}
+
+.education {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.education-item {
+  width: 48%; 
+  margin-bottom: 10px;
+}
+
+.education-item h4 {
+  margin: 0;
+  font-size: 12px; 
+  font-weight: bold;
+  color: #555;
+}
+.education-item h3 {
+  margin: 0;
+  font-size: 18px; 
+  font-weight: bold;
+  color: #333;
+}
+.education-block {
+  margin-bottom: 20px; /* Her eğitim bloğunun arasında biraz boşluk */
+}
+
+.education-block:not(:last-child) {
+  border-bottom: 1px solid #ccc; /* Eğitim bloğunun altına çizgi ekler, sonuncusu hariç */
+  padding-bottom: 20px; /* Çizgi ile içerik arasında boşluk bırakır */
+}
+.education-item p {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+  font-weight: normal;
+}
+
+@media (max-width: 600px) {
   .education-item {
-    width: 48%; 
-    margin-bottom: 10px;
+    width: 100%;
   }
-  
-  .education-item h4 {
-    margin: 5px 0;
-    font-size: 8px; 
-    font-weight: bold;
-    color: #555;
-  }
-  
-  .education-item p {
-    margin: 0;
-    font-size: 12px; 
-    color: #444444;
-    font-weight: bold;
-  }
-  
-  
-  
-  .card img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-  }
-  
-  .card h2, .card h3 {
-    margin-bottom: 10px;
-    font-size: 1.2em;
-  }
-  
-  .list {
-    list-style-type: disc;
-    padding-left: 20px;
-    text-align: left;
-  }
-  
+}

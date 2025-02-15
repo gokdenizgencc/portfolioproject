@@ -35,6 +35,7 @@ export class HomepageComponent {
   
 
   getinfo(){
+    
     this.userService.getAllUserİnformartion().subscribe(response=>{
       this.userinfo=response.data;
       this.dataLoaded=true;
@@ -76,7 +77,8 @@ export class HomepageComponent {
     this.projectService.setProjectsData(projects);
     this.router.navigate(["projects"]);
   }
-  goToInfo(){
+  goToInfo(userinfo:UserAllInfo){
+    this.userService.setUserAllInfoData(userinfo)
     this.router.navigate(["userinfo"]);
   }
 }

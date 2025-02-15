@@ -24,13 +24,13 @@ export class BlogService {
   }
 
 
-  setBlogData(blog: Blog): void {
-    this.blog = blog;
-  }
+
   setBlogsData(blogs:Blog[]):void{
     this.blogs=blogs;
   }
-
+  setBlogData(blog: Blog): void {
+    this.blog = blog;
+  }
   getBlogData(): Blog | null {
     return this.blog;
   }

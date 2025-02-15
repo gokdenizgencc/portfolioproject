@@ -2,8 +2,8 @@
     <div class="card-wrapper">
       <div class="cardd">
         <img class="profile-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVGHL9r9OucwArH8yO3rEDPryG4V3tSCBw-w&s" alt="Profil Resmi">
-        <div class="name"> Gökdeniz Genç</div>
-        <div class="text">Computer Enginner</div>
+        <div class="name">{{userinfo?.userInfos?.fullName}}</div>
+        <div class="text">Bilgisayar Mühendisliği</div>
       </div>
   
       <div class="about-section">
@@ -11,15 +11,19 @@
           <h3>Hakkında</h3>
           <button class="edit-btn">Düzenle</button>
         </div>
-        <p class="description">I am computer engineer student in mersin university. I want to work a company. Generally I solve algorithm question in hacerrank or leetcode for improve myself.</p>
+        <p class="description">{{userinfo?.userInfos?.bio}}</p>
         <div class="education">
           <div class="education-item">
             <h4>Yetenekler</h4>
-            <p>C#,C++</p>
+            <p>
+              <span *ngFor="let skill of userinfo?.skills; let last = last">
+                {{ skill.name }}<span *ngIf="!last">, </span>
+              </span>
+            </p>
           </div>
           <div class="education-item">
             <h4>Maas Beklentisi</h4>
-            <p>-</p>
+            <p>{{userinfo?.userInfos?.salaryException}}</p>
           </div>
           
         </div>
@@ -33,19 +37,19 @@
         <div class="education">
           <div class="education-item">
             <h4>Yaşadığı Yer</h4>
-            <p>İstanbul,Çekmeköy</p>
+            <p>{{userinfo?.userInfos?.livingLocation?? "-"}}</p>
           </div>
           <div class="education-item">
             <h4>Cep Telefonu</h4>
-            <p>05313123123</p>
+            <p>{{userinfo?.userInfos?.phone}}</p>
           </div>
           <div class="education-item">
             <h4>Uyruk</h4>
-            <p>Kürt</p>
+            <p>{{userinfo?.userInfos?.nationality}}</p>
           </div>
           <div class="education-item">
             <h4>T.C. Kimlik No(isteğe bağlı)</h4>
-            <p>41823123</p>
+            <p>{{userinfo?.userInfos?.nationalityId}}</p>
           </div>
         </div>
       </div>
@@ -58,31 +62,31 @@
         <div class="education">
           <div class="education-item">
             <h4>Doğrum Tarihi</h4>
-            <p>19/12/2000</p>
+            <p>{{ userinfo?.userInfos?.birthDate | date: 'dd.MM.yyyy' }}</p>
           </div>
           <div class="education-item">
             <h4>Doğum Yeri</h4>
-            <p>İstanbul/Üsküdar</p>
+            <p>{{userinfo?.userInfos?.birthplace}}</p>
           </div>
           <div class="education-item">
             <h4>Cinsiyet</h4>
-            <p>Erkek</p>
+            <p>{{userinfo?.userInfos?.gender}}</p>
           </div>
           <div class="education-item">
             <h4>Askerlik Durumu</h4>
-            <p>-</p>
+            <p>{{userinfo?.userInfos?.militaryServiceInfo}}</p>
           </div>
           <div class="education-item">
             <h4>Engel Durumu</h4>
-            <p>-</p>
+            <p>{{userinfo?.userInfos?.disabilityStatus?? "-"}}</p>
           </div>
           <div class="education-item">
             <h4>Yeni çalışma fırsatları arıyor musun?</h4>
             <p>Evet, arıyorum.</p>
           </div>
           <div class="education-item">
-            <h4>Sigara kullanıyor musun?            </h4>
-            <p>Kullanmıyorum</p>
+            <h4>Sigara kullanıyor musun?</h4>
+            <p>{{ userinfo?.userInfos?.smoke ? 'Kullanıyorum' : 'Kullanmıyorum' }}</p>
           </div>
         </div>
       </div>
@@ -91,104 +95,125 @@
           <h3>Eğitim Bilgisi</h3>
           <button class="edit-btn">Düzenle</button>
         </div>
-        <div class="education-item">
-       
-          <p >Mersin Üniversitesi</p>
-          <h4 >Üniversite</h4>
-        </div>
-    
-        <div class="education">
+      
+        <div *ngFor="let education of userinfo?.educationInfo" class="education-block">
           <div class="education-item">
-            <h4>Doğrum Tarihi</h4>
-            <p>19/12/2000</p>
+            <p>{{ education.universityName }}</p>
+            <h3>Üniversite</h3>
           </div>
-          <div class="education-item">
-            <h4>Başlangıç Yılı / Bitiş yılı (veya Beklenen)</h4>
-            <p>2019 - 2024</p>
+      
+          <div class="education">
+            <div class="education-item">
+              <h4>Bölüm</h4>
+              <p>{{ education.department }}</p>
+            </div>
+            <div class="education-item">
+              <h4>Başlangıç Tarihi / Bitiş Tarihi (veya Beklenen)</h4>
+              <p>{{ education.startDate| date: 'yyyy' }} - {{ education.finishDate | date: 'yyyy'}}</p>
+            </div>
+            <div class="education-item">
+              <h4>Not Ortalaması</h4>
+              <p>{{ education.gpa }}</p>
+            </div>
+            <div class="education-item">
+              <h4>Sınıf</h4>
+              <p>{{ education.grade }}</p>
+            </div>
+            <div class="education-item">
+              <h4>Not Sistemi</h4>
+              <p>{{ education.gradeSystem }}</p>
+            </div>
           </div>
-          <div class="education-item">
-            <h4>Not Ortalaması</h4>
-            <p>3.05</p>
-          </div>
-          <div class="education-item">
-            <h4>Sınıf</h4>
-            <p>2. Sınıf</p>
-          </div>
-          <div class="education-item">
-            <h4>Not Sistemi</h4>
-            <p>-</p>
-          </div>
-        
         </div>
       </div>
+      
   
       <div class="about-section">
         <div class="header">
           <h3>İş Deneyimi</h3>
           <button class="edit-btn">Düzenle</button>
         </div>
-        <div class="education-item">
+        <div *ngFor="let workExperience of userinfo?.workExperiences" class="education-block">
+          <div class="education-item">
        
-          <p >Vakıf Bank</p>
-          <h4 >Şirket</h4>
+            <p >{{workExperience.companyName}}</p>
+            <h3 >Şirket</h3>
+          </div>
+          <div class="education">
+            <div class="education-item">
+              <h4>Başlangıç Tarihi / Bitiş Tarihi (veya Beklenen)</h4>
+              <p>{{workExperience.startDate| date: 'yyyy.MM' }} - {{workExperience.finalDate| date: 'yyyy.MM' }}</p>
+            </div>
+            <div class="education-item">
+              <h4>Rolün</h4>
+              <p>{{workExperience.role}}</p>
+            </div>
+            <div class="education-item">
+              <h4>İl</h4>
+              <p>{{workExperience.province}}</p>
+            </div>
+  
+            <div class="education-item">
+              <h4>Kısa iş tanımı</h4>
+              <p>{{workExperience.shortWorkDefination}}</p>
+            </div>
+          </div>
         </div>
-        <div class="education">
-          <div class="education-item">
-            <h4>Başlangıç Yılı / Bitiş yılı (veya Beklenen)</h4>
-            <p>10/2025 - Devam Ediyorum</p>
-          </div>
-          <div class="education-item">
-            <h4>Başlangıç Yılı / Bitiş yılı (veya Beklenen)</h4>
-            <p>2019 - 2024</p>
-          </div>
-          <div class="education-item">
-            <h4>İl</h4>
-            <p>İstanbul, Türkiye</p>
-          </div>
-     
-        </div>
+    
       </div>
       <div class="about-section">
         <div class="header">
           <h3>Yabancı Dil</h3>
           <button class="edit-btn">Düzenle</button>
         </div>
-        <div class="education-item">
-          <h4 >Orta</h4>
-          <p >English</p>
-     
-        </div>
-        <p class="description"></p>
-      
+ 
+        <div *ngFor="let foreignLanguage of userinfo?.foreignLanguage" class="education-block">
         <div class="education">
           <div class="education-item">
-            <h4>Nerede öğrenildi?</h4>
-            <p>Okulda</p>
+            <h4 >Dil</h4>
+            <p >{{foreignLanguage.language}}</p>
+       
           </div>
-    
+          <div class="education-item">
+            <h4 >Seviye</h4>
+            <p >{{foreignLanguage.rating}}</p>
+       
+          </div>
+          <div class="education-item">
+            <h4>Nerede öğrenildi?</h4>
+            <p >{{foreignLanguage.whereDidYouLearn}}</p>
+          </div>
+    </div>
      
         </div>
       </div>
-  
+
       <div class="about-section">
+     
         <div class="header">
           <h3>Sertifika</h3>
           <button class="edit-btn">Düzenle</button>
         </div>
+        <div *ngFor="let certificates of userinfo?.certificates" class="education-block">
         <div class="education">
           <div class="education-item">
             <h4>Sertifika Adı</h4>
-            <p>.Net</p>
+            <p>{{certificates.title}}</p>
           </div>
           <div class="education-item">
-            <h4>Yer</h4>
-            <p>Online</p>
+            <h4>Sertifika Url'si</h4>
+            <p>{{certificates.certificateUrl}}</p>
           </div>
           <div class="education-item">
             <h4>Tarih</h4>
-            <p>2024</p>
+            <p>{{certificates.dateReceived| date: 'yyyy.MM'}}</p>
+          </div>
+          <div class="education-item">
+            <h4>Alınan Kurum</h4>
+            <p>{{certificates.institution}}</p>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </div>

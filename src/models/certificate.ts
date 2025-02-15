@@ -3,6 +3,6 @@ export interface Certificate{
     userId:number;
     title:string;
     institution:string;
-    dataReceived:Date;
+    dateReceived:Date;
     certificateUrl:string;
 }
