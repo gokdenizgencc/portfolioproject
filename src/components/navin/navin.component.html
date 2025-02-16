@@ -1,11 +1,9 @@
-
-
 <nav *ngIf="isUserLoggedIn" id="navbar-user">
     <div class="left-section">
         <div class="logo">
-            <img src="https://cdn-icons-png.flaticon.com/512/6588/6588143.png" alt="Logo Image" width="10" height="20">
+            <img src="https://cdn-icons-png.flaticon.com/512/6588/6588143.png" alt="Logo Image" width="40" height="40">
         </div>
-        <div class="logo-text"></div>
+        <div class="logo-text">PortfolioMaker</div>
     </div>
     <div class="right-section">
         <div class="search">
@@ -16,7 +14,7 @@
         </div>
         <button class="join-button"><i class="fa-solid fa-code-branch"></i></button>
         <button class="join-button"><i class="fa-solid fa-file"></i></button>
-        <button class="join-button"  (click)="logout()"><i class="fa-solid fa-sign-out-alt"></i></button>
+        <button class="join-button" (click)="logout()"><i class="fa-solid fa-sign-out-alt"></i></button>
     </div>
 </nav>
 <router-outlet></router-outlet>

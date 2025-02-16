@@ -93,8 +93,10 @@ export class BlogsComponent {
     this.router.navigate([`/projects/${project.projectId}`]);
   }
   ngOnDestroy(): void {
-    localStorage.removeItem('blogsData'); 
-    localStorage.removeItem('projectsData'); 
+    if (window.sessionStorage) {
+      sessionStorage.removeItem('blogsData');
+      sessionStorage.removeItem('projectsData');
+    }
   }
   
 }

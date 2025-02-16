@@ -1,61 +1,48 @@
-<div *ngIf="dataLoaded==false" class="centered">
+<div *ngIf="!dataLoaded" class="loading-overlay">
   <span class="sr-only">Yükleniyor...</span>
   <div class="spinner-border" role="status"></div>
 </div>
 
-<div *ngIf="dataLoaded==true">
-  <div class="profile-container">
-    <div class="profile-left">
-      <img src="{{userinfo.profilePhoto}}" alt="Profile Picture" class="profile-image">
-      <h2>{{userinfo.nickName}}</h2>
-      <button (click)="goToInfo(userinfo)" class="edit-profile-button">Kullanıcı Bilgileri</button>
-      
-      <div class="social-media-links">
-        <div  *ngIf="userinfo.github !== 'No GitHub'" class="social-link">
-          <a href="{{userinfo.github}}" class="social"><i class="fab fa-github"></i> Github</a>
-        </div>
-        <div *ngIf="userinfo.website !== 'No Website'" class="social-link">
-          <a href="{{userinfo.website}}"><i class="fas fa-globe"></i> Website</a>
-        </div>
-        <div *ngIf="userinfo.linkedIn !== 'No LinkedIn'" class="social-link">
-          <a href="{{userinfo.linkedIn}}"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-        </div>
-
- 
+<div *ngIf="dataLoaded" class="profile-container">
+  <div class="profile-left">
+    <img src="{{userinfo.profilePhoto}}" alt="Profile Picture" class="profile-image">
+    <h2>{{userinfo.nickName}}</h2>
+    <button (click)="goToInfo(userinfo)" class="action-button">Kullanıcı Bilgileri</button>
+    
+    <div class="social-media-links">
+      <a *ngIf="userinfo.github !== 'No GitHub'" href="{{userinfo.github}}" class="social-link"><i class="fab fa-github"></i> Github</a>
+      <a *ngIf="userinfo.website !== 'No Website'" href="{{userinfo.website}}" class="social-link"><i class="fas fa-globe"></i> Website</a>
+      <a *ngIf="userinfo.linkedIn !== 'No LinkedIn'" href="{{userinfo.linkedIn}}" class="social-link"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+    </div>
+  </div>
+  
+  <div class="profile-right">
+    <h3>Projeler</h3>
+    <div class="projects">
+      <div *ngIf="userinfo.projects.length === 0" class="no-data-container">
+        <i class="fas fa-box-open no-data-icon"></i>
+        <p class="no-data-message">Henüz proje eklenmemiş.</p>
+      </div>
+      <div class="project" *ngFor="let project of userinfo.projects">
+        <h4>{{ project.title }}</h4>
+        <p>{{ truncate(project.description) }}</p>
+        <a (click)="goToProject(project)">Devamını Oku</a>
       </div>
     </div>
+    <button (click)="goProject(userinfo.projects)" *ngIf="userinfo.projects.length !== 0" class="action-button">Projelere Git</button>
     
-    <div class="profile-right">
-      <h3>Projeler</h3>
-      <div class="projects">
-        <div *ngIf="userinfo.projects.length === 0" class="no-data-container">
-          <i class="fas fa-box-open no-data-icon"></i>
-
-        </div>
-        <div class="blog" *ngFor="let project of userinfo.projects">
-          <h4>{{ project.title }}</h4>
-          <p>{{ truncate(project.description) }}</p>
-          <a  (click)="goToProject(project)" target="_blank">Devamını Oku</a>
-        </div>
+    <h3 class="mars">Bloglar</h3>
+    <div class="blogs">
+      <div *ngIf="userinfo.blogs.length === 0" class="no-data-container">
+        <i class="fas fa-box-open no-data-icon"></i>
+        <p class="no-data-message">Henüz blog eklenmemiş.</p>
       </div>
-      <button (click)="goProject(userinfo.projects)" *ngIf="userinfo.blogs.length !== 0" class="add-project-button">Projelere Git</button>
-    
-      <h3>Bloglar</h3>
-      <div class="blogs">
-        <div *ngIf="userinfo.blogs.length === 0" class="no-data-container">
-          <i class="fas fa-box-open no-data-icon"></i>
-
-        </div>
-        <div class="blog" *ngFor="let blog of userinfo.blogs">
-          <h4>{{ blog.title }}</h4>
-          <p>{{ truncate(blog.conte) }}</p>
-          <a (click)="goToBlog(blog)" target="_blank">Devamını Oku</a>
-        </div>
+      <div class="blog" *ngFor="let blog of userinfo.blogs">
+        <h4>{{ blog.title }}</h4>
+        <p>{{ truncate(blog.conte) }}</p>
+        <a (click)="goToBlog(blog)">Devamını Oku</a>
       </div>
-      <div  *ngIf="userinfo.blogs.length !== 0">
-        <button  (click)="goBlock(userinfo.blogs)" class="add-blog-button">Bloglara Git</button>
-      </div>
-   
     </div>
+    <button (click)="goBlock(userinfo.blogs)" *ngIf="userinfo.blogs.length !== 0" class="action-button">Bloglara Git</button>
   </div>
 </div>

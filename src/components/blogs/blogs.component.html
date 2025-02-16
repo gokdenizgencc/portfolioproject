@@ -5,8 +5,8 @@
     <div class="blog-container">
       <div *ngFor="let blog of blogs" class="blog-card">
         <img [src]="blog.blogPhoto" alt="{{ blog.title }}" class="blog-image" />
-        <h3 class="blog-title">{{ blog.title }}</h3>
-        <p class="blog-text">{{ blog.conte | slice: 0:100 }}...</p>
+        <h3 class="blog-title">{{ blog.title | slice: 0:32 }}</h3>
+        <p class="blog-text">{{ blog.conte | slice: 0:70 }}...</p>
         <button (click)="goToBlogDetail(blog)" class="read-more-btn">
           Devamını Oku
         </button>
@@ -19,8 +19,8 @@
     <div class="blog-container">
       <div *ngFor="let project of projectss" class="blog-card">
         <img [src]="project.photosUrls[0].projectPhotoUrl" alt="{{ project.title }}" class="blog-image" />
-        <h3 class="blog-title">{{ project.title }}</h3>
-        <p class="blog-text">{{ project.description | slice: 0:100 }}</p>
+        <h3 class="blog-title">{{ project.title | slice: 0:25 }}</h3>
+        <p class="blog-text">{{ project.description | slice: 0:70 }}</p>
         <button (click)="goToProject(project)" class="read-more-btn">
           Devamını Oku
         </button>

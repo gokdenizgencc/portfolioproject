@@ -1,11 +1,46 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+}
+
+.spinner-border {
+  width: 80px;
+  height: 80px;
+  border-width: 6px;
+  color: #fff;
+}
+
 .profile-container {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   padding: 20px;
 }
 
 .profile-left {
-  width: 30%;
+  flex: 1 1 300px;
   text-align: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+
+  margin: 10px;
 }
 
 .profile-image {
@@ -14,223 +49,89 @@
   border-radius: 50%;
   object-fit: cover;
 }
-.loading-overlay {
-  position: fixed; /* Ekranın tamamını kaplamasını sağlar */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex; /* İçeriği flexbox ile ortalar */
-  justify-content: center; /* Yatayda ortalar */
-  align-items: center; /* Dikeyde ortalar */
-  background-color: rgba(0, 0, 0, 0.5); /* Arka planda yarı saydam siyah bir zemin ekler */
-  z-index: 9999; /* Diğer öğelerin üstünde görünmesini sağlar */
-}
-.h2{
-  color: #000000;
-}
-.spinner-border {
-  width: 100px; /* Boyutunu büyütmek için genişliği ayarla */
-  height: 100px; /* Boyutunu büyütmek için yüksekliği ayarla */
-  border-width: 8px; /* Çizgi kalınlığını artırarak spinner'ı büyüt */
-  color: black; /* Spinner rengini beyaz yap */
-}
-.sr-only{
-  color: black;
-}
-.centered {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-.centered div {
-  text-align: center;
-}
-.edit-profile-button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #000000;
-  color: white;
-  border: 1px solid #000000;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.edit-profile-button:hover {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: white;
-  color:#000000 ;
-  border: 1px solid #000000;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.profile-right {
-  width: 70%;
-  padding-left: 20px;
-}
-
-.projects {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.project {
-  width: 30%;
-  padding: 10px;
-  background-color: #f3f3f3;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-}
-
-.project h4 {
-  margin-bottom: 10px;
-}
 
 .social-media-links {
   margin-top: 20px;
-  text-align: left;
-  color: #000000; /* Siyah renk */
 }
-.social-link a {
-  color: #000000; /* Siyah renk */
-}
+
 .social-link {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  margin-left: 40%;
-}
-.social-linkk {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  margin-left: 34%;
-}
-
-
-
-
-.comments-section {
-
-  padding: 20px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.comment {
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-.comment strong {
+  display: block;
   color: #333;
+  text-decoration: none;
+  margin: 5px 0;
+  transition: color 0.3s;
 }
 
-.comment-form {
-  margin-top: 20px;
+.social-link:hover {
+  color: #007bff;
 }
 
-.comment-form textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  resize: none;
-}
+.profile-right {
+  flex: 3 1 600px;
+  padding: 20px;
+  background-color: #fff;
 
-.comment-form button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #000000;
-  color: white;
-  border: 1px solid #000000;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.add-project-button,
-.add-blog-button {
-  display: inline-block;
-  margin: 20px 0;
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #000000;
-  color: white;
-  border: 1px solid #000000;
-  border-radius: 5px;
-  cursor: pointer;
-  text-align: center;
-}
-
-.add-project-button:hover,
-.add-blog-button:hover {
-
-  background-color: white;
-  color:#000000 ;
-  border: 1px solid #000000;
+  margin: 10px;
 }
 
 .projects,
 .blogs {
+  margin-bottom: 10px;
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
 }
-
+.mars{
+  margin-top: 20px;
+}
+.project,
 .blog {
-  flex: 1 1 30%; /* Her blog için %30 genişlik, esnek büyüme */
-  max-width: 30%; /* Maksimum genişlik sınırlaması */
-  min-height: 250px; /* Sabit bir yükseklik değeri */
-  border: 1px solid #ddd; /* Bloglara kenarlık */
-  padding: 15px; /* İçeriğe biraz boşluk */
-  box-sizing: border-box; /* Padding ve border'ın genişlikten sayılması için */
-  background-color: #f3f3f3;
-    border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.blog h4 {
-  margin-top: 0;
-}
-
-.blog p {
-  flex-grow: 1; /* Metin içeriklerinin esnek olmasını sağlar */
-}
-
-.blog a {
-  margin-top: auto; /* Blog yazısının altına "Devamını Oku" butonunu yerleştirir */
-  text-decoration: none;
-  color: #000000;
-}
-
-.blog a:hover {
-  text-decoration: underline;
-}
-.no-data-container {
-  padding: 20% 40%;
-
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  flex: 1 1 250px;
   background-color: #f9f9f9;
-  margin: 20px 0;
-  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  transition: transform 0.3s;
 }
 
-.no-data-message {
-  font-size: 18px;
-  color: #666;
-  margin: 0;
+.project:hover,
+.blog:hover {
+  transform: translateY(-5px);
+}
+
+.action-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.action-button:hover {
+  background-color: #555;
+}
+
+.no-data-container {
+  text-align: center;
+  color: #999;
+  font-style: italic;
 }
 
 .no-data-icon {
-  font-size: 48px; 
-  color: #000000;
-  margin-right: 10px;
+  font-size: 48px;
+  color: #ccc;
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    flex-direction: column;
+  }
+  .profile-left,
+  .profile-right {
+    width: 100%;
+    margin: 0;
+  }
 }
