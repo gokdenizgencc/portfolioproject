@@ -1,0 +1,28 @@
+<div class="add-blog-container">
+  <h2 class="page-title">Yeni Blog Ekle</h2>
+
+  <form (ngSubmit)="submitBlog()" class="blog-form">
+
+    <div class="form-group">
+      <label for="title">Başlık</label>
+      <input type="text" id="title" [(ngModel)]="blog.title" name="title" required />
+    </div>
+
+    <div class="form-group">
+      <label for="blogPhoto">Fotoğraf Yükle</label>
+      <input type="file" id="blogPhoto" (change)="onFileSelected($event)" />
+      <img *ngIf="previewUrl" [src]="previewUrl" alt="Önizleme" class="image-preview" />
+    </div>
+
+    <div class="form-group">
+      <label for="content">İçerik</label>
+      <textarea id="content" [(ngModel)]="blog.conte" name="content" rows="5" required></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="submit-btn" (click)="submitBlog()">Yayınla</button>
+      <button type="button" class="cancel-btn" (click)="cancel()">İptal Et</button>
+    </div>
+
+  </form>
+</div>

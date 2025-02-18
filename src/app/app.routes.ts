@@ -11,6 +11,7 @@ import { BlogComponent } from '../components/blog/blog.component';
 import { RegisterComponent } from '../components/register/register.component';
 import { NaviComponent } from '../components/navi/navi.component';
 import { UserinfoComponent } from '../components/userinfo/userinfo.component';
+import { AddblogpageComponent } from '../components/addblogpage/addblogpage.component';
 
 export const routes: Routes = [
     {path: "login", component: LoginComponent},
@@ -36,6 +37,7 @@ export const routes: Routes = [
         {path: 'blogs/:id', component: BlogComponent, canActivate: [loginGuard]},
         {path: 'projects/:id', component: BlogComponent, canActivate: [loginGuard]},
         {path: 'userinfo', component: UserinfoComponent, canActivate: [loginGuard]},
+        {path: 'addblog', component: AddblogpageComponent , canActivate: [loginGuard]},
       ]
     },
     {path: '**', redirectTo: 'login'}

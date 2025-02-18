@@ -92,6 +92,10 @@ export class BlogsComponent {
     this.projectService.setProjectData(project);
     this.router.navigate([`/projects/${project.projectId}`]);
   }
+  navigateAdd(){
+
+    this.router.navigate([`addblog`]);
+  }
   ngOnDestroy(): void {
     if (window.sessionStorage) {
       sessionStorage.removeItem('blogsData');

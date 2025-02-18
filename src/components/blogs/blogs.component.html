@@ -1,7 +1,6 @@
 <div class="container">
-
+  <button class="add-blog-btn" (click)="navigateAdd()" >Blog Ekle</button>
   <div *ngIf="isBlogPage; else showProjects">
-
     <div class="blog-container">
       <div *ngFor="let blog of blogs" class="blog-card">
         <img [src]="blog.blogPhoto" alt="{{ blog.title }}" class="blog-image" />
@@ -13,7 +12,6 @@
       </div>
     </div>
   </div>
-
 
   <ng-template #showProjects>
     <div class="blog-container">
