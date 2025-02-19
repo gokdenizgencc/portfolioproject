@@ -27,17 +27,18 @@ export const routes: Routes = [
       path: '',
       component: NavinComponent, 
       children: [
-
+        {path: 'blogs/add', component: AddblogpageComponent , canActivate: [loginGuard]},
+        {path: 'projects/add', component: AddblogpageComponent , canActivate: [loginGuard]},
         {path: 'homepage', component: HomepageComponent, canActivate: [loginGuard]},
         {path: 'users/project/:userId', component: UserComponent, canActivate: [loginGuard]},
         {path: 'users', component: UserComponent, canActivate: [loginGuard]},
-        {path: 'blogs/add', component: UserAddComponent, canActivate: [loginGuard]},
         {path: 'blogs', component: BlogsComponent, canActivate: [loginGuard]},
+        { path: 'blogs/:id', component: BlogComponent, canActivate: [loginGuard] },
         {path: 'projects', component: BlogsComponent, canActivate: [loginGuard]},
-        {path: 'blogs/:id', component: BlogComponent, canActivate: [loginGuard]},
+
         {path: 'projects/:id', component: BlogComponent, canActivate: [loginGuard]},
         {path: 'userinfo', component: UserinfoComponent, canActivate: [loginGuard]},
-        {path: 'addblog', component: AddblogpageComponent , canActivate: [loginGuard]},
+  
       ]
     },
     {path: '**', redirectTo: 'login'}

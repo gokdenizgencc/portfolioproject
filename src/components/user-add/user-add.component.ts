@@ -28,23 +28,5 @@ export class UserAddComponent {
       publishedAt:[""],
     })
   }
-  add(){
-    if(this.blogAddForm.valid){
-      let blogModel= Object.assign({},this.blogAddForm.value)
-      const today = new Date();
-      blogModel.publishedAt = today.toISOString().split('T')[0]; 
-      this.blogservice.add(blogModel).subscribe(data=>{
-        console.log(data)
-        this.toasterservice.success(data.message,"Basarili")
-      },responseError=>{
-        console.log(responseError)
-        this.toasterservice.error(responseError.error)
-      })
 
-    }
-    else{
-      this.toasterservice.error("Formumuz eksik","Dikkat")
-    }
-
-  }
 }

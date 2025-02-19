@@ -12,9 +12,9 @@ export class BlogService {
   private blogs: Blog[] | null = null;
   constructor(private httpClient:HttpClient) { }
 
-  add(blog:Blog):Observable<ResponseModel>{
-    var result=this.httpClient.post<ResponseModel>("http://localhost:46772/api/Blogs/add",blog)
-    return result
+  addblog(blog:Blog): Observable<ResponseModel>{
+    var result=this.httpClient.post<ResponseModel>("http://localhost:46772/api/Blogs/add",blog);
+    return result;
   }
 
   getAllBlogById(){

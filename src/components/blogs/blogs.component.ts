@@ -4,7 +4,7 @@ import { Blog } from '../../models/blog';
 import { UserService } from '../../services/user.service';
 import { BlogService } from '../../services/blog.service';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ProjectService } from '../../services/project.service';
 import { ProjectWithPhotoDto } from '../../models/ProjectWithPhotoDto';
 import { response } from 'express';
@@ -14,7 +14,7 @@ import { ProjectDto } from '../../models/projectDto';
 @Component({
   selector: 'app-blogs',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './blogs.component.html',
   styleUrl: './blogs.component.css'
 })
@@ -94,13 +94,19 @@ export class BlogsComponent {
   }
   navigateAdd(){
 
-    this.router.navigate([`addblog`]);
+    this.router.navigate([`blogs/add`]);
+  }
+  navigateAddd(){
+
+    this.router.navigate([`projects/add`]);
   }
   ngOnDestroy(): void {
-    if (window.sessionStorage) {
-      sessionStorage.removeItem('blogsData');
-      sessionStorage.removeItem('projectsData');
+    const currentUrl = this.router.url;  
+    if (!currentUrl.startsWith('/blogs') && !currentUrl.startsWith('/projects')) {
+      localStorage.removeItem('blogsData');
+      localStorage.removeItem('projectsData');
     }
+
   }
   
 }

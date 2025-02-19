@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 loginForm:FormGroup;
+isButtonDisabled = false;
 constructor(private formBuilder:FormBuilder,private authService:AuthService,private toastrService:ToastrService,  private router:Router){
 
 }
@@ -34,19 +35,33 @@ gotoregister(){
 }
 login(){
   if(this.loginForm.valid){
-    let loginModel=Object.assign({},this.loginForm.value)
 
-    this.authService.login(loginModel).subscribe(result=>{
-      this.toastrService.success(result.message)
-      localStorage.setItem("token",result.data.token.toString())
+    // Butonu engellemeden önce kontrol et
+    if (this.isButtonDisabled) {
+      return; 
+    }
+
+    // Giriş modelini oluştur
+    let loginModel = Object.assign({}, this.loginForm.value);
+
+    // Butonu devre dışı bırak
+    this.isButtonDisabled = true;
+
+    // Giriş işlemi
+    this.authService.login(loginModel).subscribe(result => {
+      this.toastrService.success(result.message);
+      localStorage.setItem("token", result.data.token.toString());
       this.authService.decodejwt();
       this.router.navigate(["homepage"]);
-   
-    },responseError=>{
-      this.toastrService.error(responseError.error.message)
-    })
-  }
+    }, responseError => {
+      this.toastrService.error(responseError.error.message);
+    });
 
+    // 5 saniye sonra butonu tekrar etkinleştir
+    setTimeout(() => {
+      this.isButtonDisabled = false;
+    }, 5000);
+  }
 }
 
 }
