@@ -31,7 +31,7 @@
   <ng-template #showProjects>
     <h2 class="page-title">Yeni Proje Ekle</h2>
 
-  <form (ngSubmit)="submitBlog()" class="blog-form">
+  <form  class="blog-form">
     
     <div class="form-group">
       <label for="title">Başlık</label>
@@ -40,7 +40,8 @@
 
     <div class="form-group">
       <label for="blogPhoto">Fotoğraf Yükle</label>
-      <input type="file" id="blogPhoto" name="blogPhoto" (change)="onFileSelected($event)" />
+      <input type="file" (change)="onFileSelected($event)" />
+      <button >Yükle</button>
       <img *ngIf="previewUrl" [src]="previewUrl" alt="Önizleme" class="image-preview" />
     </div>
 

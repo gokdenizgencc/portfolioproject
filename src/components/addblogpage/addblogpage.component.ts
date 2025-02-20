@@ -7,6 +7,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BlogService } from '../../services/blog.service';
 import { Project } from '../../models/project';
+import { ProjectService } from '../../services/project.service';
+import { PhotoService } from '../../services/photo.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-addblogpage',
@@ -16,6 +19,7 @@ import { Project } from '../../models/project';
   styleUrl: './addblogpage.component.css'
 })
 export class AddblogpageComponent {
+  selectedFile:File |null=null;
   blog: Blog = {
     title: '',
     conte: '',
@@ -35,7 +39,7 @@ export class AddblogpageComponent {
   isBlogPage: boolean = false; 
   previewUrl: string | ArrayBuffer | null = null;
 
-  constructor(private router: Router, private http: HttpClient,private blogService:BlogService,private activatedRoute: ActivatedRoute) {}
+  constructor(private router: Router, private http: HttpClient,private blogService:BlogService,private activatedRoute: ActivatedRoute,private projectService:ProjectService,private photoService:PhotoService) {}
 
   ngOnInit():void{
     this.activatedRoute.url.subscribe(urlSegment => {
@@ -48,37 +52,33 @@ export class AddblogpageComponent {
       }
     });
   }
-  onFileSelected(event: Event) {
-    const fileInput = event.target as HTMLInputElement;
-    if (fileInput.files && fileInput.files[0]) {
-      const file = fileInput.files[0];
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.previewUrl = reader.result;
-      };
-      reader.readAsDataURL(file);
-      
-      // Fotoğrafı backend'e gönder
-      this.uploadPhoto(file).subscribe((response: any) => {
-        // Backend'den dönen URL'yi blog modeline ekle
-        this.blog.blogPhoto = response.photoUrl; // URL'yi alıp blog objesine ekledik
-        console.log('Fotoğraf yüklendi, URL:', response.photoUrl);
-      });
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+    if (!this.selectedFile) {
+      console.error("Dosya seçilmedi!");
+      return;
     }
-  }
+    this.photoService.uploadImage(this.selectedFile).subscribe(response=>{
+      var result =response;
 
-  // Fotoğrafı API'ye gönderme
-  uploadPhoto(file: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('file', file); // FormData ile fotoğrafı ekliyoruz
-
-    return this.http.post<any>('https://your-backend-api-url.com/upload', formData);
+    },)
   }
+  
+  
+  
+  
+  
 
   submitBlog() {
 
     this.blogService.addblog(this.blog).subscribe(response=>{
+      var result=response;
+  
+    })
+  }
+  submitProject() {
+
+    this.projectService.addblog(this.project).subscribe(response=>{
       var result=response;
   
     })

@@ -5,9 +5,7 @@ import { Observable } from 'rxjs';
 import { ListResponseModel } from '../models/listResponseModel';
 import { ProjectWithPhotoDto } from '../models/ProjectWithPhotoDto';
 import { ProjectDto } from '../models/projectDto';
-
-
-
+import { ResponseModel } from '../models/responsModel';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +20,11 @@ export class ProjectService {
     return this.httpClient.
       get<ListResponseModel<Project>>(this.apiUrl+"getAll");
   }
+   addblog(project:Project): Observable<ResponseModel>{
+      var result=this.httpClient.post<ResponseModel>("http://localhost:46772/api/Projects/add",project);
+      return result;
+    }
+  
   getProjectWithDetail():Observable<ListResponseModel<ProjectWithPhotoDto>>{
     return this.httpClient.
     get<ListResponseModel<ProjectWithPhotoDto>>(this.apiUrl+"getAllProjectDetailById");
