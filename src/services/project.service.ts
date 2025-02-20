@@ -20,8 +20,8 @@ export class ProjectService {
     return this.httpClient.
       get<ListResponseModel<Project>>(this.apiUrl+"getAll");
   }
-   addblog(project:Project): Observable<ResponseModel>{
-      var result=this.httpClient.post<ResponseModel>("http://localhost:46772/api/Projects/add",project);
+   addblog(projectWithPhoto:ProjectWithPhotoDto): Observable<ResponseModel>{
+      var result=this.httpClient.post<ResponseModel>("http://localhost:46772/api/Projects/AddProjectWithPhoto",projectWithPhoto);
       return result;
     }
   

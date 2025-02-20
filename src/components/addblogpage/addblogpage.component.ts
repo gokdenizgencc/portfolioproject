@@ -10,6 +10,7 @@ import { Project } from '../../models/project';
 import { ProjectService } from '../../services/project.service';
 import { PhotoService } from '../../services/photo.service';
 import { response } from 'express';
+import { ProjectWithPhotoDto } from '../../models/ProjectWithPhotoDto';
 
 @Component({
   selector: 'app-addblogpage',
@@ -60,7 +61,7 @@ export class AddblogpageComponent {
     }
     this.photoService.uploadImage(this.selectedFile).subscribe(response=>{
       var result =response;
-
+      localStorage.setItem("PhotoUrl", result.data.url);
     },)
   }
   
@@ -77,8 +78,17 @@ export class AddblogpageComponent {
     })
   }
   submitProject() {
-
-    this.projectService.addblog(this.project).subscribe(response=>{
+      // Burada project'inize diğer veri eklemelerini yapıyoruz.
+      const projectWithPhoto: ProjectWithPhotoDto = {
+        projectId: this.project.projectId,  // Eğer projenizin ID'si varsa
+        userId: this.project.userId,  // Kullanıcı ID'si
+        title: this.project.title,
+        description: this.project.description,
+        projectUrl: this.project.projectUrl,
+        createdAt: new Date(),  // Yeni tarih, her zaman güncel
+        projectPhotoUrl:localStorage.getItem("PhotoUrl")!
+      };
+    this.projectService.addblog(projectWithPhoto).subscribe(response=>{
       var result=response;
   
     })
