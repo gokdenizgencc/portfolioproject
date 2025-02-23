@@ -11,6 +11,8 @@ import { ProjectService } from '../../services/project.service';
 import { PhotoService } from '../../services/photo.service';
 import { response } from 'express';
 import { ProjectWithPhotoDto } from '../../models/ProjectWithPhotoDto';
+import { ToastrService } from 'ngx-toastr';
+import { UserAllInfo } from '../../models/userAllInfo';
 
 @Component({
   selector: 'app-addblogpage',
@@ -20,6 +22,7 @@ import { ProjectWithPhotoDto } from '../../models/ProjectWithPhotoDto';
   styleUrl: './addblogpage.component.css'
 })
 export class AddblogpageComponent {
+    userinfo:UserAllInfo;
   selectedFile:File |null=null;
   blog: Blog = {
     title: '',
@@ -40,7 +43,7 @@ export class AddblogpageComponent {
   isBlogPage: boolean = false; 
   previewUrl: string | ArrayBuffer | null = null;
 
-  constructor(private router: Router, private http: HttpClient,private blogService:BlogService,private activatedRoute: ActivatedRoute,private projectService:ProjectService,private photoService:PhotoService) {}
+  constructor(private router: Router, private blogService:BlogService,private activatedRoute: ActivatedRoute,private projectService:ProjectService,private photoService:PhotoService,private toastrService:ToastrService) {}
 
   ngOnInit():void{
     this.activatedRoute.url.subscribe(urlSegment => {
@@ -53,16 +56,31 @@ export class AddblogpageComponent {
       }
     });
   }
+  
+  
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+  
     if (!this.selectedFile) {
       console.error("Dosya seçilmedi!");
       return;
     }
-    this.photoService.uploadImage(this.selectedFile).subscribe(response=>{
-      var result =response;
-      localStorage.setItem("PhotoUrl", result.data.url);
-    },)
+  
+    // Önizleme için FileReader kullan
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.previewUrl = reader.result as string; // Base64 olarak önizleme için ata
+    };
+    reader.readAsDataURL(this.selectedFile);
+  
+  
+    this.photoService.uploadImage(this.selectedFile).subscribe(response => {
+      if (response && response.data && response.data.url) {
+        localStorage.setItem("PhotoUrl", response.data.url);
+      }
+    }, error => {
+      console.error("Fotoğraf yüklenirken hata oluştu:", error);
+    });
   }
   
   
@@ -71,30 +89,65 @@ export class AddblogpageComponent {
   
 
   submitBlog() {
-
+    this.blog.blogPhoto=localStorage.getItem("PhotoUrl")!;
     this.blogService.addblog(this.blog).subscribe(response=>{
-      var result=response;
-  
+      this.toastrService.info(response.message);
+      this.blogService.getAllBlogById().subscribe(response=>{
+        const storedUserInfo = localStorage.getItem('userinfo');
+        if (storedUserInfo) {
+          let userInfo: UserAllInfo = JSON.parse(storedUserInfo);   
+          userInfo.blogs = response.data;
+          localStorage.setItem('userinfo', JSON.stringify(userInfo));
+        }
+        localStorage.setItem('blogsData', JSON.stringify(response.data)); 
+        this.router.navigate(['blogs']);
+    
+      })
+   
+
+    },
+    responseError => {
+      this.toastrService.error(responseError.error, 'Hata', {
+
+      });
     })
   }
   submitProject() {
-      // Burada project'inize diğer veri eklemelerini yapıyoruz.
+
       const projectWithPhoto: ProjectWithPhotoDto = {
-        projectId: this.project.projectId,  // Eğer projenizin ID'si varsa
-        userId: this.project.userId,  // Kullanıcı ID'si
+        projectId: this.project.projectId, 
+        userId: this.project.userId,  
         title: this.project.title,
         description: this.project.description,
         projectUrl: this.project.projectUrl,
-        createdAt: new Date(),  // Yeni tarih, her zaman güncel
+        createdAt: new Date(),  
         projectPhotoUrl:localStorage.getItem("PhotoUrl")!
       };
     this.projectService.addblog(projectWithPhoto).subscribe(response=>{
-      var result=response;
-  
+      this.toastrService.info(response.message);
+      this.projectService.getProjectByUserId().subscribe(response=>{
+        const storedUserInfo = localStorage.getItem('userinfo');
+        if (storedUserInfo) {
+          let userInfo: UserAllInfo = JSON.parse(storedUserInfo);   
+          userInfo.projects = response.data;
+          localStorage.setItem('userinfo', JSON.stringify(userInfo));
+        }
+        localStorage.setItem('projectsData', JSON.stringify(response.data)); 
+        this.router.navigate(['projects']);
+       });
+    },
+    responseError => {
+      this.toastrService.error(responseError.error, 'Hata', {
+
+      });
     })
+
   }
 
   cancel() {
-    this.router.navigate(['/']);
+    this.router.navigate(['projects']);
+  }
+  ngOnDestroy(): void {
+    localStorage.removeItem('PhotoUrl'); 
   }
 }

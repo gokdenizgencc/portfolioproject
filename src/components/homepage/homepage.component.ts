@@ -34,22 +34,26 @@ export class HomepageComponent {
  
   
 
-  getinfo(){
-    
-    this.userService.getAllUserİnformartion().subscribe(response=>{
-      this.userinfo=response.data;
-      this.dataLoaded=true;
-      console.log(this.userinfo.github);
-      console.log(this.userinfo.linkedIn);
-      console.log(this.userinfo.website);
-    },  responseError => {
-      this.toastrService.error(responseError.error.Message, 'Hata', {
+  getinfo() {
+    const storedUserInfo = localStorage.getItem('userinfo');
 
-      });
+    if (storedUserInfo) {
+      this.userinfo = JSON.parse(storedUserInfo);
+      this.dataLoaded = true;
+    } else {
+      this.userService.getAllUserİnformartion().subscribe(
+        (response) => {
+          this.userinfo = response.data;
+          this.dataLoaded = true;
+          localStorage.setItem('userinfo', JSON.stringify(this.userinfo)); // Veriyi localStorage'a kaydet
+        },
+        (responseError) => {
+          this.toastrService.error(responseError.error.Message, 'Hata', {});
+        }
+      );
     }
-  );
-
   }
+
   truncate(content: string, wordLimit: number = 10): string {
     const words = content.split(' ');
     if (words.length > wordLimit) {

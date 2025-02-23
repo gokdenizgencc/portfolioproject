@@ -24,7 +24,10 @@ export class ProjectService {
       var result=this.httpClient.post<ResponseModel>("http://localhost:46772/api/Projects/AddProjectWithPhoto",projectWithPhoto);
       return result;
     }
-  
+    getProjectByUserId():Observable<ListResponseModel<ProjectDto>>{
+      var result=this.httpClient.get<ListResponseModel<ProjectDto>>(this.apiUrl+"getAllProjectDetailById");
+      return result;
+    }
   getProjectWithDetail():Observable<ListResponseModel<ProjectWithPhotoDto>>{
     return this.httpClient.
     get<ListResponseModel<ProjectWithPhotoDto>>(this.apiUrl+"getAllProjectDetailById");
