@@ -19,12 +19,25 @@ body {
   z-index: 9999;
 }
 
-.spinner-border {
-  width: 80px;
-  height: 80px;
-  border-width: 6px;
-  color: #fff;
+.loading-container {
+  position: fixed;  /* Sayfanın tamamına göre konumlandır */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);  /* Ortalamak için */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
 }
+
+.spinner-border {
+  width: 50px;
+  height: 50px;
+  border-width: 5px;
+  color: #000;
+}
+
 
 .profile-container {
   display: flex;

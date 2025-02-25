@@ -1,23 +1,33 @@
 <div class="container">
-
   <div *ngIf="isBlogPage; else showProjects">
-    <button class="add-blog-btn" (click)="navigateAdd()" >Blog Ekle</button>
+    <div class="header">
+      <button class="back-btn" (click)="gomain()">←</button>
+      <button class="add-blog-btn" (click)="navigateAdd()">Blog Ekle</button>
+    </div>
     <div class="blog-container">
       <div *ngFor="let blog of blogs" class="blog-card">
         <img [src]="blog.blogPhoto" alt="{{ blog.title }}" class="blog-image" />
         <h3 class="blog-title">{{ blog.title | slice: 0:32 }}</h3>
         <p class="blog-text">{{ blog.conte | slice: 0:70 }}...</p>
-        <button (click)="goToBlogDetail(blog)" class="read-more-btn">
-          Devamını Oku
-        </button>
+
+        <div class="button-container">
+          <button (click)="goToBlogDetail(blog)" class="read-more-btn">
+            Devamını Oku
+          </button>
+          <button class="edit-btn">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
   <ng-template #showProjects>
-    <button class="add-blog-btn" (click)="navigateAddd()" >Proje Ekle</button>
+    <div class="header">
+      <button class="back-btn" (click)="gomain()">←</button>
+      <button class="add-blog-btn" (click)="navigateAddd()">Proje Ekle</button>
+    </div>
     <div class="blog-container">
-      
       <div *ngFor="let project of projectss" class="blog-card">
         <img [src]="project.photosUrls[0].projectPhotoUrl" alt="{{ project.title }}" class="blog-image" />
         <h3 class="blog-title">{{ project.title | slice: 0:25 }}</h3>
@@ -25,9 +35,10 @@
         <button (click)="goToProject(project)" class="read-more-btn">
           Devamını Oku
         </button>
+        <button class="edit-btn">
+          <i class="fa-solid fa-pen"></i>
+        </button>
       </div>
     </div>
   </ng-template>
-
-
 </div>

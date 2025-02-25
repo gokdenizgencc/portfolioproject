@@ -1,4 +1,6 @@
+
 <div class="add-blog-container">
+
   <div *ngIf="isBlogPage; else showProjects">
     <h2 class="page-title">Yeni Blog Ekle</h2>
 
@@ -27,13 +29,14 @@
       </div>
 
       <div class="form-actions">
-        <button type="submit" class="submit-btn">Yayınla</button>
-        <button type="button" class="cancel-btn" (click)="cancel()">İptal Et</button>
+        <button type="submit" [disabled]="isUploading" class="submit-btn">Yayınla</button>
+        <button type="button" class="cancel-btn" (click)=" cancelb()">İptal Et</button>
       </div>
     </form>
   </div>
 
   <ng-template #showProjects>
+
     <h2 class="page-title">Yeni Proje Ekle</h2>
 
     <form (ngSubmit)="submitProject()" class="blog-form">
@@ -60,7 +63,7 @@
       </div>
 
       <div class="form-actions">
-        <button type="submit" class="submit-btn">Yayınla</button>
+        <button type="submit" [disabled]="isUploading" class="submit-btn">Yayınla</button>
         <button type="button" class="cancel-btn" (click)="cancel()">İptal Et</button>
       </div>
     </form>

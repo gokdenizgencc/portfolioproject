@@ -9,12 +9,13 @@ import { ProjectService } from '../../services/project.service';
 import { ProjectWithPhotoDto } from '../../models/ProjectWithPhotoDto';
 import { response } from 'express';
 import { ProjectDto } from '../../models/projectDto';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-blogs',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule,RouterModule, FormsModule, ReactiveFormsModule],
   templateUrl: './blogs.component.html',
   styleUrl: './blogs.component.css'
 })
@@ -95,6 +96,10 @@ export class BlogsComponent {
   navigateAdd(){
 
     this.router.navigate([`blogs/add`]);
+  }
+  gomain(){
+
+    this.router.navigate([`homepage`]);
   }
   navigateAddd(){
 

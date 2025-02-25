@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BlogService } from '../../services/blog.service';
 import { Blog } from '../../models/blog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -20,7 +20,7 @@ export class BlogComponent {
   project: ProjectDto| null = null;
   safeUrl: SafeUrl;
   isBlogPage: boolean = false; 
-  constructor(private route: ActivatedRoute, private blogService: BlogService,private sanitizer: DomSanitizer,private activatedRoute: ActivatedRoute,private projectService:ProjectService) {}
+  constructor(private route: ActivatedRoute,private router:Router, private blogService: BlogService,private sanitizer: DomSanitizer,private activatedRoute: ActivatedRoute,private projectService:ProjectService) {}
 
   ngOnInit(): void {
     this.activatedRoute.url.subscribe(urlSegment => {
@@ -73,4 +73,8 @@ export class BlogComponent {
     localStorage.removeItem('blogData'); 
     localStorage.removeItem('projectData'); 
   }
+  goProject(){
+    this.router.navigate(['homepage']);
+  }
+
 }

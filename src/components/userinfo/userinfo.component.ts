@@ -35,7 +35,10 @@ export class UserinfoComponent {
  setUserInfoData(userAllInfo: UserAllInfo): void {
     localStorage.setItem('userAllInfo', JSON.stringify(userAllInfo));  
   }
+  gomain(){
 
+    this.router.navigate([`homepage`]);
+  }
   getUserInfoDataFromStorage(): UserAllInfo | null {
     const userAllInfoData = localStorage.getItem('userAllInfo');
     return userAllInfoData ? JSON.parse(userAllInfoData) : null;

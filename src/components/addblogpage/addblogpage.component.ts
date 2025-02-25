@@ -22,6 +22,7 @@ import { UserAllInfo } from '../../models/userAllInfo';
   styleUrl: './addblogpage.component.css'
 })
 export class AddblogpageComponent {
+  isUploading = false; 
     userinfo:UserAllInfo;
   selectedFile:File |null=null;
   blog: Blog = {
@@ -66,18 +67,19 @@ export class AddblogpageComponent {
       return;
     }
   
-    // Önizleme için FileReader kullan
+  
     const reader = new FileReader();
     reader.onload = () => {
       this.previewUrl = reader.result as string; // Base64 olarak önizleme için ata
     };
     reader.readAsDataURL(this.selectedFile);
-  
+    this.isUploading = true;
   
     this.photoService.uploadImage(this.selectedFile).subscribe(response => {
       if (response && response.data && response.data.url) {
         localStorage.setItem("PhotoUrl", response.data.url);
       }
+       this.isUploading = false;
     }, error => {
       console.error("Fotoğraf yüklenirken hata oluştu:", error);
     });
@@ -143,9 +145,19 @@ export class AddblogpageComponent {
     })
 
   }
+  gomain(){
 
+    this.router.navigate([`projects`]);
+  }
+  goblog(){
+
+    this.router.navigate([`blogs`]);
+  }
   cancel() {
     this.router.navigate(['projects']);
+  }
+  cancelb() {
+    this.router.navigate(['blogs']);
   }
   ngOnDestroy(): void {
     localStorage.removeItem('PhotoUrl'); 
