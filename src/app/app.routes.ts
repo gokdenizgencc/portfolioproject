@@ -12,6 +12,7 @@ import { RegisterComponent } from '../components/register/register.component';
 import { NaviComponent } from '../components/navi/navi.component';
 import { UserinfoComponent } from '../components/userinfo/userinfo.component';
 import { AddblogpageComponent } from '../components/addblogpage/addblogpage.component';
+import { UpdateblogComponent } from '../components/updateblog/updateblog.component';
 
 export const routes: Routes = [
     {path: "login", component: LoginComponent},
@@ -38,7 +39,8 @@ export const routes: Routes = [
 
         {path: 'projects/:id', component: BlogComponent, canActivate: [loginGuard]},
         {path: 'userinfo', component: UserinfoComponent, canActivate: [loginGuard]},
-  
+        {path: 'editblog/:id', component: UpdateblogComponent, canActivate: [loginGuard]},
+        {path: 'editproject/:id', component: UpdateblogComponent, canActivate: [loginGuard]},
       ]
     },
     {path: '**', redirectTo: 'login'}

@@ -74,7 +74,9 @@ export class BlogComponent {
     localStorage.removeItem('projectData'); 
   }
   goProject(){
-    this.router.navigate(['homepage']);
+    this.router.navigate(['projects']);
   }
-
+  goblog(){
+    this.router.navigate(['blogs']);
+  }
 }

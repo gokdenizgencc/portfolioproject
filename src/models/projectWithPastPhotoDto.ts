@@ -1,4 +1,4 @@
-export interface ProjectWithPhotoDto {
+export interface ProjectWithPastPhotoDto {
     projectId: number;
     userId: number;
     title: string;
@@ -6,5 +6,5 @@ export interface ProjectWithPhotoDto {
     projectUrl: string;
     createdAt: Date;
     projectPhotoUrl: string;
-
+    pastProjectTitle:string;
   }

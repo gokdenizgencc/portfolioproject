@@ -123,7 +123,8 @@ export class AddblogpageComponent {
         description: this.project.description,
         projectUrl: this.project.projectUrl,
         createdAt: new Date(),  
-        projectPhotoUrl:localStorage.getItem("PhotoUrl")!
+        projectPhotoUrl:localStorage.getItem("PhotoUrl")!,
+        
       };
     this.projectService.addblog(projectWithPhoto).subscribe(response=>{
       this.toastrService.info(response.message);

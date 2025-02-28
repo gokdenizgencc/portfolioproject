@@ -4,6 +4,7 @@ import { Blog } from '../models/blog';
 import { Observable } from 'rxjs';
 import { ResponseModel } from '../models/responsModel';
 import { ListResponseModel } from '../models/listResponseModel';
+import { SingleResponseModel } from '../models/singleResponseModel';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +12,7 @@ export class BlogService {
   private blog: Blog | null = null;
   private blogs: Blog[] | null = null;
   constructor(private httpClient:HttpClient) { }
-
+  apiUrl="http://localhost:46772/api/";
   addblog(blog:Blog): Observable<ResponseModel>{
     var result=this.httpClient.post<ResponseModel>("http://localhost:46772/api/Blogs/add",blog);
     return result;
@@ -20,7 +21,11 @@ export class BlogService {
   getAllBlogById(){
     let path="http://localhost:46772/api/Blogs/getAllByUserId";
 
-    return this.httpClient.get<ListResponseModel<Blog>>(path)
+    return this.httpClient.get<ListResponseModel<Blog>>(path);
+  }
+  updateBlogById(blog:Blog):Observable<SingleResponseModel<Blog>>{
+    let path=this.apiUrl+"Blogs/update";
+    return this.httpClient.post<SingleResponseModel<Blog>>(path,blog);
   }
 
 

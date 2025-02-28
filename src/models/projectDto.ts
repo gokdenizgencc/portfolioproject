@@ -6,5 +6,6 @@ export interface ProjectDto {
     title: string;
     description: string;
     createdAt: Date;
+    projectUrl: string;
     photosUrls: ProjectPhotoDto[];
   }

@@ -6,6 +6,7 @@ import { ListResponseModel } from '../models/listResponseModel';
 import { ProjectWithPhotoDto } from '../models/ProjectWithPhotoDto';
 import { ProjectDto } from '../models/projectDto';
 import { ResponseModel } from '../models/responsModel';
+import { ProjectWithPastPhotoDto } from '../models/projectWithPastPhotoDto';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,10 @@ export class ProjectService {
   }
    addblog(projectWithPhoto:ProjectWithPhotoDto): Observable<ResponseModel>{
       var result=this.httpClient.post<ResponseModel>("http://localhost:46772/api/Projects/AddProjectWithPhoto",projectWithPhoto);
+      return result;
+    }
+    updateproject(projectWithPhoto:ProjectWithPastPhotoDto): Observable<ResponseModel>{
+      var result=this.httpClient.post<ResponseModel>(this.apiUrl+"UpdateProjectWithPhoto",projectWithPhoto);
       return result;
     }
     getProjectByUserId():Observable<ListResponseModel<ProjectDto>>{

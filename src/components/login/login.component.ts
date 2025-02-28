@@ -36,18 +36,18 @@ gotoregister(){
 login(){
   if(this.loginForm.valid){
 
-    // Butonu engellemeden önce kontrol et
+  
     if (this.isButtonDisabled) {
       return; 
     }
 
-    // Giriş modelini oluştur
+   
     let loginModel = Object.assign({}, this.loginForm.value);
 
-    // Butonu devre dışı bırak
+ 
     this.isButtonDisabled = true;
 
-    // Giriş işlemi
+   
     this.authService.login(loginModel).subscribe(result => {
       this.toastrService.success(result.message);
       localStorage.setItem("token", result.data.token.toString());
@@ -57,7 +57,7 @@ login(){
       this.toastrService.error(responseError.error.message);
     });
 
-    // 5 saniye sonra butonu tekrar etkinleştir
+  
     setTimeout(() => {
       this.isButtonDisabled = false;
     }, 5000);

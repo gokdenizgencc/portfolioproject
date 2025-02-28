@@ -2,7 +2,7 @@
 <div class="add-blog-container">
 
   <div *ngIf="isBlogPage; else showProjects">
-    <h2 class="page-title">Yeni Blog Ekle</h2>
+    <h2 class="page-title">Blog Ekle</h2>
 
     <form (ngSubmit)="submitBlog()" class="blog-form">
       <div class="form-group">
@@ -37,7 +37,7 @@
 
   <ng-template #showProjects>
 
-    <h2 class="page-title">Yeni Proje Ekle</h2>
+    <h2 class="page-title">Proje Ekle</h2>
 
     <form (ngSubmit)="submitProject()" class="blog-form">
       <div class="form-group">

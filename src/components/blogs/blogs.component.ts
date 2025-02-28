@@ -106,12 +106,24 @@ export class BlogsComponent {
     this.router.navigate([`projects/add`]);
   }
   ngOnDestroy(): void {
-    const currentUrl = this.router.url;  
-    if (!currentUrl.startsWith('/blogs') && !currentUrl.startsWith('/projects')) {
+    const currentUrl = this.router.url; 
+    const segments = currentUrl.split('/'); 
+    const pageName = segments[1]; 
+    if (pageName=="blogs" || pageName=="projects" || pageName=="editblog" || pageName=="editproject"){
+
+      
+    }
+    else{
       localStorage.removeItem('blogsData');
       localStorage.removeItem('projectsData');
     }
-
   }
-  
+  goedit(blog:Blog){
+    this.blogService.setBlogData(blog);
+    this.router.navigate([`editblog/${blog.blogId}`]);
+  }
+  goeditp(project:ProjectDto){
+    this.projectService.setProjectData(project);
+    this.router.navigate([`editproject/${project.projectId}`]);
+  }
 }
