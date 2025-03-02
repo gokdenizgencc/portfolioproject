@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { ProjectDto } from '../../models/projectDto';
 import { Project } from '../../models/project';
 import { ProjectService } from '../../services/project.service';
+import { BlogDto } from '../../models/blogDto';
 
 @Component({
   selector: 'app-blog',

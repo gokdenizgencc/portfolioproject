@@ -22,20 +22,24 @@ export class ProjectService {
       get<ListResponseModel<Project>>(this.apiUrl+"getAll");
   }
    addblog(projectWithPhoto:ProjectWithPhotoDto): Observable<ResponseModel>{
-      var result=this.httpClient.post<ResponseModel>("http://localhost:46772/api/Projects/AddProjectWithPhoto",projectWithPhoto);
+      var result=this.httpClient.post<ResponseModel>("http://localhost:46772/api/Projects/addprojectwithphoto",projectWithPhoto); 
       return result;
     }
     updateproject(projectWithPhoto:ProjectWithPastPhotoDto): Observable<ResponseModel>{
-      var result=this.httpClient.post<ResponseModel>(this.apiUrl+"UpdateProjectWithPhoto",projectWithPhoto);
+      var result=this.httpClient.post<ResponseModel>(this.apiUrl+"updateprojectwithphoto",projectWithPhoto);
+      return result;
+    }
+    deleteproject(projectWithPhoto:ProjectWithPastPhotoDto): Observable<ResponseModel>{
+      var result=this.httpClient.post<ResponseModel>(this.apiUrl+"deleteprojectwithphoto",projectWithPhoto);
       return result;
     }
     getProjectByUserId():Observable<ListResponseModel<ProjectDto>>{
-      var result=this.httpClient.get<ListResponseModel<ProjectDto>>(this.apiUrl+"getAllProjectDetailById");
+      var result=this.httpClient.get<ListResponseModel<ProjectDto>>(this.apiUrl+"getallprojectdetailbyid");
       return result;
     }
   getProjectWithDetail():Observable<ListResponseModel<ProjectWithPhotoDto>>{
     return this.httpClient.
-    get<ListResponseModel<ProjectWithPhotoDto>>(this.apiUrl+"getAllProjectDetailById");
+    get<ListResponseModel<ProjectWithPhotoDto>>(this.apiUrl+"getallprojectdetailbyid");
   }
     setProjectData(project: ProjectDto): void {
       this.project = project;

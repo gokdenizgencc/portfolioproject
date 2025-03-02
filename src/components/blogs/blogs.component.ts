@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Blog } from '../../models/blog';
 import { UserService } from '../../services/user.service';
 import { BlogService } from '../../services/blog.service';
@@ -10,12 +10,18 @@ import { ProjectWithPhotoDto } from '../../models/ProjectWithPhotoDto';
 import { response } from 'express';
 import { ProjectDto } from '../../models/projectDto';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Project } from '../../models/project';
+import { DeleteConfirmDialog } from '../delete-confirm-dialog/delete-confirm-dialog.component';
+import { UserAllInfo } from '../../models/userAllInfo';
+import { ProjectWithPastPhotoDto } from '../../models/projectWithPastPhotoDto';
+import { BlogDto } from '../../models/blogDto';
+import { DeleteConfirmDialogBlog } from '../delete-confirm-dialog-blog/delete-confirm-dialog-blog.component';
 
 @Component({
   selector: 'app-blogs',
   standalone: true,
-  imports: [CommonModule,RouterModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule,RouterModule, FormsModule, ReactiveFormsModule,MatDialogModule],
   templateUrl: './blogs.component.html',
   styleUrl: './blogs.component.css'
 })
@@ -24,8 +30,10 @@ export class BlogsComponent {
   projectss:ProjectDto[] | null = null;
   dataLoaded:Boolean
   projects:ProjectWithPhotoDto[];
+  pasttitle:string| null = null;
   isBlogPage: boolean = false; 
-    constructor(private blogService:BlogService,private projectService:ProjectService,private toastrService:ToastrService,private router:Router,private activatedRoute: ActivatedRoute){
+    constructor(private blogService:BlogService,private projectService:ProjectService,
+      private toastrService:ToastrService,private router:Router,private activatedRoute: ActivatedRoute,public dialog: MatDialog,private changeDetectorRef: ChangeDetectorRef){
   
     }
   ngOnInit():void{
@@ -47,6 +55,7 @@ export class BlogsComponent {
         const savedBlog = this.getProjectsDataFromStorage();
         if (savedBlog) {
           this.projectss = savedBlog; 
+          
         } else {
      
           this.projectss = this.projectService.getProjectsData();
@@ -65,6 +74,88 @@ export class BlogsComponent {
     const blogData = localStorage.getItem('blogsData');
     return blogData ? JSON.parse(blogData) : null;
   }
+  openDeleteDialog(project: Project): void {
+    const dialogRef = this.dialog.open(DeleteConfirmDialog);
+    const projectWithPhoto: ProjectWithPastPhotoDto = {
+      projectId: project!.projectId, 
+      userId: project!.userId,  
+      title: project!.title,
+      description: project!.description,
+      projectUrl: project!.projectUrl!,
+      createdAt: new Date(),  
+      projectPhotoUrl:localStorage.getItem("PhotoUrl")!,
+      pastProjectTitle: project!.title,
+    };
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteProject(projectWithPhoto);
+      }
+    });
+  }
+  openDeleteDialogForBlog(blog: Blog) { 
+    const dialogRef = this.dialog.open(DeleteConfirmDialogBlog );
+    const blogDto: BlogDto = {
+        blogId:blog!.blogId,
+        blogPhoto:blog!.blogPhoto,
+        conte: blog!.conte,
+        publishedAt: blog!.publishedAt,
+        title: blog!.title,
+      };
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+
+        this.deleteBlog(blogDto);
+      }
+    });
+  }
+
+  deleteProject(project: ProjectWithPastPhotoDto) {
+    this.projectService.deleteproject(project).subscribe(response => {
+      this.toastrService.info(response.message);
+  
+   
+      this.projectService.getProjectByUserId().subscribe(response => {
+        const storedUserInfo = localStorage.getItem('userinfo');
+        if (storedUserInfo) {
+          let userInfo: UserAllInfo = JSON.parse(storedUserInfo);
+          userInfo.projects = response.data;
+          localStorage.setItem('userinfo', JSON.stringify(userInfo));
+        }
+        localStorage.setItem('projectsData', JSON.stringify(response.data));
+
+        this.projectss = response.data;
+        this.changeDetectorRef.detectChanges();
+      });
+    },
+    responseError => {
+      this.toastrService.error(responseError.error, 'Hata');
+    }); 
+  }
+  deleteBlog(blogDto: BlogDto) {
+    
+    this.blogService.deleteBlog(blogDto).subscribe(response => {
+      this.toastrService.info(response.message);
+  
+   
+      this.blogService.getAllBlogById().subscribe(response => {
+        const storedUserInfo = localStorage.getItem('userinfo');
+        if (storedUserInfo) {
+          let userInfo: UserAllInfo = JSON.parse(storedUserInfo);
+          userInfo.blogs = response.data;
+          localStorage.setItem('userinfo', JSON.stringify(userInfo));
+        }
+        localStorage.setItem('projectsData', JSON.stringify(response.data));
+  
+      
+        this.blogs = response.data;
+        this.changeDetectorRef.detectChanges();
+      });
+    },
+    responseError => {
+      this.toastrService.error(responseError.error, 'Hata');
+    });
+  }
+  
   setProjectsData(projects: ProjectDto[]): void {
     localStorage.setItem('projectsData', JSON.stringify(projects));  
   }

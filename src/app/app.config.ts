@@ -7,6 +7,7 @@ import { HttpClientModule, provideHttpClient, withFetch, withInterceptors } from
 import { provideToastr } from 'ngx-toastr';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from '../interceptors/auth.interceptor';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
@@ -21,7 +22,7 @@ export const appConfig: ApplicationConfig = {
       progressBar: true
     }),
     provideAnimations(),
-    provideHttpClient(withInterceptors([AuthInterceptor]))
+    provideHttpClient(withInterceptors([AuthInterceptor])), provideAnimationsAsync()
     
 ]
 };

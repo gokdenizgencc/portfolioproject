@@ -5,6 +5,6 @@ export interface ProjectWithPastPhotoDto {
     description: string;
     projectUrl: string;
     createdAt: Date;
-    projectPhotoUrl: string;
-    pastProjectTitle:string;
+    projectPhotoUrl?: string;
+    pastProjectTitle?:string;
   }

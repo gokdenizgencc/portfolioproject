@@ -17,6 +17,9 @@
           <button class="edit-btn" (click)="goedit(blog)">
             <i class="fa-solid fa-pen"></i>
           </button>
+          <button class="delete-btn"(click)="openDeleteDialogForBlog(blog)">
+            <i class="fa-solid fa-trash"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -37,6 +40,9 @@
         </button>
         <button class="edit-btn" (click)="goeditp(project)">
           <i class="fa-solid fa-pen"></i>
+        </button>
+        <button class="delete-btn" (click)="openDeleteDialog(project)">
+          <i class="fa-solid fa-trash"></i>
         </button>
       </div>
     </div>

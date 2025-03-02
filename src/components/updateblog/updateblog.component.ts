@@ -12,6 +12,7 @@ import { Project } from '../../models/project';
 import { ProjectDto } from '../../models/projectDto';
 import { ProjectWithPhotoDto } from '../../models/ProjectWithPhotoDto';
 import { ProjectWithPastPhotoDto } from '../../models/projectWithPastPhotoDto';
+import { BlogDto } from '../../models/blogDto';
 
 @Component({
   selector: 'app-updateblog',
@@ -117,7 +118,14 @@ export class UpdateblogComponent {
       }
     submitBlog() {
       this.blog!.blogPhoto=localStorage.getItem("PhotoUrl")!;
-      this.blogService.updateBlogById(this.blog!).subscribe(response=>{
+      const blogDto: BlogDto = {
+        blogId:this.blog!.blogId,
+        blogPhoto:this.blog!.blogPhoto,
+        conte:this.blog!.conte,
+        publishedAt:this.blog!.publishedAt,
+        title:this.blog!.title,
+      };
+      this.blogService.updateBlogById(blogDto).subscribe(response=>{
         this.toastrService.info(response.message);
         this.blogService.getAllBlogById().subscribe(response=>{
           const storedUserInfo = localStorage.getItem('userinfo');

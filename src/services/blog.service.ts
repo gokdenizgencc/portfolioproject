@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ResponseModel } from '../models/responsModel';
 import { ListResponseModel } from '../models/listResponseModel';
 import { SingleResponseModel } from '../models/singleResponseModel';
+import { BlogDto } from '../models/blogDto';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,8 +14,8 @@ export class BlogService {
   private blogs: Blog[] | null = null;
   constructor(private httpClient:HttpClient) { }
   apiUrl="http://localhost:46772/api/";
-  addblog(blog:Blog): Observable<ResponseModel>{
-    var result=this.httpClient.post<ResponseModel>("http://localhost:46772/api/Blogs/add",blog);
+  addblog(blog:BlogDto): Observable<ResponseModel>{
+    var result=this.httpClient.post<ResponseModel>("http://localhost:46772/api/Blogs/addBlog",blog);
     return result;
   }
 
@@ -23,12 +24,14 @@ export class BlogService {
 
     return this.httpClient.get<ListResponseModel<Blog>>(path);
   }
-  updateBlogById(blog:Blog):Observable<SingleResponseModel<Blog>>{
-    let path=this.apiUrl+"Blogs/update";
-    return this.httpClient.post<SingleResponseModel<Blog>>(path,blog);
+  updateBlogById(blog:BlogDto):Observable<SingleResponseModel<BlogDto>>{
+    let path=this.apiUrl+"Blogs/updateBlog";
+    return this.httpClient.post<SingleResponseModel<BlogDto>>(path,blog);
   }
-
-
+ deleteBlog(blog:BlogDto): Observable<ResponseModel>{
+      var result=this.httpClient.post<ResponseModel>(this.apiUrl+"Blogs/delete",blog);
+      return result;
+    }
 
   setBlogsData(blogs:Blog[]):void{
     this.blogs=blogs;
