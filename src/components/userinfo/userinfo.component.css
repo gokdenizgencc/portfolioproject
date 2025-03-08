@@ -96,6 +96,70 @@
   align-items: center;
   margin-bottom: 10px;
 }
+.input-bio {
+  width: 100%;             
+
+  font-size: 14px;
+  color: #444;
+  border: 1px solid #ccc; 
+  border-radius: 5px;    
+  box-sizing: border-box; 
+}
+.input-salaryr{
+  width: 13%;   
+  font-size: 14px;
+
+  color: #444;
+  border: 1px solid #ccc; 
+  border-radius: 5px;    
+
+}
+.input-salary{
+  width: 43%;   
+  height: 35px; 
+  line-height: 35px; 
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #444;
+  border: 1px solid #ccc; 
+  border-radius: 5px;    
+
+}
+.input-salaryz{ 
+  width: 47%;   
+  height: 35px; 
+  line-height: 35px; 
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #444;
+  border: 1px solid #ccc; 
+  border-radius: 5px;    
+
+}
+.input-salaryzz{ 
+  width: 63%;   
+  height: 35px; 
+  line-height: 35px; 
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #444;
+  border: 1px solid #ccc; 
+  border-radius: 5px;    
+
+}
+.education-item p {
+  height: 35px;
+  line-height: 35px; 
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+
+  color: #444;
+ 
+}
 
 .header h3 {
   margin: 0;
@@ -113,7 +177,12 @@
   cursor: pointer;
   transition: 0.3s;
 }
-
+.edit-btnz {
+  background: #000;
+  color: white;
+ 
+  margin-left: 2%;
+}
 .edit-btn:hover {
   background: white;
   color: black;
@@ -122,7 +191,26 @@
   border-radius: 5px;
   cursor: pointer;
 }
+.delete-btnb {
 
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: red;
+
+}
+.delete-btn {
+  position: absolute;
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  color: red;
+
+}
+
+.delete-btn:hover {
+  color: darkred;
+}
 .description {
   font-size: 14px;
   color: #444;
@@ -153,19 +241,31 @@
   color: #333;
 }
 .education-block {
-  margin-bottom: 20px; /* Her eğitim bloğunun arasında biraz boşluk */
+  margin-bottom: 20px; 
 }
 
 .education-block:not(:last-child) {
-  border-bottom: 1px solid #ccc; /* Eğitim bloğunun altına çizgi ekler, sonuncusu hariç */
-  padding-bottom: 20px; /* Çizgi ile içerik arasında boşluk bırakır */
+  border-bottom: 1px solid #ccc; 
+  padding-bottom: 20px; 
 }
-.education-item p {
-  margin: 0;
-  font-size: 14px;
-  color: #333;
-  font-weight: normal;
+.add-education-btn {
+  background-color: #000;  
+  color: white;            
+  border: none;              
+  padding: 10px 20px;         
+  text-align: center;         
+  text-decoration: none;     
+  display: inline-block;      
+  font-size: 16px;            
+  cursor: pointer;           
+  border-radius: 5px;      
+  transition: background-color 0.3s ease; 
 }
+
+.add-education-btn:hover {
+  background-color: #555; 
+}
+
 
 @media (max-width: 600px) {
   .education-item {
