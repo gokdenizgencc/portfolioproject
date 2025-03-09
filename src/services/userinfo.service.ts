@@ -17,20 +17,20 @@ export class UserinfoService {
   apiUrl="http://localhost:46772/api/";
   constructor(private httpClient:HttpClient) { }
 
-      UpdateUserInfoApplicant(userInfoApplientDto:UserInfoApplicantDto):Observable<SingleResponseModel<UserInfoApplicantDto>>{
+      UpdateUserInfoApplicant(userInfoApplientDto:UserInfoApplicantDto):Observable<ResponseModel>{
              let path=this.apiUrl+"UserInfo/UpdateUserInfoApplicant";
-             return this.httpClient.post<SingleResponseModel<UserInfoApplicantDto>>(path,userInfoApplientDto);
+             return this.httpClient.post<SingleResponseModel<ResponseModel>>(path,userInfoApplientDto);
       }
       UpdateUserInfoAbout(userInfoAboutDto:UserInfoAboutDto):Observable<SingleResponseModel<UserInfoAboutDto>>{
         let path=this.apiUrl+"UserInfo/UpdateUserInfoAbout";
         return this.httpClient.post<SingleResponseModel<UserInfoAboutDto>>(path,userInfoAboutDto);
       }
-      UpdateUserInfoPersonal(userInfoPersonalDto:UserInfoPersonalDto):Observable<SingleResponseModel<UserInfoPersonalDto>>{
+      UpdateUserInfoPersonal(userInfoPersonalDto:UserInfoPersonalDto):Observable<ResponseModel>{
         let path=this.apiUrl+"UserInfo/UpdateUserInfoPersonal";
-        return this.httpClient.post<SingleResponseModel<UserInfoPersonalDto>>(path,userInfoPersonalDto);
+        return this.httpClient.post<ResponseModel>(path,userInfoPersonalDto);
       }
-      GetUserinfoByUserId():Observable<SingleResponseModel<UserInfos>>{
+      GetUserinfoByUserId():Observable<ResponseModel>{
         let path=this.apiUrl+"UserInfo/getByUserId";
-        return this.httpClient.get<SingleResponseModel<UserInfos>>(path);
+        return this.httpClient.get<ResponseModel>(path);
       }
 }

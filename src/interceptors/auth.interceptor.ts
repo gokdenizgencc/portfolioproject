@@ -21,11 +21,16 @@ export const AuthInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
       })
     : req;
 
-  return next(newRequest).pipe(
-    catchError((error: HttpErrorResponse) => {
-        localStorage.removeItem('token');
-        router.navigate(['/login'])
-      return throwError(error);
-    })
-  );
+    return next(newRequest).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          localStorage.removeItem('token');
+          router.navigate(['/login']);
+        } else if (error.status === 500) {
+  
+        }
+        return throwError(() => error);
+      })
+    );
+    
 };

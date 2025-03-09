@@ -18,15 +18,20 @@ import { EducationInfo } from '../../models/educationInfo';
 import { Console } from 'console';
 import { EducationInfoDto } from '../../models/educationInfoDto';
 import { EducationInfoService } from '../../services/education-info.service';
-import { DateformatPipe } from "../../app/pipes/dateformat.pipe";
 import { CertificatesDto } from '../../models/certificatesDto';
-import { Certificate } from 'crypto';
 import { CertificateService } from '../../services/certificate.service';
+import { Certificate } from '../../models/certificate';
+import { WorkExperienceDto } from '../../models/workExperienceDto';
+import { WorkExperienceService } from '../../services/work-experience.service';
+import { WorkExperience } from '../../models/workExperience';
+import { ForeignLanguageService } from '../../services/foreign-language.service';
+import { ForeignLanguageDto } from '../../models/foreignLanguageDto';
+import { ForeignLanguages } from '../../models/foreignLanguage';
 
 @Component({
   selector: 'app-userinfo',
   standalone: true,
-  imports: [CommonModule, FormsModule, DateformatPipe],
+  imports: [CommonModule, FormsModule],
   templateUrl: './userinfo.component.html',
   styleUrl: './userinfo.component.css'
 })
@@ -43,7 +48,8 @@ export class UserinfoComponent {
     isCertificateEditing = false;
 
       constructor(private userService:UserService,private activatedRoute:ActivatedRoute,private toastrService:ToastrService,
-        private router:Router,private userinfoService:UserinfoService,private educationInfoService:EducationInfoService,private certificateService:CertificateService){
+        private router:Router,private userinfoService:UserinfoService,private educationInfoService:EducationInfoService,
+        private certificateService:CertificateService,private workExperienceService:WorkExperienceService,private foreignLanguageService:ForeignLanguageService){
       }
     ngOnInit():void{
       const savedBlog = this.getUserInfoDataFromStorage();
@@ -56,7 +62,6 @@ export class UserinfoComponent {
           this.setUserInfoData(this.userinfo); 
         }
       }
-      console.log(this.userinfo?.certificates[0].dateReceived)
   
     }
     addSkill() {
@@ -67,7 +72,7 @@ export class UserinfoComponent {
           name: '', 
           proficiency: 50, 
         };
-        this.userinfo.skills.push(newSkill); // Yeni skill ekleniyor
+        this.userinfo.skills.push(newSkill); 
       }
     }
     addEducation(){
@@ -84,7 +89,50 @@ export class UserinfoComponent {
           userId: 0,
 
         };
-        this.userinfo.educationInfo.push(newEducation); // Yeni skill ekleniyor
+        this.userinfo.educationInfo.push(newEducation); 
+      }
+    }
+    addCertificate(){
+      if (this.userinfo) {
+        const newCertificate: Certificate = {
+          certificateId:0,
+          certificateUrl:'',
+          dateReceived:undefined,
+          institution:'',
+          title:'',
+          userId:0
+
+        };
+        this.userinfo.certificates.push(newCertificate); 
+      }
+    }
+    addWorkExperience(){ 
+      if (this.userinfo) {
+        const newWorkExperience: WorkExperience= {
+          companyName:'',
+          finalDate:undefined,
+          province:'',
+          role:'',
+          userId:0,
+          workExperienceId:0,
+          startDate:undefined,
+          shortWorkDefination:''
+
+        };
+        this.userinfo.workExperiences.push(newWorkExperience); 
+      }
+    }
+    addForeignLanguage(){ 
+      if (this.userinfo) {
+        const newForeignLanguage: ForeignLanguages= {
+          foreignLanguageId:0,
+          language:'',
+          userId:0,
+          rating:'',
+          whereDidYouLearn:'',
+
+        };
+        this.userinfo.foreignLanguage.push(newForeignLanguage); 
       }
     }
     updateGpaLimits(education: any) {
@@ -102,9 +150,24 @@ export class UserinfoComponent {
         this.userinfo.skills.splice(index, 1);
       }
     }
+    deleteForeignLanguage(index: number){ 
+      if (this.userinfo) {
+        this.userinfo.foreignLanguage.splice(index, 1);
+      }
+    }
     deleteEducationInfo(index: number) {
       if (this.userinfo) {
         this.userinfo.educationInfo.splice(index, 1); 
+      }
+    }
+    deleteCertificate(index: number) {
+      if (this.userinfo) {
+        this.userinfo.certificates.splice(index, 1); 
+      }
+    }
+    deleteWorkExperience(index: number) { 
+      if (this.userinfo) {
+        this.userinfo.workExperiences.splice(index, 1); 
       }
     }
     toggleEdit() {
@@ -116,25 +179,19 @@ export class UserinfoComponent {
           skills: this.userinfo?.skills,
         };
       
-        this.userinfoService.UpdateUserInfoAbout(userInfoAbout).pipe(
-          switchMap(response => {
-            this.toastrService.info(response.message);
-            return this.userinfoService.GetUserinfoByUserId(); // İlk API bitince ikinci başlasın
-          })
-        ).subscribe(
-          response => {
-            const storedUserInfo = localStorage.getItem('userAllInfo');
-            if (storedUserInfo) {
-              let userInfo: UserAllInfo = JSON.parse(storedUserInfo);
-              userInfo.userInfos = response.data;
-              this.userinfo!.userInfos= response.data;
-              localStorage.setItem('userAllInfo', JSON.stringify(userInfo));
-            }
-          },
-          responseError => {
-            this.toastrService.error(responseError.error, 'Hata');
-          }
-        );
+        this.userinfoService.UpdateUserInfoAbout(userInfoAbout).subscribe(response=>{
+          this.toastrService.info(response.message);
+            this.userinfo!.skills= response.data.skills!;
+            this.userinfo!.userInfos!.bio= response.data.bio;
+            this.userinfo!.userInfos!.salaryException= response.data.salaryException;
+            localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
+
+        },
+        responseError => {
+          this.toastrService.error(responseError.error, 'Hata', {
+    
+          });
+        })
       }
       
     }
@@ -147,29 +204,24 @@ export class UserinfoComponent {
           nationalityId:userInfo.nationalityId,
           phone:userInfo.phone
           };
-    this.userinfoService.UpdateUserInfoApplicant(userInfoApplication).pipe(
-      switchMap(response => {
-        this.toastrService.info(response.message);
-        return this.userinfoService.GetUserinfoByUserId(); // İlk API bitince ikinci başlasın
-      })
-    ).subscribe(
-      response => {
-        const storedUserInfo = localStorage.getItem('userAllInfo');
-        if (storedUserInfo) {
-          let userInfo: UserAllInfo = JSON.parse(storedUserInfo);
-          userInfo.userInfos = response.data;
-          this.userinfo!.userInfos= response.data;
-          localStorage.setItem('userAllInfo', JSON.stringify(userInfo));
-        }
-      },
-      responseError => {
-        this.toastrService.error(responseError.error, 'Hata');
-      }
-    );
+    this.userinfoService.UpdateUserInfoApplicant(userInfoApplication).subscribe(response=>{
+      this.toastrService.info(response.message);
+        this.userinfo!.userInfos!.livingLocation= userInfo.livingLocation;
+        this.userinfo!.userInfos!.nationality= userInfo.nationality;
+        this.userinfo!.userInfos!.nationalityId= userInfo.nationalityId;
+        this.userinfo!.userInfos!.phone= userInfo.phone;
+        localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
+
+    },
+    responseError => {
+      this.toastrService.error(responseError.error, 'Hata', {
+
+      });
+    })
       }
    
     }
-    toggledutc() {
+    toggledutc(eduInfo:EducationInfo[]) {
       this.isEducationEditing= !this.isEducationEditing;
       if(this.isEducationEditing==false){
         const educationInfoDto: EducationInfoDto = {
@@ -177,25 +229,17 @@ export class UserinfoComponent {
           educationInfos:this.userinfo!.educationInfo
 
           };
-    this.educationInfoService.UpdateEducationInfo(educationInfoDto).pipe(
-      switchMap(response => {
-        this.toastrService.info(response.message);
-        return this.educationInfoService.GetEducationInfoByUserId(); // İlk API bitince ikinci başlasın
-      })
-    ).subscribe(
-      response => {
-        const storedUserInfo = localStorage.getItem('userAllInfo');
-        if (storedUserInfo) {
-          let userInfo: UserAllInfo = JSON.parse(storedUserInfo);
-          userInfo.educationInfo = response.data;
-          this.userinfo!.educationInfo!= response.data;
-          localStorage.setItem('userAllInfo', JSON.stringify(userInfo));
-        }
-      },
-      responseError => {
-        this.toastrService.error(responseError.error, 'Hata');
-      }
-    );
+    this.educationInfoService.UpdateEducationInfo(educationInfoDto).subscribe(response=>{
+      this.toastrService.info(response.message);
+        this.userinfo!.educationInfo= eduInfo;
+        localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
+
+    },
+    responseError => {
+      this.toastrService.error(responseError.error, 'Hata', {
+
+      });
+    })
   
       }
     }
@@ -211,36 +255,71 @@ export class UserinfoComponent {
           militaryServiceInfo:userInfo.militaryServiceInfo,
 
           };
-    this.userinfoService.UpdateUserInfoPersonal(userInfoPersonal).pipe(
-      switchMap(response => {
-        this.toastrService.info(response.message);
-        return this.userinfoService.GetUserinfoByUserId(); // İlk API bitince ikinci başlasın
-      })
-    ).subscribe(
-      response => {
-        const storedUserInfo = localStorage.getItem('userAllInfo');
-        if (storedUserInfo) {
-          let userInfo: UserAllInfo = JSON.parse(storedUserInfo);
-          userInfo.userInfos = response.data;
-          this.userinfo!.userInfos= response.data;
-          localStorage.setItem('userAllInfo', JSON.stringify(userInfo));
-        }
-      },
-      responseError => {
-        this.toastrService.error(responseError.error, 'Hata');
-      }
-    );
+    this.userinfoService.UpdateUserInfoPersonal(userInfoPersonal).subscribe(response=>{
+      this.toastrService.info(response.message);
+        this.userinfo!.userInfos!.birthDate= userInfo.birthDate;
+        this.userinfo!.userInfos!.birthplace= userInfo.birthplace;
+        this.userinfo!.userInfos!.gender= userInfo.gender;
+        this.userinfo!.userInfos!.militaryServiceInfo= userInfo.militaryServiceInfo;
+        this.userinfo!.userInfos!.disabilityStatus= userInfo.disabilityStatus;
+        this.userinfo!.userInfos!.smoke= userInfo.smoke;
+        localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
+
+    },
+    responseError => {
+      this.toastrService.error(responseError.error, 'Hata', {
+
+      });
+    })
   
       }
     }
-    toggleworkexp() {
+    toggleworkexp(workExperience:WorkExperience[]) {
       this.isWorkExperienceEditing= !this.isWorkExperienceEditing;
+      if(this.isWorkExperienceEditing==false){
+        const workExperienceDto: WorkExperienceDto = {
+          userId:0,
+          workExperience:this.userinfo!.workExperiences
+
+          };
+    this.workExperienceService.UpdateWorkExperience(workExperienceDto).subscribe(response=>{
+      this.toastrService.info(response.message);
+        this.userinfo!.workExperiences!= workExperience;
+        localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
+
+    },
+    responseError => {
+      this.toastrService.error(responseError.error, 'Hata', {
+
+      });
+    })
+  
+      }
     }
   
-    toggleLanguageEditing(){
+    toggleLanguageEditing(foreignLanguages:ForeignLanguages[]){
       this.isLanguageEditing=!this.isLanguageEditing;
+      if(this.isLanguageEditing==false){
+        const foreignLanguageDto: ForeignLanguageDto = {
+          userId:0,
+          foreignLanguages:this.userinfo!.foreignLanguage 
+
+          };
+    this.foreignLanguageService.UpdateForeignLanguage(foreignLanguageDto).subscribe(response=>{
+      this.toastrService.info(response.message);
+        this.userinfo!.foreignLanguage= foreignLanguages;
+        localStorage.setItem('userinfo', JSON.stringify( this.userinfo));
+      
+    },
+    responseError => {
+      this.toastrService.error(responseError.error, 'Hata', {
+
+      });
+    })
+  
+      }
     }
-    toggleCertificateEditing(){
+    toggleCertificateEditing(certificates:Certificate[]){
       this.isCertificateEditing = !this.isCertificateEditing;
       if(this.isCertificateEditing==false){
         const certificatesDto: CertificatesDto = {
@@ -248,40 +327,32 @@ export class UserinfoComponent {
           certificates:this.userinfo!.certificates
 
           };
-    this.certificateService.UpdateCertificate(certificatesDto).pipe(
-      switchMap(response => {
-        this.toastrService.info(response.message);
-        return this.userinfoService.GetUserinfoByUserId(); // İlk API bitince ikinci başlasın
-      })
-    ).subscribe(
-      response => {
-        const storedUserInfo = localStorage.getItem('userAllInfo');
-        if (storedUserInfo) {
-          let userInfo: UserAllInfo = JSON.parse(storedUserInfo);
-          userInfo.userInfos = response.data;
-          this.userinfo!.userInfos= response.data;
-          localStorage.setItem('userAllInfo', JSON.stringify(userInfo));
-        }
-      },
-      responseError => {
-        this.toastrService.error(responseError.error, 'Hata');
-      }
-    );
+    this.certificateService.UpdateCertificate(certificatesDto).subscribe(response=>{
+      this.toastrService.info(response.message);
+        this.userinfo!.certificates= certificates;
+        localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
+      
+    },
+    responseError => {
+      this.toastrService.error(responseError.error, 'Hata', {
+
+      });
+    })
   
       }
     }
  setUserInfoData(userAllInfo: UserAllInfo): void {
-    localStorage.setItem('userAllInfo', JSON.stringify(userAllInfo));  
+    localStorage.setItem('userinfo', JSON.stringify(userAllInfo));  
   }
   gomain(){
 
     this.router.navigate([`homepage`]);
   }
   getUserInfoDataFromStorage(): UserAllInfo | null {
-    const userAllInfoData = localStorage.getItem('userAllInfo');
+    const userAllInfoData = localStorage.getItem('userinfo');
     return userAllInfoData ? JSON.parse(userAllInfoData) : null;
   }
   ngOnDestroy(): void {
-    localStorage.removeItem('userAllInfo'); 
+    localStorage.removeItem('userinfo'); 
   }
 }

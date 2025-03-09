@@ -90,7 +90,9 @@ nav{
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    flex-shrink: 0; 
 }
+
 
 /* Ekran boyutuna göre değişiklikler */
 @media (max-width: 768px) {

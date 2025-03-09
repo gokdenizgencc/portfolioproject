@@ -9,11 +9,10 @@ import { Skill } from "./skill";
 import { SocialLink } from "./socialLink";
 import { WorkExperience } from "./workExperience";
 import { EducationInfo } from "./educationInfo";
-import { ForeignLanguage } from "./foreignLanguage";
+import { ForeignLanguages } from "./foreignLanguage";
 import { UserInfos } from "./userInfo";
 
 export interface UserAllInfo {
-  userInfo: UserInfos;
   name: string;
   profilePhoto:string;
   nickName:string;
@@ -28,5 +27,5 @@ export interface UserAllInfo {
   userInfos:UserInfos;
   workExperiences:WorkExperience[];
   educationInfo:EducationInfo[];
-  foreignLanguage:ForeignLanguage[];
+  foreignLanguage:ForeignLanguages[];
 }

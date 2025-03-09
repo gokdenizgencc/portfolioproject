@@ -1,4 +1,4 @@
-export interface ForeignLanguage {
+export interface ForeignLanguages {
     foreignLanguageId: number;
     rating?: string;
     whereDidYouLearn?: string;
