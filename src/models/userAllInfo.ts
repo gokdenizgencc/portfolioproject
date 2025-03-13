@@ -15,12 +15,13 @@ import { UserInfos } from "./userInfo";
 export interface UserAllInfo {
   name: string;
   profilePhoto:string;
-  nickName:string;
   github:string;
   linkedIn:string;
   website:string;
+  email:string;
   skills: Skill[];
   certificates: Certificate[];
+  socialLinks: SocialLink[];
   projects: ProjectDto[];
   blogs: Blog[];
   comments: Comments[];

@@ -5,6 +5,7 @@
       <button class="add-blog-btn" (click)="navigateAdd()">Blog Ekle</button>
     </div>
     <div class="blog-container">
+
       <div *ngFor="let blog of blogs" class="blog-card">
         <img [src]="blog.blogPhoto" alt="{{ blog.title }}" class="blog-image" />
         <h3 class="blog-title">{{ blog.title | slice: 0:32 }}</h3>
@@ -22,6 +23,11 @@
           </button>
         </div>
       </div>
+    </div>
+    <div *ngIf="blogs!.length === 0" class="no-data-container">
+      <i class="fas fa-box-open no-data-icon"></i>
+      <p class="no-data-message">Henüz blog eklenmemiş.</p>
+      
     </div>
   </div>
 
@@ -45,6 +51,12 @@
           <i class="fa-solid fa-trash"></i>
         </button>
       </div>
+   
+    </div>
+    <div *ngIf="projectss!.length === 0"  class="no-data-container">
+      <i class="fas fa-box-open no-data-icon"></i>
+      <p class="no-data-message">Henüz proje eklenmemiş.</p>
+      
     </div>
   </ng-template>
 </div>

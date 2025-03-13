@@ -12,20 +12,29 @@ import { Blog } from '../../models/blog';
 import { AuthService } from '../../services/auth.service';
 import { ProjectService } from '../../services/project.service';
 import { ProjectDto } from '../../models/projectDto';
+import { FormsModule } from '@angular/forms';
+import { SocialLinkService } from '../../services/social-link.service';
+import { SocialLinkDto } from '../../models/socialLinkDto';
+import { SocialLink } from '../../models/socialLink';
 
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [ RouterModule,CommonModule],
+  imports: [ RouterModule,CommonModule, FormsModule],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent {
   userinfo:UserAllInfo;
   id:number;
+  isEditing: boolean = false;
+  socialLinks:SocialLink[];
+
   dataLoaded=false;
-    constructor(private userService:UserService,private projectService:ProjectService,private activatedRoute:ActivatedRoute,private toastrService:ToastrService,private router:Router,private blogService:BlogService,private authService:AuthService){
+    constructor(private userService:UserService,private projectService:ProjectService,
+      private activatedRoute:ActivatedRoute,private toastrService:ToastrService,private router:Router,private blogService:BlogService,
+      private authService:AuthService,private socialLinkService:SocialLinkService){
     }
   ngOnInit():void{
     this.getinfo();
@@ -33,7 +42,40 @@ export class HomepageComponent {
   }
  
   
-
+  saveLinks(github: string, website: string, linkedIn: string) {
+    // socialLinks içindeki her platformu güncelle
+    this.userinfo.socialLinks.forEach(link => {
+      if (link.platform === 'Github') {
+        link.url = github;  
+      } else if (link.platform === 'LinkedIn') {
+        link.url = linkedIn;  
+      } else if (link.platform === 'Website') {
+        link.url = website;  
+      }
+    });
+  
+    // API çağrısını gönder
+    const socialLinkDto: SocialLinkDto = {
+      userId: 0,
+      socialLinks: this.userinfo.socialLinks
+    };
+  
+    this.socialLinkService.UpdateSocialLink(socialLinkDto).subscribe(
+      response => {
+        this.toastrService.info(response.message);
+        this.userinfo!.github = github;
+        this.userinfo!.linkedIn = linkedIn;
+        this.userinfo!.website = website;
+        localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
+      },
+      responseError => {
+        this.toastrService.error(responseError.error.Message, 'Hata');
+      }
+    );
+  
+    this.isEditing = false;
+  }
+  
   getinfo() {
     const storedUserInfo = localStorage.getItem('userinfo');
 
@@ -84,5 +126,9 @@ export class HomepageComponent {
   goToInfo(userinfo:UserAllInfo){
     this.userService.setUserAllInfoData(userinfo)
     this.router.navigate(["userinfo"]);
+  }
+  goToCv(userinfo:UserAllInfo){
+    this.userService.setUserAllInfoData(userinfo)
+    this.router.navigate([`/cvpage/${userinfo.userInfos.nickName}`]);
   }
 }

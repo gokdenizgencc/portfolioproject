@@ -131,12 +131,42 @@ body {
   text-align: center;
   color: #999;
   font-style: italic;
+  margin: 10% 10% 10% 30%;
 }
 
 .no-data-icon {
   font-size: 48px;
   color: #ccc;
 }
+.edit-icon {
+  cursor: pointer;
+  margin-left: 10px;
+  color: #007bff;
+}
+
+.edit-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 2%;
+  margin-left: 34%;
+}
+
+.edit-section input {
+  padding: 5px;
+  width: 49%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.edit-section button {
+  padding: 5px 2px;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+  margin-left: 9.5%;
+}
+
 
 @media (max-width: 768px) {
   .profile-container {

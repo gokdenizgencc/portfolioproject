@@ -72,17 +72,11 @@ button {
 
 
 .image img {
-  width: 100%;
-  max-width: 500px;
+  width: 130%;
+  max-width: 32%;
   height: auto;
   display: block;
   margin: 10% auto 0; /* Üst kısmına 20px boşluk ekler */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
-.buton-sa{
-  background-color: #006400;
-  border: 1.5px solid #000000;
-}
-.buton-sa:hover{
-  background-color: #000000;
-  border:1.5px solid #f2f5f7;
-}
+

@@ -6,16 +6,41 @@
         <div class="logo-text">PortfolioMaker</div>
     </div>
     <div class="right-section">
-        <div class="search">
+        <div class="search position-relative">
             <form class="form-inline">
-                <input class="form-control custom-focus" type="search" placeholder="Takma İsim" aria-label="Search">
-                <button class="join-buttonn"><i class="fas fa-search"></i></button>
+                <input 
+                  class="form-control custom-focus" 
+                  type="search" 
+                  placeholder="Takma İsim" 
+                  aria-label="Search"
+                  [(ngModel)]="searchTerm"
+                  (input)="search(searchTerm)"
+                  name="search">
+                <button type="button" class="join-buttonn"><i class="fas fa-search"></i></button>
+                
+                <!-- Arama Sonuçları Dropdown -->
+                <div *ngIf="showDropdown && searchResults.length > 0" class="search-dropdown">
+                    <div 
+                      *ngFor="let user of searchResults" 
+                      class="search-item"
+                      (click)="navigateToProfile(user.nickname)">
+                        <div class="user-avatar" *ngIf="user.profilePicture">
+                            <img [src]="user.profilePicture" alt="User Avatar">
+                        </div>
+                        <div class="user-info">
+                            <div class="user-nickname">{{user.nickname}}</div>
+                            <div class="user-full-name" *ngIf="user.fullName">{{user.fullName}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="showDropdown && searchTerm.length >= 2 && searchResults.length === 0" class="search-dropdown no-results">
+                    Sonuç bulunamadı
+                </div>
             </form>
         </div>
         <button class="join-button"><i class="fa-solid fa-code-branch"></i></button>
         <button class="join-button"><i class="fa-solid fa-file"></i></button>
         <button class="join-button" (click)="logout()"><i class="fa-solid fa-sign-out-alt"></i></button>
-        
     </div>
 </nav>
 <router-outlet></router-outlet>

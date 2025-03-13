@@ -13,6 +13,7 @@ import { NaviComponent } from '../components/navi/navi.component';
 import { UserinfoComponent } from '../components/userinfo/userinfo.component';
 import { AddblogpageComponent } from '../components/addblogpage/addblogpage.component';
 import { UpdateblogComponent } from '../components/updateblog/updateblog.component';
+import { CvpageComponent } from '../components/cvpage/cvpage.component';
 
 export const routes: Routes = [
     {path: "login", component: LoginComponent},
@@ -41,6 +42,7 @@ export const routes: Routes = [
         {path: 'userinfo', component: UserinfoComponent, canActivate: [loginGuard]},
         {path: 'editblog/:id', component: UpdateblogComponent, canActivate: [loginGuard]},
         {path: 'editproject/:id', component: UpdateblogComponent, canActivate: [loginGuard]},
+        {path: 'cvpage/:username', component: CvpageComponent, canActivate: [loginGuard]},
       ]
     },
     {path: '**', redirectTo: 'login'}

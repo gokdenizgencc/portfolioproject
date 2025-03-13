@@ -5,9 +5,14 @@
       <button class="back-btn" (click)=" gomain()" >←</button>
       <div class="cardd">
         
-        <img class="profile-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVGHL9r9OucwArH8yO3rEDPryG4V3tSCBw-w&s" alt="Profil Resmi">
-        <div class="name">{{userinfo?.userInfos?.fullName}}</div>
-        <div class="text">Bilgisayar Mühendisi</div>
+        <img class="profile-img" src="{{userinfo?.profilePhoto}}" alt="Profil Resmi">
+        <div class="name" *ngIf="!isEditing">{{userinfo?.userInfos?.fullName}}</div>
+        <textarea  *ngIf="isEditing" type="name" [(ngModel)]="userinfo!.userInfos!.fullName" class="input-salaryt" rows="0"></textarea>
+        <div class="text" *ngIf="!isEditing">{{userinfo?.userInfos?.profession}}</div>
+        <textarea  *ngIf="isEditing" type="text" [(ngModel)]="userinfo!.userInfos!.profession" class="input-salaryt" rows="0"></textarea>
+ 
+
+        
       </div>
   
       <div class="about-section">
@@ -19,7 +24,7 @@
         </div>
       
         <div class="description">
-          <p *ngIf="!isEditing">{{ userinfo?.userInfos?.bio }}</p>
+          <p *ngIf="!isEditing">{{ userinfo?.userInfos?.bio?? "-" }}</p>
           <textarea *ngIf="isEditing" [(ngModel)]="userinfo!.userInfos.bio" class="input-bio"></textarea>
         </div>
       
@@ -27,26 +32,30 @@
           <div class="education-item">
             <h4>Yetenekler</h4>
             <p *ngIf="!isEditing">
-              <span *ngFor="let skill of userinfo?.skills; let last = last">
-                {{ skill.name }}<span *ngIf="!last">/ </span>
+              <span *ngIf="userinfo?.skills?.length; else noSkills">
+                <span *ngFor="let skill of userinfo?.skills; let last = last">
+                  {{ skill.name }}<span *ngIf="!last">/ </span>
+                </span>
               </span>
+              <ng-template #noSkills>-</ng-template>
             </p>
+            
             <div *ngIf="isEditing">
               <ng-container *ngFor="let skill of userinfo!.skills; let i = index">
-                <button class="delete-btn" (click)="deleteSkill(i)">&#10005;</button> <!-- Çarpı butonu -->
+                <button class="delete-btn" (click)="deleteSkill(i)">&#10005;</button> 
                 <textarea type="text" [(ngModel)]="userinfo!.skills[i].name" class="input-salaryr" rows="1"></textarea>
     
               </ng-container>
-              <button class="edit-btnz" (click)="addSkill()">+</button> <!-- Artı butonu -->
+              <button class="edit-btnz" (click)="addSkill()">+</button> 
             </div>
           </div>
       
           <div class="education-item">
             <h4>Maaş Beklentisi</h4>
-            <p *ngIf="!isEditing">{{ userinfo?.userInfos?.salaryException }}</p>
+            <p *ngIf="!isEditing">{{ userinfo?.userInfos?.salaryException?? "-" }}</p>
             <textarea *ngIf="isEditing" type="text" [(ngModel)]="userinfo!.userInfos.salaryException" class="input-salary" rows="1"></textarea>
           </div>
-          <button *ngIf="isEditing" (click)="isEditing = !isEditing"  class="edit-btnt"  >
+          <button *ngIf="isEditing" (click)="cancelEditt()"  class="edit-btnt"  >
             Vazgeç
           </button>
         </div>
@@ -55,7 +64,7 @@
       
       
       
-      
+  
       <div class="about-section">
         <div class="header">
           <h3>Başvuru Bilgileri</h3>
@@ -70,27 +79,28 @@
           </div>
           <div class="education-item">
             <h4>Cep Telefonu</h4>
-            <p *ngIf="!isInfo">{{userinfo?.userInfos?.phone}}</p>
+            <p *ngIf="!isInfo">{{userinfo?.userInfos?.phone?? "-"}}</p>
             <textarea  *ngIf="isInfo" type="text" [(ngModel)]="userinfo!.userInfos!.phone" class="input-salary" rows="1"></textarea>
           </div>
           <div class="education-item">
             <h4>Uyruk</h4>
-            <p *ngIf="!isInfo">{{userinfo?.userInfos?.nationality}}</p>
+            <p *ngIf="!isInfo">{{userinfo?.userInfos?.nationality?? "-"}}</p>
             <textarea  *ngIf="isInfo" type="text" [(ngModel)]="userinfo!.userInfos!.nationality" class="input-salary" rows="1"></textarea>
           </div>
           <div class="education-item">
             <h4>T.C. Kimlik No(isteğe bağlı)</h4>
-            <p  *ngIf="!isInfo">{{userinfo?.userInfos?.nationalityId}}</p>
+            <p  *ngIf="!isInfo">{{userinfo?.userInfos?.nationalityId?? "-"}}</p>
             <textarea  *ngIf="isInfo" type="text" [(ngModel)]="userinfo!.userInfos!.nationalityId" class="input-salary" rows="1"></textarea>
           </div>
         </div>
-        <button *ngIf="isInfo" (click)="isInfo = !isInfo"  class="edit-btnt"  >
+        <button *ngIf="isInfo" (click)="cancelEdit()"  class="edit-btnt"  >
           Vazgeç
         </button>
       </div>
+
       <div class="about-section">
         <div class="header">
-          <h3>Kişisel Bilgilerin</h3>
+          <h3>Kişisel Bilgilerim</h3>
           <button class="edit-btn" (click)="toggleEditPersonalInfo(userinfo!.userInfos)">
             {{ isPersonalInfoEditing ? 'Kaydet' : 'Düzenle' }}
           </button>
@@ -99,17 +109,23 @@
         <div class="education">
           <div class="education-item">
             <h4>Doğum Tarihi</h4>
-            <p *ngIf="!isPersonalInfoEditing">{{ userinfo?.userInfos?.birthDate | date: 'dd.MM.yyyy' }}</p>
+            <p *ngIf="!isPersonalInfoEditing">
+              <span *ngIf="userinfo?.userInfos?.birthDate; else noDate">
+                {{ userinfo?.userInfos?.birthDate | date: 'dd.MM.yyyy' }}
+              </span>
+              <ng-template #noDate>-</ng-template>
+            </p>
+            
             <input *ngIf="isPersonalInfoEditing" type="date" [(ngModel)]="userinfo!.userInfos.birthDate" class="input-salary" />
           </div>
           <div class="education-item">
             <h4>Doğum Yeri</h4>
-            <p *ngIf="!isPersonalInfoEditing">{{ userinfo?.userInfos?.birthplace }}</p>
+            <p *ngIf="!isPersonalInfoEditing">{{ userinfo?.userInfos?.birthplace?? "-" }}</p>
             <textarea *ngIf="isPersonalInfoEditing" [(ngModel)]="userinfo!.userInfos.birthplace" class="input-salary" rows="1"></textarea>
           </div>
           <div class="education-item">
             <h4>Cinsiyet</h4>
-            <p *ngIf="!isPersonalInfoEditing">{{ userinfo?.userInfos?.gender }}</p>
+            <p *ngIf="!isPersonalInfoEditing">{{ userinfo?.userInfos?.gender?? "-" }}</p>
             <select *ngIf="isPersonalInfoEditing" [(ngModel)]="userinfo!.userInfos.gender" class="input-salary">
               <option [ngValue]="null">-</option>
               <option [ngValue]="'Erkek'">Erkek</option>
@@ -119,7 +135,7 @@
           </div>
           <div class="education-item">
             <h4>Askerlik Durumu</h4>
-            <p *ngIf="!isPersonalInfoEditing">{{ userinfo?.userInfos?.militaryServiceInfo }}</p>
+            <p *ngIf="!isPersonalInfoEditing">{{ userinfo?.userInfos?.militaryServiceInfo?? "-"  }}</p>
             <select *ngIf="isPersonalInfoEditing" [(ngModel)]="userinfo!.userInfos.militaryServiceInfo"  class="input-salary">
               <option [ngValue]="null">-</option>
               <option [ngValue]="'Muaf'">Muaf</option>
@@ -139,14 +155,17 @@
           </div>
           <div class="education-item">
             <h4>Sigara kullanıyor musun?</h4>
-            <p *ngIf="!isPersonalInfoEditing">{{ userinfo?.userInfos?.smoke ? 'Kullanıyorum' : 'Kullanmıyorum' }}</p>
+            <p *ngIf="!isPersonalInfoEditing">
+              {{ userinfo?.userInfos?.smoke == null ? '-' : (userinfo?.userInfos?.smoke ? 'Kullanıyorum' : 'Kullanmıyorum') }}
+            </p>
+            
             <select *ngIf="isPersonalInfoEditing" [(ngModel)]="userinfo!.userInfos.smoke" class="input-salary">
               <option [ngValue]="null">-</option>
               <option [ngValue]="true">Kullanıyorum</option>
               <option [ngValue]="false">Kullanmıyorum</option>
             </select>
           </div>
-          <button *ngIf="isPersonalInfoEditing" (click)="isPersonalInfoEditing = !isPersonalInfoEditing"  class="edit-btnt"  >
+          <button *ngIf="isPersonalInfoEditing" (click)="cancelEditPersonalInfo()"  class="edit-btnt"  >
             Vazgeç
           </button>
         </div>
@@ -154,7 +173,7 @@
       
       <div class="about-section">
         <div class="header">
-          <h3>Eğitim Bilgisi </h3>
+          <h3>Eğitim Bilgilerim </h3>
           <button class="edit-btn" (click)="toggledutc(userinfo!.educationInfo)">
             {{ isEducationEditing ? 'Kaydet' : 'Düzenle' }}
           </button>
@@ -163,14 +182,14 @@
         <div *ngFor="let education of userinfo?.educationInfo; let i = index" class="education-block">
           <button *ngIf="isEducationEditing" class="delete-btnb" (click)="deleteEducationInfo(i)">&#10005;</button> <!-- Çarpı butonu -->
           <div class="education-item">
-            <h4>Üniversite</h4>
+            <h4>Eğitim Kurumu</h4>
             <textarea *ngIf="isEducationEditing" [(ngModel)]="education.universityName" class="input-salary" rows="1"></textarea>
             <p *ngIf="!isEducationEditing">{{ education.universityName }}</p>
           </div>
       
           <div class="education">
             <div class="education-item">
-              <h4>Bölüm</h4>
+              <h4>Bölüm/Diploma</h4>
               <textarea *ngIf="isEducationEditing" [(ngModel)]="education.department" class="input-salary" rows="1"></textarea>
               <p *ngIf="!isEducationEditing">{{ education.department }}</p>
             </div>
@@ -201,6 +220,7 @@
                 <option [ngValue]="'2.Sınıf'">2.Sınıf</option>  
                 <option [ngValue]="'3.Sınıf'">3.Sınıf</option>
                 <option [ngValue]="'4.Sınıf'">4.Sınıf</option>  
+                <option [ngValue]="'Mezun'">Mezun</option>  
               </select>
             </div>
       
@@ -219,7 +239,7 @@
       
 
         <button *ngIf="isEducationEditing" class="add-education-btn" (click)="addEducation()">Eğitim Ekle</button>
-        <button *ngIf="isEducationEditing" (click)="isEducationEditing = !isEducationEditing"  class="edit-btnt"  >
+        <button *ngIf="isEducationEditing" (click)="cancelEducationEdit()"  class="edit-btnt"  >
           Vazgeç
         </button>
       </div>
@@ -229,7 +249,7 @@
   
       <div class="about-section">
         <div class="header">
-          <h3>İş Deneyimi</h3>
+          <h3>İş Deneyimleri</h3>
           <button class="edit-btn" (click)="toggleworkexp(userinfo!.workExperiences)">
             {{ isWorkExperienceEditing ? 'Kaydet' : 'Düzenle' }}
           </button>
@@ -265,21 +285,21 @@
       
             <div class="education-item">
               <h4>Kısa İş Tanımı</h4>
-              <textarea *ngIf="isWorkExperienceEditing" [(ngModel)]="workExperience.shortWorkDefination" class="input-salary" rows="2"></textarea>
+              <textarea *ngIf="isWorkExperienceEditing" [(ngModel)]="workExperience.shortWorkDefination" class="input-bio" rows="3"></textarea>
               <p *ngIf="!isWorkExperienceEditing">{{ workExperience.shortWorkDefination }}</p>
             </div>
      
           </div>
         </div>
         <button *ngIf="isWorkExperienceEditing" class="add-education-btn" (click)="addWorkExperience()">İş Deneyimi Ekle</button>
-        <button *ngIf="isWorkExperienceEditing" (click)="isWorkExperienceEditing = !isWorkExperienceEditing"  class="edit-btnt"  >
+        <button *ngIf="isWorkExperienceEditing" (click)="cancelEditWorkExperience()"  class="edit-btnt"  >
           Vazgeç
         </button>
       </div>
       
       <div class="about-section">
         <div class="header">
-          <h3>Yabancı Dil</h3>
+          <h3>Yabancı Diller</h3>
           <button class="edit-btn" (click)="toggleLanguageEditing(userinfo!.foreignLanguage)">
             {{ isLanguageEditing ? 'Kaydet' : 'Düzenle' }}
           </button>
@@ -315,7 +335,7 @@
           </div>
         </div>
         <button *ngIf="isLanguageEditing" class="add-education-btn" (click)="addForeignLanguage()">Yabancı Dil Ekle</button> 
-        <button *ngIf="isLanguageEditing" (click)="isLanguageEditing = !isLanguageEditing"  class="edit-btnt"  >
+        <button *ngIf="isLanguageEditing" (click)="cancelEditForeignLanguages()"  class="edit-btnt"  >
           Vazgeç
         </button>
       </div>
@@ -326,7 +346,7 @@
 
     <div class="about-section">
   <div class="header">
-    <h3>Sertifika</h3>
+    <h3>Sertifikalar</h3>
     <button class="edit-btn" (click)="toggleCertificateEditing(userinfo!.certificates)">
       {{ isCertificateEditing ? 'Kaydet' : 'Düzenle' }}
     </button>
@@ -363,7 +383,7 @@
 
   </div>
   <button *ngIf="isCertificateEditing" class="add-education-btn" (click)="addCertificate()">Sertifika Ekle</button>
-  <button *ngIf="isCertificateEditing" (click)="isCertificateEditing= !isCertificateEditing"  class="edit-btnt"  >
+  <button *ngIf="isCertificateEditing" (click)="cancelEditCertificates()"  class="edit-btnt"  >
     Vazgeç
   </button>
 </div>

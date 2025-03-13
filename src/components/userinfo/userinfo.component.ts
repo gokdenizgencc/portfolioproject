@@ -46,6 +46,13 @@ export class UserinfoComponent {
     isPersonalInfoEditing: boolean = false;
     isLanguageEditing=false;
     isCertificateEditing = false;
+    backupUserInfo: UserInfos;
+    backupEducationInfo: EducationInfo[] = [];
+    backupUserInfoD: UserInfoAboutDto;
+    backupPersonalInfo:UserInfos;
+    backupWorkExperiences: WorkExperience[] | null = null;
+    backupForeignLanguages: ForeignLanguages[] | null = null;
+    backupCertificates: Certificate[] | null = null;
 
       constructor(private userService:UserService,private activatedRoute:ActivatedRoute,private toastrService:ToastrService,
         private router:Router,private userinfoService:UserinfoService,private educationInfoService:EducationInfoService,
@@ -171,176 +178,340 @@ export class UserinfoComponent {
       }
     }
     toggleEdit() {
-      this.isEditing = !this.isEditing;
-      if (this.isEditing == false) {
+      if (!this.isEditing) {
+        this.backupUserInfoD = {
+          bio: this.userinfo?.userInfos.bio || '',
+          salaryException: this.userinfo?.userInfos.salaryException || '',
+          skills: this.userinfo?.skills ? [...this.userinfo.skills] : [],
+          fullName:this.userinfo?.userInfos.fullName,
+          profession:this.userinfo?.userInfos.profession
+        };
+      } else {
+ 
         const userInfoAbout: UserInfoAboutDto = {
           bio: this.userinfo?.userInfos.bio,
           salaryException: this.userinfo?.userInfos.salaryException,
           skills: this.userinfo?.skills,
+          profession:this.userinfo?.userInfos.profession,
+          fullName:this.userinfo?.userInfos.fullName
         };
-      
-        this.userinfoService.UpdateUserInfoAbout(userInfoAbout).subscribe(response=>{
-          this.toastrService.info(response.message);
-            this.userinfo!.skills= response.data.skills!;
-            this.userinfo!.userInfos!.bio= response.data.bio;
-            this.userinfo!.userInfos!.salaryException= response.data.salaryException;
-            localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
-
-        },
-        responseError => {
-          this.toastrService.error(responseError.error, 'Hata', {
     
-          });
-        })
+        this.userinfoService.UpdateUserInfoAbout(userInfoAbout).subscribe(
+          response => {
+            this.toastrService.info(response.message);
+            this.userinfo!.skills = response.data.skills!;
+            this.userinfo!.userInfos!.bio = response.data.bio;
+            this.userinfo!.userInfos!.salaryException = response.data.salaryException;
+            this.userinfo!.userInfos.profession=response.data.profession;
+            this.userinfo!.userInfos.fullName=response.data.fullName;
+            localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
+          },
+          responseError => {
+            this.toastrService.error(responseError.error, 'Hata');
+            
+
+            this.restoreBackupUserInfo();
+          }
+        );
       }
-      
+    
+      this.isEditing = !this.isEditing;
     }
-    toggleEditinfo(userInfo:UserInfos) {
-      this.isInfo=!this.isInfo;
-      if(this.isInfo==false){
-        const userInfoApplication: UserInfoApplicantDto = {
-          livingLocation:userInfo.livingLocation,
-          nationality:userInfo.nationality,
-          nationalityId:userInfo.nationalityId,
-          phone:userInfo.phone
-          };
-    this.userinfoService.UpdateUserInfoApplicant(userInfoApplication).subscribe(response=>{
-      this.toastrService.info(response.message);
-        this.userinfo!.userInfos!.livingLocation= userInfo.livingLocation;
-        this.userinfo!.userInfos!.nationality= userInfo.nationality;
-        this.userinfo!.userInfos!.nationalityId= userInfo.nationalityId;
-        this.userinfo!.userInfos!.phone= userInfo.phone;
-        localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
-
-    },
-    responseError => {
-      this.toastrService.error(responseError.error, 'Hata', {
-
-      });
-    })
+    
+    cancelEditt() {
+      this.restoreBackupUserInfo();
+      this.isEditing = false;
+    }
+    restoreBackupUserInfo() {
+      if (this.backupUserInfoD) {
+        this.userinfo!.userInfos!.bio = this.backupUserInfoD.bio;
+        this.userinfo!.userInfos!.salaryException = this.backupUserInfoD.salaryException;
+        this.userinfo!.skills = [...this.backupUserInfoD.skills!];
+        this.userinfo!.userInfos.fullName=this.backupUserInfoD.fullName;
+        this.userinfo!.userInfos.profession=this.backupUserInfoD.profession;
       }
+    }
+    
+    // Vazgeç butonu için
    
+    
+    toggleEditinfo(userInfo: UserInfos) {
+      if (!this.isInfo) {
+
+        this.backupUserInfo = { ...userInfo };
+        
+      } else {
+
+        const userInfoApplication: UserInfoApplicantDto = {
+          livingLocation: userInfo.livingLocation,
+          nationality: userInfo.nationality,
+          nationalityId: userInfo.nationalityId,
+          phone: userInfo.phone
+        };
+    
+        this.userinfoService.UpdateUserInfoApplicant(userInfoApplication).subscribe(
+          response => {
+            this.toastrService.info(response.message);
+            this.userinfo!.userInfos!.livingLocation = userInfo.livingLocation;
+            this.userinfo!.userInfos!.nationality = userInfo.nationality;
+            this.userinfo!.userInfos!.nationalityId = userInfo.nationalityId;
+            this.userinfo!.userInfos!.phone = userInfo.phone;
+            localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
+          },
+          responseError => {
+            this.toastrService.error(responseError.error.Message, 'Hata');
+    
+            // Eğer hata alırsak eski verilere geri dönüyoruz
+            this.userinfo!.userInfos!.livingLocation = this.backupUserInfo.livingLocation;
+            this.userinfo!.userInfos!.nationality = this.backupUserInfo.nationality;
+            this.userinfo!.userInfos!.nationalityId = this.backupUserInfo.nationalityId;
+            this.userinfo!.userInfos!.phone = this.backupUserInfo.phone;
+          }
+        );
+      }
+      this.isInfo = !this.isInfo;
     }
-    toggledutc(eduInfo:EducationInfo[]) {
-      this.isEducationEditing= !this.isEducationEditing;
-      if(this.isEducationEditing==false){
+    
+    cancelEdit() {
+      // Kullanıcı "Vazgeç" butonuna basarsa, eski veriye geri döneriz
+      this.userinfo!.userInfos!.livingLocation = this.backupUserInfo.livingLocation;
+      this.userinfo!.userInfos!.nationality = this.backupUserInfo.nationality;
+      this.userinfo!.userInfos!.nationalityId = this.backupUserInfo.nationalityId;
+      this.userinfo!.userInfos!.phone = this.backupUserInfo.phone;
+      this.isInfo = false;
+    }
+    
+    toggledutc(eduInfo: EducationInfo[]) {
+      if (!this.isEducationEditing) {
+   
+        this.backupEducationInfo = JSON.parse(JSON.stringify(eduInfo)); // Derin kopyalama
+      } else {
+        // Kaydetme işlemi
         const educationInfoDto: EducationInfoDto = {
-          userId:0,
-          educationInfos:this.userinfo!.educationInfo
-
-          };
-    this.educationInfoService.UpdateEducationInfo(educationInfoDto).subscribe(response=>{
-      this.toastrService.info(response.message);
-        this.userinfo!.educationInfo= eduInfo;
-        localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
-
-    },
-    responseError => {
-      this.toastrService.error(responseError.error, 'Hata', {
-
-      });
-    })
-  
+          userId: 0,
+          educationInfos: this.userinfo!.educationInfo
+        };
+    
+        this.educationInfoService.UpdateEducationInfo(educationInfoDto).subscribe(
+          response => {
+            this.toastrService.info(response.message);
+            this.userinfo!.educationInfo = eduInfo;
+            localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
+          },
+          responseError => {
+            this.toastrService.error(responseError.error, 'Hata');
+            
+            
+            this.restoreBackupEducation();
+          }
+        );
       }
+      this.isEducationEditing = !this.isEducationEditing;
     }
-    toggleEditPersonalInfo(userInfo:UserInfos) {
-      this.isPersonalInfoEditing = !this.isPersonalInfoEditing;
-      if(this.isPersonalInfoEditing==false){
+    
+    // Eski eğitim bilgilerini geri yükleme
+    restoreBackupEducation() {
+      this.userinfo!.educationInfo = JSON.parse(JSON.stringify(this.backupEducationInfo)); 
+  
+    }
+    
+    // Vazgeç butonu için
+    cancelEducationEdit() {
+      this.restoreBackupEducation();
+      this.isEducationEditing = false;
+    }
+    
+    toggleEditPersonalInfo(userInfo: UserInfos) {
+      if (!this.isPersonalInfoEditing) {
+
+        this.backupPersonalInfo = {
+          smoke: userInfo.smoke,
+          birthDate: userInfo.birthDate,
+          birthplace: userInfo.birthplace,
+          disabilityStatus: userInfo.disabilityStatus,
+          gender: userInfo.gender,
+          militaryServiceInfo: userInfo.militaryServiceInfo,
+          userInfoId:userInfo.userInfoId
+        };
+      } else {
+
         const userInfoPersonal: UserInfoPersonalDto = {
-          smoke:userInfo.smoke,
-          birthDate:userInfo.birthDate,
-          birthPlace:userInfo.birthplace,
-          disabilityStatus:userInfo.disabilityStatus,
-          gender:userInfo.gender,
-          militaryServiceInfo:userInfo.militaryServiceInfo,
-
-          };
-    this.userinfoService.UpdateUserInfoPersonal(userInfoPersonal).subscribe(response=>{
-      this.toastrService.info(response.message);
-        this.userinfo!.userInfos!.birthDate= userInfo.birthDate;
-        this.userinfo!.userInfos!.birthplace= userInfo.birthplace;
-        this.userinfo!.userInfos!.gender= userInfo.gender;
-        this.userinfo!.userInfos!.militaryServiceInfo= userInfo.militaryServiceInfo;
-        this.userinfo!.userInfos!.disabilityStatus= userInfo.disabilityStatus;
-        this.userinfo!.userInfos!.smoke= userInfo.smoke;
-        localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
-
-    },
-    responseError => {
-      this.toastrService.error(responseError.error, 'Hata', {
-
-      });
-    })
-  
+          smoke: userInfo.smoke,
+          birthDate: userInfo.birthDate,
+          birthPlace: userInfo.birthplace,
+          disabilityStatus: userInfo.disabilityStatus,
+          gender: userInfo.gender,
+          militaryServiceInfo: userInfo.militaryServiceInfo,
+        };
+    
+        this.userinfoService.UpdateUserInfoPersonal(userInfoPersonal).subscribe(
+          response => {
+            this.toastrService.info(response.message);
+            this.userinfo!.userInfos!.birthDate = userInfo.birthDate;
+            this.userinfo!.userInfos!.birthplace = userInfo.birthplace;
+            this.userinfo!.userInfos!.gender = userInfo.gender;
+            this.userinfo!.userInfos!.militaryServiceInfo = userInfo.militaryServiceInfo;
+            this.userinfo!.userInfos!.disabilityStatus = userInfo.disabilityStatus;
+            this.userinfo!.userInfos!.smoke = userInfo.smoke;
+            localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
+          },
+          responseError => {
+            this.toastrService.error(responseError.error, 'Hata');
+            
+            // Hata olursa eski verileri geri yükle
+            this.restoreBackupPersonalInfo();
+          }
+        );
+      }
+    
+      this.isPersonalInfoEditing = !this.isPersonalInfoEditing;
+    }
+    
+    // Eski kişisel bilgileri geri yükleme fonksiyonu
+    restoreBackupPersonalInfo() {
+      if (this.backupPersonalInfo) {
+        this.userinfo!.userInfos!.birthDate = this.backupPersonalInfo.birthDate;
+        this.userinfo!.userInfos!.birthplace = this.backupPersonalInfo.birthplace;
+        this.userinfo!.userInfos!.gender = this.backupPersonalInfo.gender;
+        this.userinfo!.userInfos!.militaryServiceInfo = this.backupPersonalInfo.militaryServiceInfo;
+        this.userinfo!.userInfos!.disabilityStatus = this.backupPersonalInfo.disabilityStatus;
+        this.userinfo!.userInfos!.smoke = this.backupPersonalInfo.smoke;
       }
     }
-    toggleworkexp(workExperience:WorkExperience[]) {
-      this.isWorkExperienceEditing= !this.isWorkExperienceEditing;
-      if(this.isWorkExperienceEditing==false){
+    
+    // "Vazgeç" butonu için
+    cancelEditPersonalInfo() {
+      this.restoreBackupPersonalInfo();
+      this.isPersonalInfoEditing = false;
+    }
+    
+    toggleworkexp(workExperience: WorkExperience[]) {
+      if (!this.isWorkExperienceEditing) {
+        // Düzenleme moduna girerken mevcut verileri yedekle
+        this.backupWorkExperiences = JSON.parse(JSON.stringify(this.userinfo!.workExperiences));
+      } else {
+        // Kaydetme işlemi
         const workExperienceDto: WorkExperienceDto = {
-          userId:0,
-          workExperience:this.userinfo!.workExperiences
-
-          };
-    this.workExperienceService.UpdateWorkExperience(workExperienceDto).subscribe(response=>{
-      this.toastrService.info(response.message);
-        this.userinfo!.workExperiences!= workExperience;
-        localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
-
-    },
-    responseError => {
-      this.toastrService.error(responseError.error, 'Hata', {
-
-      });
-    })
-  
+          userId: 0,
+          workExperience: this.userinfo!.workExperiences
+        };
+    
+        this.workExperienceService.UpdateWorkExperience(workExperienceDto).subscribe(
+          response => {
+            this.toastrService.info(response.message);
+            this.userinfo!.workExperiences = workExperience;
+            localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
+          },
+          responseError => {
+            this.toastrService.error(responseError.error, 'Hata');
+    
+            // Hata olursa eski verileri geri yükle
+            this.restoreBackupWorkExperiences();
+          }
+        );
+      }
+    
+      this.isWorkExperienceEditing = !this.isWorkExperienceEditing;
+    }
+    
+    // Eski iş deneyimlerini geri yükleme fonksiyonu
+    restoreBackupWorkExperiences() {
+      if (this.backupWorkExperiences) {
+        this.userinfo!.workExperiences = JSON.parse(JSON.stringify(this.backupWorkExperiences));
       }
     }
+    
+    // "Vazgeç" butonu için
+    cancelEditWorkExperience() {
+      this.restoreBackupWorkExperiences();
+      this.isWorkExperienceEditing = false;
+    }
+    
   
-    toggleLanguageEditing(foreignLanguages:ForeignLanguages[]){
-      this.isLanguageEditing=!this.isLanguageEditing;
-      if(this.isLanguageEditing==false){
+    toggleLanguageEditing(foreignLanguages: ForeignLanguages[]) {
+      if (!this.isLanguageEditing) {
+        // Düzenleme moduna girerken mevcut verileri yedekle
+        this.backupForeignLanguages = JSON.parse(JSON.stringify(this.userinfo!.foreignLanguage));
+      } else {
+        // Kaydetme işlemi
         const foreignLanguageDto: ForeignLanguageDto = {
-          userId:0,
-          foreignLanguages:this.userinfo!.foreignLanguage 
-
-          };
-    this.foreignLanguageService.UpdateForeignLanguage(foreignLanguageDto).subscribe(response=>{
-      this.toastrService.info(response.message);
-        this.userinfo!.foreignLanguage= foreignLanguages;
-        localStorage.setItem('userinfo', JSON.stringify( this.userinfo));
-      
-    },
-    responseError => {
-      this.toastrService.error(responseError.error, 'Hata', {
-
-      });
-    })
-  
+          userId: 0,
+          foreignLanguages: this.userinfo!.foreignLanguage
+        };
+    
+        this.foreignLanguageService.UpdateForeignLanguage(foreignLanguageDto).subscribe(
+          response => {
+            this.toastrService.info(response.message);
+            this.userinfo!.foreignLanguage = foreignLanguages;
+            localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
+          },
+          responseError => {
+            this.toastrService.error(responseError.error, 'Hata');
+    
+            // Hata olursa eski verileri geri yükle
+            this.restoreBackupForeignLanguages();
+          }
+        );
+      }
+    
+      this.isLanguageEditing = !this.isLanguageEditing;
+    }
+    
+    // Eski yabancı dilleri geri yükleme fonksiyonu
+    restoreBackupForeignLanguages() {
+      if (this.backupForeignLanguages) {
+        this.userinfo!.foreignLanguage = JSON.parse(JSON.stringify(this.backupForeignLanguages));
       }
     }
-    toggleCertificateEditing(certificates:Certificate[]){
-      this.isCertificateEditing = !this.isCertificateEditing;
-      if(this.isCertificateEditing==false){
+    
+    // "Vazgeç" butonu için
+    cancelEditForeignLanguages() {
+      this.restoreBackupForeignLanguages();
+      this.isLanguageEditing = false;
+    }
+    
+    toggleCertificateEditing(certificates: Certificate[]) {
+      if (!this.isCertificateEditing) {
+       
+        this.backupCertificates = JSON.parse(JSON.stringify(this.userinfo!.certificates));
+      } else {
+       
         const certificatesDto: CertificatesDto = {
-          userId:0,
-          certificates:this.userinfo!.certificates
-
-          };
-    this.certificateService.UpdateCertificate(certificatesDto).subscribe(response=>{
-      this.toastrService.info(response.message);
-        this.userinfo!.certificates= certificates;
-        localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
-      
-    },
-    responseError => {
-      this.toastrService.error(responseError.error, 'Hata', {
-
-      });
-    })
-  
+          userId: 0,
+          certificates: this.userinfo!.certificates
+        };
+    
+        this.certificateService.UpdateCertificate(certificatesDto).subscribe(
+          response => {
+            this.toastrService.info(response.message);
+            this.userinfo!.certificates = certificates;
+            localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
+          },
+          responseError => {
+            this.toastrService.error(responseError.error, 'Hata');
+    
+            // Hata olursa eski verileri geri yükle
+            this.restoreBackupCertificates();
+          }
+        );
+      }
+    
+      this.isCertificateEditing = !this.isCertificateEditing;
+    }
+    
+    
+    restoreBackupCertificates() {
+      if (this.backupCertificates) {
+        this.userinfo!.certificates = JSON.parse(JSON.stringify(this.backupCertificates));
       }
     }
+    
+  
+    cancelEditCertificates() {
+      this.restoreBackupCertificates();
+      this.isCertificateEditing = false;
+    }
+    
  setUserInfoData(userAllInfo: UserAllInfo): void {
     localStorage.setItem('userinfo', JSON.stringify(userAllInfo));  
   }

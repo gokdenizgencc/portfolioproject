@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
 import { AuthService } from '../../services/auth.service';
+import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-navin',
@@ -18,10 +19,34 @@ export class NavinComponent {
   isUserLoggedIn: boolean = false;
   user:User
   id:number;
-  constructor(private userService:UserService,private authService:AuthService,private router:Router){
+  searchTerm = '';
+  searchResults: any[] = [];
+  showDropdown = false;
+  private searchTerms = new Subject<string>();
+  constructor(private userService:UserService,private authService:AuthService,private router:Router,private httpClient:HttpClient){
   
     }
   ngOnInit():void{
+    this.searchTerms.pipe(
+      // Her tuş vuruşundan sonra 300ms bekle
+      debounceTime(300),
+      
+      // Aynı terimi tekrar aramayı önle
+      distinctUntilChanged(),
+      
+      // Her terim değişikliğinde API çağrısı yap
+      switchMap((term: string) => {
+        if (term.length < 2) {
+          this.showDropdown = false;
+          return [];
+        }
+        this.showDropdown = true;
+        // API'nize uygun URL'yi kullanın
+        return this.httpClient.get<any[]>(`/api/users/search?nickname=${term}`);
+      })
+    ).subscribe(results => {
+      this.searchResults = results;
+    });
     this.islogin()
     this.getid()
 
@@ -38,6 +63,17 @@ export class NavinComponent {
     }
   );
  
+  }
+  search(term: string): void {
+    this.searchTerm = term;
+    this.searchTerms.next(term);
+  }
+  
+
+  navigateToProfile(username: string): void {
+    this.router.navigate([`/${username}`]);
+    this.searchTerm = '';
+    this.showDropdown = false;
   }
   route(){
     this.router.navigate(["login"]); 

@@ -13,5 +13,6 @@ export interface UserInfos {
     fullName?: string;
     bio?: string;
     salaryException?: string;
-
+    profession?: string;
+    nickName?: string;
 }

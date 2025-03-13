@@ -126,6 +126,18 @@
   border-radius: 5px;    
 
 }
+.input-salaryt{
+  width: 20%;   
+  height: 13%; 
+  line-height: 35px; 
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #444;
+  border: 1px solid #ccc; 
+  border-radius: 5px;    
+
+}
 .input-salaryz{ 
   width: 47%;   
   height: 35px; 
