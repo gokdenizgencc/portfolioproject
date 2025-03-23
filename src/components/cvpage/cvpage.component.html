@@ -1,87 +1,102 @@
-
-<div class="cv-container">
+<div *ngIf="dataLoaded; else loadingTemplate" class="cv-container">
+  <div class="button-row">
     <button class="back-btn" (click)="gomain()">←</button>
-    <div class="cv-header">
-      <div class="profile-image">
-        <img [src]="userinfo?.profilePhoto" alt="Profil">
+    <button class="right-btn" (click)="gouserinfo(userinfo!)">Ayrıntılı Bilgi</button>
+  </div>
+
+  <div class="cv-header">
+    <div class="profile-image">
+      <img [src]="userinfo?.profilePhoto" alt="Profil">
+    </div>
+    <div class="header-text">
+      <h1>{{userinfo?.userInfos?.fullName}}</h1>
+      <h2>{{userinfo?.userInfos?.profession}}</h2>
+      <div class="contact-info">
+        <span><i class="fas fa-envelope"></i> {{userinfo?.email}}</span>
+        <span><i class="fas fa-phone"></i> +90 {{userinfo?.userInfos?.phone}}</span>
+        <span><i class="fas fa-map-marker-alt"></i> {{userinfo?.userInfos?.livingLocation}}</span>
       </div>
-      <div class="header-text">
-        <h1>{{userinfo?.userInfos?.fullName}}</h1>
-        <h2>{{userinfo?.userInfos?.profession}}</h2>
-        <div class="contact-info">
-          <span><i class="fas fa-envelope"></i> {{userinfo?.email}}</span>
-          <span><i class="fas fa-phone"></i> +90 {{userinfo?.userInfos?.phone}}</span>
-          <span><i class="fas fa-map-marker-alt"></i> {{userinfo?.userInfos?.livingLocation}}</span>
+      <p class="about">{{userinfo?.userInfos?.bio}}</p>
+    </div>
+  </div>
+
+  <div class="cv-columns">
+    <div class="cv-left-column">
+      <!-- Deneyim -->
+      <div class="cv-section">
+        <h3 class="section-title">Deneyim</h3>
+        <div class="content-item" *ngFor="let exp of userinfo?.workExperiences">
+          <div class="content-header">
+            <div class="content-title">{{exp.role}}</div>
+            <div class="content-subtitle">
+              {{exp.companyName}} | {{exp.startDate | date: 'YYYY'}} - {{exp.finalDate | date: 'YYYY'}}
+            </div>
+          </div>
+          <div class="content-desc">{{exp.shortWorkDefination}}</div>
         </div>
-        <p class="about">{{userinfo?.userInfos?.bio}}</p>
+      </div>
+
+      <!-- Eğitim -->
+      <div class="cv-section">
+        <h3 class="section-title">Eğitim</h3>
+        <div class="content-item" *ngFor="let edu of userinfo?.educationInfo">
+          <div class="content-header">
+            <div class="content-title">{{edu.department}}</div>
+            <div class="content-subtitle">
+              {{edu.universityName}} | {{edu.startDate | date: 'YYYY'}} - {{edu.finishDate | date: 'YYYY'}}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    
-    <div class="cv-columns">
-      <div class="cv-left-column">
-        <!-- Deneyim -->
-        <div class="cv-section">
-          <h3 class="section-title">Deneyim</h3>
-          <div class="content-item" *ngFor="let exp of userinfo?.workExperiences">
-            <div class="content-header">
-              <div class="content-title">{{exp.role}}</div>
-              <div class="content-subtitle">{{exp.companyName}} | {{exp.startDate | date: 'YYYY'}} - {{exp.finalDate| date: 'YYYY'}}</div>
-            </div>
-            <div class="content-desc">{{exp.shortWorkDefination}}</div>
+
+    <div class="cv-right-column">
+      <!-- Yetenekler -->
+      <div class="cv-section">
+        <h3 class="section-title">Yetenekler</h3>
+        <div class="skill-item" *ngFor="let skill of userinfo?.skills">
+          <div class="skill-info">
+            <span class="skill-name">{{skill.name}}</span>
+            <span class="skill-percentage">{{skill.proficiency}}%</span>
           </div>
-        </div>
-        
-        <!-- Eğitim -->
-        <div class="cv-section">
-          <h3 class="section-title">Eğitim</h3>
-          <div class="content-item" *ngFor="let edu of userinfo?.educationInfo">
-            <div class="content-header">
-              <div class="content-title">{{edu.department}}</div>
-              <div class="content-subtitle">{{edu.universityName}} | {{edu.startDate | date: 'YYYY'}} - {{edu.finishDate| date: 'YYYY'}}</div>
-            </div>
+          <div class="skill-bar">
+            <div class="skill-level" [style.width.%]="skill.proficiency"></div>
           </div>
         </div>
       </div>
-      
-      <div class="cv-right-column">
-        <!-- Yetenekler -->
-        <div class="cv-section">
-          <h3 class="section-title">Yetenekler</h3>
-          <div class="skill-item" *ngFor="let skill of userinfo?.skills">
-            <div class="skill-info">
-              <span class="skill-name">{{skill.name}}</span>
-              <span class="skill-percentage">{{skill.proficiency}}%</span>
-            </div>
-            <div class="skill-bar">
-              <div class="skill-level" [style.width.%]="skill.name"></div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="cv-section">
-            <h3 class="section-title">Sertifiklar</h3>
-            <div class="content-item"  *ngFor="let cerf of userinfo?.certificates">
-              <div class="content-header">
-                <div class="content-title">{{cerf.title}}</div>
-                <div class="content-subtitle">{{cerf.institution}} | {{cerf.dateReceived | date: 'dd.MM.yyyy'}}</div>
-              </div>
-              <a 
-              href="{{cerf.certificateUrl}}" 
-              class="social-link">
-             <i class="fas fa-certificate"></i> 
-           </a>
-           
-            </div>
-          </div>
-        <div class="cv-section">
-          <h3 class="section-title">Diller</h3>
-          <div class="language-item" *ngFor="let lang of userinfo?.foreignLanguage">
-            <span class="language-name">{{lang.language}}:</span>
-            <span class="language-level">{{lang.rating}}</span>
-          </div>
-        </div>
 
-      
+      <!-- Sertifikalar -->
+      <div class="cv-section">
+        <h3 class="section-title">Sertifikalar</h3>
+        <div class="content-item" *ngFor="let cerf of userinfo?.certificates">
+          <div class="content-header">
+            <div class="content-title">{{cerf.title}}</div>
+            <div class="content-subtitle">
+              {{cerf.institution}} | {{cerf.dateReceived | date: 'dd.MM.yyyy'}}
+            </div>
+          </div>
+          <a href="{{cerf.certificateUrl}}" class="social-link">
+            <i class="fas fa-certificate"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Diller -->
+      <div class="cv-section">
+        <h3 class="section-title">Diller</h3>
+        <div class="language-item" *ngFor="let lang of userinfo?.foreignLanguage">
+          <span class="language-name">{{lang.language}}:</span>
+          <span class="language-level">{{lang.rating}}</span>
+        </div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Yüklenme durumu -->
+<ng-template #loadingTemplate>
+  <div *ngIf="!dataLoaded" class="loading-container">
+    <span class="sr-only">Yükleniyor...</span>
+    <div class="spinner-border" role="status"></div>
+  </div>
+</ng-template>

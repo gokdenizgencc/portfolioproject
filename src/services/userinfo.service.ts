@@ -8,6 +8,8 @@ import { UserInfoPersonalDto } from '../models/userInfoPersonalDto';
 import { UserInfoAboutDto } from '../models/userInfoAboutDto';
 import { UserInfo } from 'os';
 import { UserInfos } from '../models/userInfo';
+import { ListResponseModel } from '../models/listResponseModel';
+import { UserSearchResultDto } from '../models/UserSearchResultDto';
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +34,9 @@ export class UserinfoService {
       GetUserinfoByUserId():Observable<ResponseModel>{
         let path=this.apiUrl+"UserInfo/getByUserId";
         return this.httpClient.get<ResponseModel>(path);
+      }
+      SearchByNickname(name:string):Observable<ListResponseModel<UserSearchResultDto>>{
+        let path=this.apiUrl+"UserInfo/SearchByNickname?nickName="+name;
+        return this.httpClient.get<ListResponseModel<UserSearchResultDto>>(path);
       }
 }

@@ -7,6 +7,8 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
 import { AuthService } from '../../services/auth.service';
 import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
+import { UserinfoService } from '../../services/userinfo.service';
+import { UserSearchResultDto } from '../../models/UserSearchResultDto';
 
 @Component({
   selector: 'app-navin',
@@ -20,21 +22,20 @@ export class NavinComponent {
   user:User
   id:number;
   searchTerm = '';
-  searchResults: any[] = [];
+  searchResults: UserSearchResultDto[] = [];
   showDropdown = false;
   private searchTerms = new Subject<string>();
-  constructor(private userService:UserService,private authService:AuthService,private router:Router,private httpClient:HttpClient){
+  constructor(private userService:UserService,private authService:AuthService,private router:Router,private httpClient:HttpClient,private userInfoService:UserinfoService){
   
     }
   ngOnInit():void{
     this.searchTerms.pipe(
-      // Her tuş vuruşundan sonra 300ms bekle
       debounceTime(300),
       
-      // Aynı terimi tekrar aramayı önle
+    
       distinctUntilChanged(),
       
-      // Her terim değişikliğinde API çağrısı yap
+     
       switchMap((term: string) => {
         if (term.length < 2) {
           this.showDropdown = false;
@@ -42,10 +43,10 @@ export class NavinComponent {
         }
         this.showDropdown = true;
         // API'nize uygun URL'yi kullanın
-        return this.httpClient.get<any[]>(`/api/users/search?nickname=${term}`);
+        return this.userInfoService.SearchByNickname(term);
       })
     ).subscribe(results => {
-      this.searchResults = results;
+      this.searchResults = results.data;
     });
     this.islogin()
     this.getid()
@@ -70,8 +71,9 @@ export class NavinComponent {
   }
   
 
-  navigateToProfile(username: string): void {
-    this.router.navigate([`/${username}`]);
+  navigateToProfile(userSearchResult: UserSearchResultDto): void {
+    this.userService.setUserAllInfoDataOther(userSearchResult);
+    this.router.navigate([`/cvpage/${userSearchResult.nickName}`]);
     this.searchTerm = '';
     this.showDropdown = false;
   }

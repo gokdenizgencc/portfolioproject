@@ -3,8 +3,9 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #fff;
+  background-color: #ffff;
   padding: 20px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .card-wrapper {
@@ -12,285 +13,271 @@
   max-width: 850px;
 }
 
+.back-btn {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 1.2rem;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 16px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 118, 255, 0.2);
+}
+
+.back-btn:hover {
+  background-color: #1a1a1a;
+  transform: translateY(-1px);
+}
+
 .cardd {
   position: relative;
   width: 100%;  
-  height: 220px;
-  margin-bottom: 16px;
+  height: 240px;
+  margin-bottom: 24px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-.back-btn {
-  display: block;
-  padding: 0.5rem 1.5rem;
-  background-color:  #000;;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  text-align: center;
-  transition: background-color 0.3s;
-  font-size: 1rem;
-  font-weight: bold;
-  margin-bottom: 7px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
 }
 
-.back-btn:hover {
-  background-color: #555;
-}
 .cardd::before {
   content: "";
   position: absolute;
   width: 100%;
   height: 50%;
-  background-color: #333;
+  background: black;
   top: 0;
   left: 0;
   z-index: 0;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
 }
 
 .profile-img {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: 4px solid white;
+  border: 5px solid white;
   z-index: 1;
+  object-fit: cover;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .name {
-  font-size: 30px;
-  font-weight: bold;
-  color: black;
+  font-size: 26px;
+  font-weight: 700;
+  color: #333;
+  margin-top: 60px;
+  margin-bottom: 5px;
 }
 
 .text {
-  color: #777;
-  font-size: 14px;
-  font-weight: normal;
+  color: #555;
+  font-size: 16px;
+  font-weight: 500;
   text-align: center;
+  margin-bottom: 10px;
 }
 
 .about-section {
   background: white;
-  padding: 20px;
-  margin-bottom: 16px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 24px;
+  margin-bottom: 24px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+.about-section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.1);
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-}
-.input-bio {
-  width: 100%;             
-
-  font-size: 14px;
-  color: #444;
-  border: 1px solid #ccc; 
-  border-radius: 5px;    
-  box-sizing: border-box; 
-}
-.input-salaryr{
-  width: 13%;   
-  font-size: 14px;
-
-  color: #444;
-  border: 1px solid #ccc; 
-  border-radius: 5px;    
-
-}
-.input-salary{
-  width: 43%;   
-  height: 35px; 
-  line-height: 35px; 
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  color: #444;
-  border: 1px solid #ccc; 
-  border-radius: 5px;    
-
-}
-.input-salaryt{
-  width: 20%;   
-  height: 13%; 
-  line-height: 35px; 
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  color: #444;
-  border: 1px solid #ccc; 
-  border-radius: 5px;    
-
-}
-.input-salaryz{ 
-  width: 47%;   
-  height: 35px; 
-  line-height: 35px; 
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  color: #444;
-  border: 1px solid #ccc; 
-  border-radius: 5px;    
-
-}
-.input-salaryzz{ 
-  width: 63%;   
-  height: 35px; 
-  line-height: 35px; 
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  color: #444;
-  border: 1px solid #ccc; 
-  border-radius: 5px;    
-
-}
-.education-item p {
-  height: 35px;
-  line-height: 35px; 
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-
-  color: #444;
- 
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .header h3 {
   margin: 0;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 20px;
+  font-weight: 600;
   color: #333;
 }
 
-.edit-btn {
-  background: #000;
+.edit-btn, .edit-btnt, .add-education-btn {
+  background: black;
   color: white;
-  border: 1px solid black;
-  padding: 5px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.edit-btnz {
-  background: #000;
-  color: white;
- 
-  margin-left: 2%;
-}
-.edit-btnt{
-  margin-top: 1%;
-
-  background: #000;
-  color: white;
-  border: 1px solid black;
-  padding: 5px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-
-}
-.edit-btn:hover {
-  background: white;
-  color: black;
-  border: 1px solid black;
-  padding: 5px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.delete-btnb {
-
-  background: transparent;
   border: none;
-  font-size: 20px;
-  color: red;
-
-}
-.delete-btn {
-  position: absolute;
-  background: transparent;
-  border: none;
-  font-size: 12px;
-  color: red;
-
-}
-
-.delete-btn:hover {
-  color: darkred;
-}
-.description {
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
   font-size: 14px;
-  color: #444;
-  line-height: 1.5;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 118, 255, 0.2);
+}
+
+.edit-btn:hover, .edit-btnt:hover, .add-education-btn:hover {
+  background: #1a1a1a;
+  transform: translateY(-1px);
+}
+
+.edit-btnz {
+  background: #0076ff;
+  color: white;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-btnz:hover {
+  background: #1a1a1a;
+  transform: scale(1.05);
+}
+
+.delete-btn, .delete-btnb {
+  background: transparent;
+  border: none;
+  color: #ff4757;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-btnb {
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.delete-btn:hover, .delete-btnb:hover {
+  color: #ff0022;
+  transform: scale(1.1);
+}
+
+.description {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
 }
 
 .education {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 16px;
 }
 
 .education-item {
-  width: 48%; 
-  margin-bottom: 10px;
+  width: calc(50% - 8px);
+  margin-bottom: 12px;
 }
 
 .education-item h4 {
-  margin: 0;
-  font-size: 12px; 
-  font-weight: bold;
+  margin: 0 0 6px 0;
+  font-size: 14px;
+  font-weight: 600;
   color: #555;
 }
-.education-item h3 {
+
+.education-item p {
   margin: 0;
-  font-size: 18px; 
-  font-weight: bold;
+  min-height: 35px;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
   color: #333;
+  background-color: #f9f9f9;
+  padding: 8px 12px;
+  border-radius: 8px;
 }
+
 .education-block {
-  margin-bottom: 20px; 
+  margin-bottom: 24px;
+  position: relative;
 }
 
 .education-block:not(:last-child) {
-  border-bottom: 1px solid #ccc; 
-  padding-bottom: 20px; 
-}
-.add-education-btn {
-  margin-top: 1%;
-  margin-right: 1%;
-  background: #000;
-  color: white;
-  border: 1px solid black;
-  padding: 5px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 24px;
 }
 
-.add-education-btn:hover {
-  background-color: #555; 
+.input-bio, .input-salary, .input-salaryt, .input-salaryr, .input-salaryz, .input-salaryzz {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  color: #333;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  background-color: #f9f9f9;
 }
 
+.input-salary {
+  width: 100%;
+}
 
-@media (max-width: 600px) {
+.input-salaryr {
+  width: 70%;
+}
+
+.input-salaryt {
+  width: 20%;
+}
+
+.input-salaryz {
+  width: 100%;
+}
+
+.input-salaryzz {
+  width: 100%;
+}
+
+.input-bio:focus, .input-salary:focus, .input-salaryt:focus, 
+.input-salaryr:focus, .input-salaryz:focus, .input-salaryzz:focus {
+  border-color: #0076ff;
+  box-shadow: 0 0 0 2px rgba(0, 118, 255, 0.2);
+  outline: none;
+}
+
+@media (max-width: 768px) {
   .education-item {
     width: 100%;
+  }
+  
+  .about-section {
+    padding: 20px;
+  }
+  
+  .header h3 {
+    font-size: 18px;
   }
 }

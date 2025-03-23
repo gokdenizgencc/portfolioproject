@@ -7,9 +7,9 @@
         
         <img class="profile-img" src="{{userinfo?.profilePhoto}}" alt="Profil Resmi">
         <div class="name" *ngIf="!isEditing">{{userinfo?.userInfos?.fullName}}</div>
-        <textarea  *ngIf="isEditing" type="name" [(ngModel)]="userinfo!.userInfos!.fullName" class="input-salaryt" rows="0"></textarea>
+        <textarea  *ngIf="isEditing" type="name" [(ngModel)]="userinfo!.userInfos!.fullName" class="input-salaryt" rows="1"></textarea>
         <div class="text" *ngIf="!isEditing">{{userinfo?.userInfos?.profession}}</div>
-        <textarea  *ngIf="isEditing" type="text" [(ngModel)]="userinfo!.userInfos!.profession" class="input-salaryt" rows="0"></textarea>
+        <textarea  *ngIf="isEditing" type="text" [(ngModel)]="userinfo!.userInfos!.profession" class="input-salaryt" rows="1"></textarea>
  
 
         
@@ -18,7 +18,7 @@
       <div class="about-section">
         <div class="header">
           <h3>Hakkında</h3>
-          <button class="edit-btn" (click)="toggleEdit()">
+          <button *ngIf="!otherinfo" class="edit-btn" (click)="toggleEdit()">
             {{ isEditing ? 'Kaydet' : 'Düzenle' }}
           </button>
         </div>
@@ -42,9 +42,9 @@
             
             <div *ngIf="isEditing">
               <ng-container *ngFor="let skill of userinfo!.skills; let i = index">
-                <button class="delete-btn" (click)="deleteSkill(i)">&#10005;</button> 
+            
                 <textarea type="text" [(ngModel)]="userinfo!.skills[i].name" class="input-salaryr" rows="1"></textarea>
-    
+                <button class="delete-btn" (click)="deleteSkill(i)">&#10005;</button> 
               </ng-container>
               <button class="edit-btnz" (click)="addSkill()">+</button> 
             </div>
@@ -68,7 +68,7 @@
       <div class="about-section">
         <div class="header">
           <h3>Başvuru Bilgileri</h3>
-          <button  (click)="toggleEditinfo(userinfo!.userInfos)" class="edit-btn" >          {{ isInfo ? 'Kaydet' : 'Düzenle' }}</button>
+          <button *ngIf="!otherinfo"  (click)="toggleEditinfo(userinfo!.userInfos)" class="edit-btn" >          {{ isInfo ? 'Kaydet' : 'Düzenle' }}</button>
         </div>
   
         <div class="education">
@@ -101,7 +101,7 @@
       <div class="about-section">
         <div class="header">
           <h3>Kişisel Bilgilerim</h3>
-          <button class="edit-btn" (click)="toggleEditPersonalInfo(userinfo!.userInfos)">
+          <button *ngIf="!otherinfo" class="edit-btn" (click)="toggleEditPersonalInfo(userinfo!.userInfos)">
             {{ isPersonalInfoEditing ? 'Kaydet' : 'Düzenle' }}
           </button>
         </div>
@@ -174,7 +174,7 @@
       <div class="about-section">
         <div class="header">
           <h3>Eğitim Bilgilerim </h3>
-          <button class="edit-btn" (click)="toggledutc(userinfo!.educationInfo)">
+          <button *ngIf="!otherinfo" class="edit-btn" (click)="toggledutc(userinfo!.educationInfo)">
             {{ isEducationEditing ? 'Kaydet' : 'Düzenle' }}
           </button>
         </div>
@@ -250,7 +250,7 @@
       <div class="about-section">
         <div class="header">
           <h3>İş Deneyimleri</h3>
-          <button class="edit-btn" (click)="toggleworkexp(userinfo!.workExperiences)">
+          <button *ngIf="!otherinfo" class="edit-btn" (click)="toggleworkexp(userinfo!.workExperiences)">
             {{ isWorkExperienceEditing ? 'Kaydet' : 'Düzenle' }}
           </button>
         </div>
@@ -300,7 +300,7 @@
       <div class="about-section">
         <div class="header">
           <h3>Yabancı Diller</h3>
-          <button class="edit-btn" (click)="toggleLanguageEditing(userinfo!.foreignLanguage)">
+          <button *ngIf="!otherinfo" class="edit-btn" (click)="toggleLanguageEditing(userinfo!.foreignLanguage)">
             {{ isLanguageEditing ? 'Kaydet' : 'Düzenle' }}
           </button>
         </div>
@@ -347,7 +347,7 @@
     <div class="about-section">
   <div class="header">
     <h3>Sertifikalar</h3>
-    <button class="edit-btn" (click)="toggleCertificateEditing(userinfo!.certificates)">
+    <button *ngIf="!otherinfo" class="edit-btn" (click)="toggleCertificateEditing(userinfo!.certificates)">
       {{ isCertificateEditing ? 'Kaydet' : 'Düzenle' }}
     </button>
   </div>

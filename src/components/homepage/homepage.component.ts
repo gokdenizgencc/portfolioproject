@@ -125,7 +125,7 @@ export class HomepageComponent {
   }
   goToInfo(userinfo:UserAllInfo){
     this.userService.setUserAllInfoData(userinfo)
-    this.router.navigate(["userinfo"]);
+    this.router.navigate([`userinfo/${userinfo.userInfos.nickName}`]);
   }
   goToCv(userinfo:UserAllInfo){
     this.userService.setUserAllInfoData(userinfo)

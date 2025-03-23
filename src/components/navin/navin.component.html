@@ -18,18 +18,16 @@
                   name="search">
                 <button type="button" class="join-buttonn"><i class="fas fa-search"></i></button>
                 
-                <!-- Arama Sonuçları Dropdown -->
+            
                 <div *ngIf="showDropdown && searchResults.length > 0" class="search-dropdown">
                     <div 
-                      *ngFor="let user of searchResults" 
+                      *ngFor="let info of searchResults" 
                       class="search-item"
-                      (click)="navigateToProfile(user.nickname)">
-                        <div class="user-avatar" *ngIf="user.profilePicture">
-                            <img [src]="user.profilePicture" alt="User Avatar">
-                        </div>
+                      (click)="navigateToProfile(info)">
+            
                         <div class="user-info">
-                            <div class="user-nickname">{{user.nickname}}</div>
-                            <div class="user-full-name" *ngIf="user.fullName">{{user.fullName}}</div>
+                            <div class="user-nickname">{{info.nickName}}</div>
+              
                         </div>
                     </div>
                 </div>

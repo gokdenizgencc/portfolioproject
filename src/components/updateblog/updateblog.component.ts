@@ -117,7 +117,7 @@ export class UpdateblogComponent {
         localStorage.removeItem('projectData'); 
       }
     submitBlog() {
-      this.blog!.blogPhoto=localStorage.getItem("PhotoUrl")!;
+      this.blog!.blogPhoto=localStorage.getItem("PhotoUrl")?? this.blog?.blogPhoto!;
       const blogDto: BlogDto = {
         blogId:this.blog!.blogId,
         blogPhoto:this.blog!.blogPhoto,
@@ -149,16 +149,17 @@ export class UpdateblogComponent {
     }
   submitProject() {
 
-      const projectWithPhoto: ProjectWithPastPhotoDto = {
-        projectId: this.project!.projectId, 
-        userId: this.project!.userId,  
-        title: this.project!.title,
-        description: this.project!.description,
-        projectUrl: this.project!.projectUrl!,
-        createdAt: new Date(),  
-        projectPhotoUrl:localStorage.getItem("PhotoUrl")!,
-        pastProjectTitle:this.pasttitle!,
-      };
+    const projectWithPhoto: ProjectWithPastPhotoDto = {
+      projectId: this.project!.projectId,
+      userId: this.project!.userId,
+      title: this.project!.title,
+      description: this.project!.description,
+      projectUrl: this.project!.projectUrl!,
+      createdAt: new Date(),
+      projectPhotoUrl: localStorage.getItem("PhotoUrl") ?? this.project!.photosUrls[0].projectPhotoUrl!,
+      pastProjectTitle: this.pasttitle!,
+    };
+    
     this.projectService.updateproject(projectWithPhoto).subscribe(response=>{
       this.toastrService.info(response.message);
       this.projectService.getProjectByUserId().subscribe(response=>{

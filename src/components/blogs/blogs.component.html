@@ -1,62 +1,85 @@
 <div class="container">
   <div *ngIf="isBlogPage; else showProjects">
     <div class="header">
-      <button class="back-btn" (click)="gomain()">←</button>
-      <button class="add-blog-btn" (click)="navigateAdd()">Blog Ekle</button>
+      <button class="back-btn" (click)="gomain()">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <h2 class="page-title">Blog</h2>
+      <button class="add-btn" (click)="navigateAdd()">
+        <i class="fas fa-plus"></i> Blog Ekle
+      </button>
     </div>
-    <div class="blog-container">
-
-      <div *ngFor="let blog of blogs" class="blog-card">
-        <img [src]="blog.blogPhoto" alt="{{ blog.title }}" class="blog-image" />
-        <h3 class="blog-title">{{ blog.title | slice: 0:32 }}</h3>
-        <p class="blog-text">{{ blog.conte | slice: 0:70 }}...</p>
-
-        <div class="button-container">
-          <button (click)="goToBlogDetail(blog)" class="read-more-btn">
-            Devamını Oku
+    
+    <div class="content-grid">
+      <div *ngFor="let blog of blogs" class="card">
+        <div class="card-actions">
+          <button class="action-btn delete-btn" (click)="openDeleteDialogForBlog(blog)">
+            <i class="fa-solid fa-trash"></i>
           </button>
-          <button class="edit-btn" (click)="goedit(blog)">
+          <button class="action-btn edit-btn" (click)="goedit(blog)">
             <i class="fa-solid fa-pen"></i>
           </button>
-          <button class="delete-btn"(click)="openDeleteDialogForBlog(blog)">
-            <i class="fa-solid fa-trash"></i>
+        </div>
+        <div class="card-img-container">
+          <img [src]="blog.blogPhoto" alt="{{ blog.title }}" class="card-img" />
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">{{ blog.title | slice: 0:32 }}</h3>
+          <p class="card-text">{{ blog.conte | slice: 0:70 }}...</p>
+          <button (click)="goToBlogDetail(blog)" class="read-more-btn">
+            Devamını Oku
           </button>
         </div>
       </div>
     </div>
-    <div *ngIf="blogs!.length === 0" class="no-data-container">
-      <i class="fas fa-box-open no-data-icon"></i>
-      <p class="no-data-message">Henüz blog eklenmemiş.</p>
-      
+    
+    <div *ngIf="blogs!.length === 0" class="empty-state">
+      <div class="empty-state-icon">
+        <i class="fas fa-box-open"></i>
+      </div>
+      <p class="empty-state-text">Henüz blog eklenmemiş.</p>
     </div>
   </div>
-
+  
   <ng-template #showProjects>
     <div class="header">
-      <button class="back-btn" (click)="gomain()">←</button>
-      <button class="add-blog-btn" (click)="navigateAddd()">Proje Ekle</button>
+      <button class="back-btn" (click)="gomain()">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <h2 class="page-title">Projeler</h2>
+      <button class="add-btn" (click)="navigateAddd()">
+        <i class="fas fa-plus"></i> Proje Ekle
+      </button>
     </div>
-    <div class="blog-container">
-      <div *ngFor="let project of projectss" class="blog-card">
-        <img [src]="project.photosUrls[0].projectPhotoUrl" alt="{{ project.title }}" class="blog-image" />
-        <h3 class="blog-title">{{ project.title | slice: 0:25 }}</h3>
-        <p class="blog-text">{{ project.description | slice: 0:70 }}</p>
-        <button (click)="goToProject(project)" class="read-more-btn">
-          Devamını Oku
-        </button>
-        <button class="edit-btn" (click)="goeditp(project)">
-          <i class="fa-solid fa-pen"></i>
-        </button>
-        <button class="delete-btn" (click)="openDeleteDialog(project)">
-          <i class="fa-solid fa-trash"></i>
-        </button>
+    
+    <div class="content-grid">
+      <div *ngFor="let project of projectss" class="card">
+        <div class="card-actions">
+          <button class="action-btn delete-btn" (click)="openDeleteDialog(project)">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+          <button class="action-btn edit-btn" (click)="goeditp(project)">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+        </div>
+        <div class="card-img-container">
+          <img [src]="project.photosUrls[0].projectPhotoUrl" alt="{{ project.title }}" class="card-img" />
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">{{ project.title | slice: 0:25 }}</h3>
+          <p class="card-text">{{ project.description | slice: 0:70 }}...</p>
+          <button (click)="goToProject(project)" class="read-more-btn">
+            Devamını Oku
+          </button>
+        </div>
       </div>
-   
     </div>
-    <div *ngIf="projectss!.length === 0"  class="no-data-container">
-      <i class="fas fa-box-open no-data-icon"></i>
-      <p class="no-data-message">Henüz proje eklenmemiş.</p>
-      
+    
+    <div *ngIf="projectss!.length === 0" class="empty-state">
+      <div class="empty-state-icon">
+        <i class="fas fa-box-open"></i>
+      </div>
+      <p class="empty-state-text">Henüz proje eklenmemiş.</p>
     </div>
   </ng-template>
 </div>

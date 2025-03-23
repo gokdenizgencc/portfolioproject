@@ -25,7 +25,7 @@ export class BlogService {
     return this.httpClient.get<ListResponseModel<Blog>>(path);
   }
   updateBlogById(blog:BlogDto):Observable<SingleResponseModel<BlogDto>>{
-    let path=this.apiUrl+"Blogs/updateBlog";
+    let path="http://localhost:46772/api/Blogs/updateBlog";
     return this.httpClient.post<SingleResponseModel<BlogDto>>(path,blog);
   }
  deleteBlog(blog:BlogDto): Observable<ResponseModel>{

@@ -39,7 +39,7 @@ export const routes: Routes = [
         {path: 'projects', component: BlogsComponent, canActivate: [loginGuard]},
 
         {path: 'projects/:id', component: BlogComponent, canActivate: [loginGuard]},
-        {path: 'userinfo', component: UserinfoComponent, canActivate: [loginGuard]},
+        {path: 'userinfo/:username', component: UserinfoComponent, canActivate: [loginGuard]},
         {path: 'editblog/:id', component: UpdateblogComponent, canActivate: [loginGuard]},
         {path: 'editproject/:id', component: UpdateblogComponent, canActivate: [loginGuard]},
         {path: 'cvpage/:username', component: CvpageComponent, canActivate: [loginGuard]},

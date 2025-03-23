@@ -33,10 +33,30 @@
     font-weight: bold;
     margin-bottom: 1%;
   }
-  
+  .right-btn {
+    display: block;
+    padding: 0.5rem 1.5rem;
+    background-color:  #000;;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
+    font-size: 1rem;
+ 
+    margin-bottom: 1%;
+    margin-left: 70%;
+  }
   .back-btn:hover {
     background-color: #555;
   }
+  .button-row {
+    display: flex;
+    justify-content: space-between; /* Butonları sağa ve sola yerleştirir */
+    align-items: center;
+    width: 100%;
+}
 .cv-header {
   display: flex;
   margin-bottom: 15px;
@@ -146,7 +166,37 @@
   color: var(--text-light);
   font-size: 12px;
 }
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+}
 
+.loading-container {
+  position: fixed;  /* Sayfanın tamamına göre konumlandır */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);  /* Ortalamak için */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+}
+
+.spinner-border {
+  width: 50px;
+  height: 50px;
+  border-width: 5px;
+  color: #000;
+}
 .skill-item {
   margin-bottom: 8px;
 }

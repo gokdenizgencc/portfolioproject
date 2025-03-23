@@ -5,39 +5,38 @@
 
 <div *ngIf="dataLoaded" class="profile-container">
   <div class="profile-left">
-    <img src="{{userinfo.profilePhoto}}" alt="Profile Picture" class="profile-image">
-    <h2>{{userinfo.userInfos.nickName}}</h2>
+  <img src="{{userinfo.profilePhoto}}" alt="Profil Resmi" class="profile-image">
+    <h2 class="user-name">{{userinfo.userInfos.nickName}}</h2>
+
     <button (click)="goToInfo(userinfo)" class="action-button">Kullanıcı Bilgileri</button>
 
     <div class="social-media-links">
+        <i *ngIf="!isEditing" class="fas fa-edit edit-icon" (click)="isEditing = true"></i>
+
+        <a *ngIf="userinfo.github?.trim()  && !isEditing " href="{{userinfo.github}}" class="social-link">
+            <i class="fab fa-github"></i> GitHub
+        </a>
+        <a *ngIf="userinfo.website?.trim() && !isEditing " href="{{userinfo.website}}" class="social-link">
+            <i class="fas fa-globe"></i> Website
+        </a>
+        <a *ngIf="userinfo.linkedIn?.trim() && !isEditing " href="{{userinfo.linkedIn}}" class="social-link">
+            <i class="fab fa-linkedin-in"></i> LinkedIn
+        </a>
+
       
-      <i  *ngIf="!isEditing" class="fas fa-edit edit-icon" (click)="isEditing = true"></i>
-      <a *ngIf="userinfo.github !== null && userinfo.github.trim() !== '' && !isEditing" href="{{userinfo.github}}" class="social-link">
-        <i class="fab fa-github"></i> Github
-      </a>
-      <a *ngIf="userinfo.website !== null && userinfo.website.trim() !== '' && !isEditing" href="{{userinfo.website}}" class="social-link">
-        <i class="fas fa-globe"></i> Website
-      </a>
-      <a *ngIf="userinfo.linkedIn && userinfo.linkedIn.trim() !== '' && !isEditing" 
-      href="{{userinfo.linkedIn}}" 
-      class="social-link">
-     <i class="fab fa-linkedin-in"></i> LinkedIn
-   </a>
-   <button (click)="goToCv(userinfo)" class="action-button">CV'ye Git</button>
-   
 
-    
-    
+        <div *ngIf="isEditing" class="edit-section">
+            <input type="text" [(ngModel)]="userinfo.github" placeholder="GitHub Linki">
+            <input type="text" [(ngModel)]="userinfo.website" placeholder="Website Linki">
+            <input type="text" [(ngModel)]="userinfo.linkedIn" placeholder="LinkedIn Linki">
 
-      <div *ngIf="isEditing" class="edit-section">
-        <input type="text" [(ngModel)]="userinfo.github" placeholder="GitHub Linki">
-        <input type="text" [(ngModel)]="userinfo.website" placeholder="Website Linki">
-        <input type="text" [(ngModel)]="userinfo.linkedIn" placeholder="LinkedIn Linki">
-        <button class="action-button" (click)="saveLinks(userinfo.github,userinfo.website,userinfo.linkedIn)">Kaydet</button>
-        <button class="action-button"(click)="isEditing = false">İptal</button>
-      </div>
+            <div class="button-group">
+                <button class="action-button save" (click)="saveLinks(userinfo.github, userinfo.website, userinfo.linkedIn)">Kaydet</button>
+                <button class="action-button cancel" (click)="isEditing = false">İptal</button>
+            </div>
+        </div>
+        <button (click)="goToCv(userinfo)" class="action-button">CV'ye Git</button>
     </div>
-    
   </div>
   
   <div class="profile-right">
@@ -48,21 +47,22 @@
         <p class="no-data-message">Henüz proje eklenmemiş.</p>
         
       </div>
-      <div class="project" *ngFor="let project of userinfo.projects">
+      <div class="project" *ngFor="let project of userinfo.projects.slice(0, 4)">
         <h4>{{ project.title }}</h4>
         <p>{{ truncate(project.description) }}</p>
         <a (click)="goToProject(project)">Devamını Oku</a>
       </div>
+      
     </div>
     <button (click)="goProject(userinfo.projects)" class="action-button">Projelere Git</button>
     
     <h3 class="mars">Bloglar</h3>
-    <div class="blogs">
+    <div class="projects">
       <div *ngIf="userinfo.blogs.length === 0" class="no-data-container">
         <i class="fas fa-box-open no-data-icon"></i>
         <p class="no-data-message">Henüz blog eklenmemiş.</p>
       </div>
-      <div class="blog" *ngFor="let blog of userinfo.blogs">
+      <div class="project" *ngFor="let blog of userinfo.blogs.slice(0, 4)">
         <h4>{{ blog.title }}</h4>
         <p>{{ truncate(blog.conte) }}</p>
         <a (click)="goToBlog(blog)">Devamını Oku</a>
