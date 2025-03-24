@@ -1,73 +1,109 @@
-
-<div class="add-blog-container">
-
-    <div *ngIf="isBlogPage; else showProjects">
-      <h2 class="page-title">Blog Düzenle</h2>
-  
-      <form (ngSubmit)="submitBlog()" class="blog-form">
-        <div class="form-group">
-          <label for="title">Başlık</label>
-          <input type="text" id="title" [(ngModel)]="blog!.title" name="title" required />
-        </div>
-  
-        <div class="form-group image-upload-container">
-            <input type="file" id="blogPhoto" name="blogPhoto"  (change)="onFileSelected($event)" hidden />
-            <label for="blogPhoto" class="image-upload-box">
-              <div class="upload-overlay" *ngIf="previewUrl">
-                <span class="upload-success-text">Fotoğraf Yüklendi ✅</span>
-              </div>
-              <div *ngIf="!previewUrl" class="upload-text">Resim Seç</div>
-              <img *ngIf="previewUrl" [src]="previewUrl" alt="Önizleme" class="image-preview" />
-            </label>
-          </div>
-          
-        
-        
-  
-        <div class="form-group">
-          <label for="content">İçerik</label>
-          <textarea id="content" [(ngModel)]="blog!.conte" name="content" rows="5" required></textarea>
-        </div>
-  
-        <div class="form-actions">
-          <button type="submit" [disabled]="isUploading" class="submit-btn">Yayınla</button>
-          <button type="button" class="cancel-btn" (click)="cancelb()" >İptal Et</button>
-        </div>
-      </form>
-    </div>
-  
-    <ng-template #showProjects>
-  
-      <h2 class="page-title">Proje Düzenle</h2>
-  
-      <form (ngSubmit)="submitProject()" class="blog-form">
-        <div class="form-group">
-          <label for="title">Başlık</label>
-          <input type="text" id="title" [(ngModel)]="project!.title" name="title" required />
-        </div>
-  
+<div class="edit-container">
+  <div *ngIf="isBlogPage; else showProjects" class="form-wrapper">
+    <h1 class="title">Blog Düzenle</h1>
+    
+    <form (ngSubmit)="submitBlog()" class="form">
+      <div class="input-group">
+        <label for="title">Başlık</label>
+        <input type="text" id="title" [(ngModel)]="blog!.title" name="title" required placeholder="Blog başlığını girin" />
+      </div>
       
-        <div class="form-group image-upload-container">
-          <input type="file" id="blogPhoto" name="blogPhoto" (change)="onFileSelected($event)" hidden />
-          <label for="blogPhoto" class="image-upload-box">
-            <div class="upload-overlay" *ngIf="previewUrl">
-              <span class="upload-success-text">Fotoğraf Yüklendi ✅</span>
+      <div class="media-upload">
+        <input type="file" id="blogPhoto" name="blogPhoto" (change)="onFileSelected($event)" hidden />
+        <label for="blogPhoto" class="upload-area">
+          <ng-container *ngIf="!previewUrl">
+            <div class="upload-placeholder">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path>
+                <path d="M12 12v9"></path>
+                <path d="m16 16-4-4-4 4"></path>
+              </svg>
+              <span>Resim Yüklemek İçin Tıklayın</span>
+              <p class="upload-hint">veya dosyayı sürükleyip bırakın</p>
             </div>
-            <div *ngIf="!previewUrl" class="upload-text">Resim Seç</div>
-            <img *ngIf="previewUrl" [src]="previewUrl" alt="Önizleme" class="image-preview" />
-          </label>
-        </div>
-  
-        <div class="form-group">
-          <label for="description">Açıklama</label>
-          <textarea id="description" [(ngModel)]="project!.description" name="description" rows="5" required></textarea>
-        </div>
-  
-        <div class="form-actions">
-          <button type="submit" [disabled]="isUploading" class="submit-btn">Yayınla</button>
-          <button type="button" class="cancel-btn" (click)="cancel()" >İptal Et</button>
-        </div>
-      </form>
-    </ng-template>
+          </ng-container>
+          
+          <div class="preview-container" *ngIf="previewUrl">
+            <img [src]="previewUrl" alt="Önizleme" class="preview-image" />
+            <div class="preview-overlay">
+              <span class="change-image-text">Değiştirmek için tıklayın</span>
+            </div>
+          </div>
+        </label>
+      </div>
+      
+      <div class="input-group">
+        <label for="description">Açıklama</label>
+        <textarea id="content" [(ngModel)]="blog!.conte" name="content" rows="6" required placeholder="Blog içeriğini buraya yazın..."></textarea>
+      </div>
+      
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="cancelb()">    <i class="fas fa-times"></i> İptal</button>
+        <button type="submit" [disabled]="isUploading" class="btn btn-secondary">
+          <span *ngIf="isUploading">
+            <svg class="spinner" viewBox="0 0 50 50">
+              <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+            </svg>
+            Yükleniyor...
+          </span>
+          <span *ngIf="!isUploading">   <i class="fas fa-paper-plane"></i> Yayınla</span>
+        </button>
+      </div>
+    </form>
   </div>
   
+  <ng-template #showProjects>
+    <div class="form-wrapper">
+    <h2 class="title">Proje Düzenle</h2>
+    
+    <form (ngSubmit)="submitProject()" class="form">
+      <div class="input-group">
+        <label for="title">Başlık</label>
+        <input type="text" id="title" [(ngModel)]="project!.title" name="title" required placeholder="Proje başlığını girin" />
+      </div>
+      
+      <div class="media-upload">
+        <input type="file" id="blogPhoto" name="blogPhoto" (change)="onFileSelected($event)" hidden />
+        <label for="blogPhoto" class="upload-area">
+          <ng-container *ngIf="!previewUrl">
+            <div class="upload-placeholder">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path>
+                <path d="M12 12v9"></path>
+                <path d="m16 16-4-4-4 4"></path>
+              </svg>
+              <span>Resim Yüklemek İçin Tıklayın</span>
+              <p class="upload-hint">veya dosyayı sürükleyip bırakın</p>
+            </div>
+          </ng-container>
+          
+          <div class="preview-container" *ngIf="previewUrl">
+            <img [src]="previewUrl" alt="Önizleme" class="preview-image"  />
+            <div class="preview-overlay">
+              <span class="change-image-text">Değiştirmek için tıklayın</span>
+            </div>
+          </div>
+        </label>
+      </div>
+      
+      <div class="input-group">
+        <label for="description">Açıklama</label>
+        <textarea id="description" [(ngModel)]="project!.description" name="description" rows="6" required placeholder="Proje açıklamasını buraya yazın..."></textarea>
+      </div>
+      
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="cancel()">    <i class="fas fa-times"></i> İptal</button>
+        <button type="submit" [disabled]="isUploading" class="btn btn-secondary">
+          <span *ngIf="isUploading">
+            <svg class="spinner" viewBox="0 0 50 50">
+              <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+            </svg>
+            Yükleniyor...
+          </span>
+          <span *ngIf="!isUploading">   <i class="fas fa-paper-plane"></i> Yayınla</span>
+        </button>
+      </div>
+    </form>
+  </div>
+  </ng-template>
+</div>

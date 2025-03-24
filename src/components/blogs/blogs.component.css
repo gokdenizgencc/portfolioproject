@@ -17,7 +17,7 @@ body {
 }
 
 .container {
-  max-width: 1320px;
+  max-width: 1600px;
   margin: 2rem auto;
   padding: 0 1.5rem;
 }
@@ -127,7 +127,7 @@ body {
 .card-img-container {
   position: relative;
   overflow: hidden;
-  height: 200px;
+  height: 120px;
 }
 
 .card-img {

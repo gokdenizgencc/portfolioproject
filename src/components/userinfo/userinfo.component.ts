@@ -2,20 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { UserAllInfo } from '../../models/userAllInfo';
 import { UserService } from '../../services/user.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserinfoService } from '../../services/userinfo.service';
-import { response } from 'express';
 import { UserInfoApplicantDto } from '../../models/userInfoApplicantDto';
-import { UserInfo } from 'os';
 import { UserInfos } from '../../models/userInfo';
 import { UserInfoPersonalDto } from '../../models/userInfoPersonalDto';
 import { Skill } from '../../models/skill';
 import { UserInfoAboutDto } from '../../models/userInfoAboutDto';
-import { switchMap } from 'rxjs';
 import { EducationInfo } from '../../models/educationInfo';
-import { Console } from 'console';
 import { EducationInfoDto } from '../../models/educationInfoDto';
 import { EducationInfoService } from '../../services/education-info.service';
 import { CertificatesDto } from '../../models/certificatesDto';
@@ -28,11 +24,12 @@ import { ForeignLanguageService } from '../../services/foreign-language.service'
 import { ForeignLanguageDto } from '../../models/foreignLanguageDto';
 import { ForeignLanguages } from '../../models/foreignLanguage';
 import { UserSearchResultDto } from '../../models/UserSearchResultDto';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-userinfo',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule,RouterModule, FormsModule, ReactiveFormsModule,MatDialogModule],
   templateUrl: './userinfo.component.html',
   styleUrl: './userinfo.component.css'
 })
@@ -165,6 +162,7 @@ export class UserinfoComponent {
         this.userinfo.skills.push(newSkill); 
       }
     }
+    
     addEducation(){
       if (this.userinfo) {
         const newEducation: EducationInfo = {
@@ -273,7 +271,7 @@ export class UserinfoComponent {
  
         const userInfoAbout: UserInfoAboutDto = {
           bio: this.userinfo?.userInfos.bio,
-          salaryException: this.userinfo?.userInfos.salaryException,
+          salaryException: this.userinfo?.userInfos.salaryException?.toString(),
           skills: this.userinfo?.skills,
           profession:this.userinfo?.userInfos.profession,
           fullName:this.userinfo?.userInfos.fullName
@@ -608,5 +606,6 @@ export class UserinfoComponent {
   }
   ngOnDestroy(): void {
     localStorage.removeItem('userinfo'); 
+    localStorage.removeItem('userinfoo'); 
   }
 }

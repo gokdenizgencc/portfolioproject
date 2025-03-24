@@ -8,12 +8,10 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserAllInfo } from '../../models/userAllInfo';
 import { Blog } from '../../models/blog';
-import { Project } from '../../models/project';
 import { ProjectDto } from '../../models/projectDto';
-import { ProjectWithPhotoDto } from '../../models/ProjectWithPhotoDto';
 import { ProjectWithPastPhotoDto } from '../../models/projectWithPastPhotoDto';
 import { BlogDto } from '../../models/blogDto';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-updateblog',
   standalone: true,
@@ -30,7 +28,7 @@ export class UpdateblogComponent {
     isBlogPage: boolean = false; 
     pasttitle:string| null = null;
     previewUrl: string | ArrayBuffer | null = null;
-  constructor(private router: Router, private blogService:BlogService,private activatedRoute: ActivatedRoute,private projectService:ProjectService,
+  constructor(private location: Location,private router: Router, private blogService:BlogService,private activatedRoute: ActivatedRoute,private projectService:ProjectService,
     private photoService:PhotoService,private toastrService:ToastrService) {}
     ngOnInit(): void {
       this.activatedRoute.url.subscribe(urlSegment => {
@@ -135,7 +133,7 @@ export class UpdateblogComponent {
             localStorage.setItem('userinfo', JSON.stringify(userInfo));
           }
           localStorage.setItem('blogsData', JSON.stringify(response.data)); 
-          this.router.navigate(['blogs']);
+          this.location.back();
       
         })
      
@@ -170,7 +168,7 @@ export class UpdateblogComponent {
           localStorage.setItem('userinfo', JSON.stringify(userInfo));
         }
         localStorage.setItem('projectsData', JSON.stringify(response.data)); 
-        this.router.navigate(['projects']);
+        this.location.back();
        });
     },
     responseError => {
@@ -189,9 +187,9 @@ export class UpdateblogComponent {
 
     } 
     cancel() {
-      this.router.navigate(['projects']);
+      this.location.back();
     }
     cancelb() {
-      this.router.navigate(['blogs']);
+      this.location.back();
     }
 }

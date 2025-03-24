@@ -5,9 +5,8 @@ import { Blog } from '../../models/blog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { ProjectDto } from '../../models/projectDto';
-import { Project } from '../../models/project';
 import { ProjectService } from '../../services/project.service';
-import { BlogDto } from '../../models/blogDto';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-blog',
@@ -21,12 +20,12 @@ export class BlogComponent {
   project: ProjectDto| null = null;
   safeUrl: SafeUrl;
   isBlogPage: boolean = false; 
-  constructor(private route: ActivatedRoute,private router:Router, private blogService: BlogService,private sanitizer: DomSanitizer,private activatedRoute: ActivatedRoute,private projectService:ProjectService) {}
+  constructor(private location: Location,private route: ActivatedRoute,private router:Router, private blogService: BlogService,private sanitizer: DomSanitizer,private activatedRoute: ActivatedRoute,private projectService:ProjectService) {}
 
   ngOnInit(): void {
     this.activatedRoute.url.subscribe(urlSegment => {
       const firstSegment = urlSegment[0]?.path; 
-      if (firstSegment === 'blogs') {
+      if (firstSegment === 'blog') {
         this.isBlogPage = true;
         const savedBlog = this.getBlogDataFromStorage();
         if (savedBlog) {
@@ -75,9 +74,9 @@ export class BlogComponent {
     localStorage.removeItem('projectData'); 
   }
   goProject(){
-    this.router.navigate(['projects']);
+    this.location.back();
   }
   goblog(){
-    this.router.navigate(['blogs']);
+    this.location.back();
   }
 }

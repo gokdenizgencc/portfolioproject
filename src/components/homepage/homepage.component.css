@@ -231,16 +231,68 @@ body {
 }
 
 
+/* Modern Empty State Styling */
 .no-data-container {
-  text-align: center;
-  color: #999;
-  font-style: italic;
-  margin: 10% 10% 10% 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 40px 20px;
+ 
+  width: 100%;
+  transition: all 0.3s ease;
+  border: 2px dashed #e0e0e0;
+}
+
+.no-data-container:hover {
+  border-color: #d0d0d0;
+  background-color: #f0f2f5;
 }
 
 .no-data-icon {
-  font-size: 48px;
-  color: #ccc;
+  font-size: 64px;
+  color: #bdbdbd;
+
+  transition: transform 0.3s ease;
+}
+
+.no-data-container:hover .no-data-icon {
+  transform: scale(1.1);
+  color: #9e9e9e;
+}
+
+.no-data-message {
+  font-size: 16px;
+  color: #757575;
+  margin: 0;
+  font-weight: 500;
+}
+
+.no-data-subtext {
+  font-size: 14px;
+  color: #9e9e9e;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.add-content-btn {
+  margin-top: 20px;
+  padding: 8px 16px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-content-btn:hover {
+  background-color: #1A1A1A;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .edit-icon {
   cursor: pointer;

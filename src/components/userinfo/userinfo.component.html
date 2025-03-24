@@ -7,9 +7,9 @@
         
         <img class="profile-img" src="{{userinfo?.profilePhoto}}" alt="Profil Resmi">
         <div class="name" *ngIf="!isEditing">{{userinfo?.userInfos?.fullName}}</div>
-        <textarea  *ngIf="isEditing" type="name" [(ngModel)]="userinfo!.userInfos!.fullName" class="input-salaryt" rows="1"></textarea>
+  
         <div class="text" *ngIf="!isEditing">{{userinfo?.userInfos?.profession}}</div>
-        <textarea  *ngIf="isEditing" type="text" [(ngModel)]="userinfo!.userInfos!.profession" class="input-salaryt" rows="1"></textarea>
+        <textarea  *ngIf="isEditing" type="text" [(ngModel)]="userinfo!.userInfos!.profession" class="input-salaryt" placeholder="Meslek" rows="1"></textarea>
  
 
         
@@ -53,7 +53,8 @@
           <div class="education-item">
             <h4>Maaş Beklentisi</h4>
             <p *ngIf="!isEditing">{{ userinfo?.userInfos?.salaryException?? "-" }}</p>
-            <textarea *ngIf="isEditing" type="text" [(ngModel)]="userinfo!.userInfos.salaryException" class="input-salary" rows="1"></textarea>
+       <input *ngIf="isEditing" [(ngModel)]="userinfo!.userInfos.salaryException"
+       class="input-salary" type="number" />
           </div>
           <button *ngIf="isEditing" (click)="cancelEditt()"  class="edit-btnt"  >
             Vazgeç

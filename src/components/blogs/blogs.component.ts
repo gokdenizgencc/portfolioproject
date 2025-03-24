@@ -17,7 +17,7 @@ import { UserAllInfo } from '../../models/userAllInfo';
 import { ProjectWithPastPhotoDto } from '../../models/projectWithPastPhotoDto';
 import { BlogDto } from '../../models/blogDto';
 import { DeleteConfirmDialogBlog } from '../delete-confirm-dialog-blog/delete-confirm-dialog-blog.component';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-blogs',
   standalone: true,
@@ -32,7 +32,7 @@ export class BlogsComponent {
   projects:ProjectWithPhotoDto[];
   pasttitle:string| null = null;
   isBlogPage: boolean = false; 
-    constructor(private blogService:BlogService,private projectService:ProjectService,
+    constructor(private location: Location,private blogService:BlogService,private projectService:ProjectService,
       private toastrService:ToastrService,private router:Router,private activatedRoute: ActivatedRoute,public dialog: MatDialog,private changeDetectorRef: ChangeDetectorRef){
   
     }
@@ -166,7 +166,7 @@ export class BlogsComponent {
 
   goToBlogDetail(blog: Blog){
     this.blogService.setBlogData(blog);
-    this.router.navigate([`/blogs/${blog.blogId}`]);
+    this.router.navigate([`/blog/${blog.blogId}`]);
   }
   getProject(){
     this.projectService.getProjectWithDetail().subscribe(response=>{
@@ -182,15 +182,13 @@ export class BlogsComponent {
   }
   goToProject(project:ProjectDto){
     this.projectService.setProjectData(project);
-    this.router.navigate([`/projects/${project.projectId}`]);
+    this.router.navigate([`/project/${project.projectId}`]);
   }
   navigateAdd(){
-
     this.router.navigate([`blogs/add`]);
   }
   gomain(){
-
-    this.router.navigate([`homepage`]);
+    this.location.back();
   }
   navigateAddd(){
 

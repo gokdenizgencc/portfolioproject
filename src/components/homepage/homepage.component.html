@@ -35,7 +35,7 @@
                 <button class="action-button cancel" (click)="isEditing = false">İptal</button>
             </div>
         </div>
-        <button (click)="goToCv(userinfo)" class="action-button">CV'ye Git</button>
+        <!--<button (click)="goToCv(userinfo)" class="action-button">CV'ye Git</button>-->
     </div>
   </div>
   
@@ -43,9 +43,12 @@
     <h3>Projeler</h3>
     <div class="projects">
       <div *ngIf="userinfo.projects.length === 0" class="no-data-container">
-        <i class="fas fa-box-open no-data-icon"></i>
+        <i class="fas fa-folder-open no-data-icon"></i>
         <p class="no-data-message">Henüz proje eklenmemiş.</p>
-        
+        <p class="no-data-subtext">Projelerinizi ekleyerek portfolyonuzu oluşturmaya başlayın.</p>
+        <button (click)="goaddproject()" class="add-content-btn">
+          <i class="fas fa-plus"></i> Yeni Proje Ekle
+        </button>
       </div>
       <div class="project" *ngFor="let project of userinfo.projects.slice(0, 4)">
         <h4>{{ project.title }}</h4>
@@ -54,13 +57,17 @@
       </div>
       
     </div>
-    <button (click)="goProject(userinfo.projects)" class="action-button">Projelere Git</button>
+    <button *ngIf="userinfo.projects.length !== 0" (click)="goProject(userinfo)" class="action-button">Projelere Git</button>
     
     <h3 class="mars">Bloglar</h3>
     <div class="projects">
       <div *ngIf="userinfo.blogs.length === 0" class="no-data-container">
-        <i class="fas fa-box-open no-data-icon"></i>
+        <i class="fas fa-pen-fancy no-data-icon"></i>
         <p class="no-data-message">Henüz blog eklenmemiş.</p>
+        <p class="no-data-subtext">Düşüncelerinizi ve deneyimlerinizi paylaşmaya başlayın.</p>
+        <button (click)="goaddblog()" class="add-content-btn">
+          <i class="fas fa-plus"></i> Yeni Blog Ekle
+        </button>
       </div>
       <div class="project" *ngFor="let blog of userinfo.blogs.slice(0, 4)">
         <h4>{{ blog.title }}</h4>
@@ -68,6 +75,6 @@
         <a (click)="goToBlog(blog)">Devamını Oku</a>
       </div>
     </div>
-    <button (click)="goBlock(userinfo.blogs)"  class="action-button">Bloglara Git</button>
+    <button *ngIf="userinfo.blogs.length !== 0" (click)="goBlock(userinfo)"  class="action-button">Bloglara Git</button>
   </div>
 </div>

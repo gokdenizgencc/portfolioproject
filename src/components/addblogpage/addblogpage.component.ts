@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/internal/Observable';
 import { Blog } from '../../models/blog';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -9,11 +7,10 @@ import { BlogService } from '../../services/blog.service';
 import { Project } from '../../models/project';
 import { ProjectService } from '../../services/project.service';
 import { PhotoService } from '../../services/photo.service';
-import { response } from 'express';
 import { ProjectWithPhotoDto } from '../../models/ProjectWithPhotoDto';
 import { ToastrService } from 'ngx-toastr';
 import { UserAllInfo } from '../../models/userAllInfo';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-addblogpage',
   standalone: true,
@@ -44,7 +41,7 @@ export class AddblogpageComponent {
   isBlogPage: boolean = false; 
   previewUrl: string | ArrayBuffer | null = null;
 
-  constructor(private router: Router, private blogService:BlogService,private activatedRoute: ActivatedRoute,private projectService:ProjectService,private photoService:PhotoService,private toastrService:ToastrService) {}
+  constructor(private location: Location,private router: Router, private blogService:BlogService,private activatedRoute: ActivatedRoute,private projectService:ProjectService,private photoService:PhotoService,private toastrService:ToastrService) {}
 
   ngOnInit():void{
     this.activatedRoute.url.subscribe(urlSegment => {
@@ -102,14 +99,14 @@ export class AddblogpageComponent {
           localStorage.setItem('userinfo', JSON.stringify(userInfo));
         }
         localStorage.setItem('blogsData', JSON.stringify(response.data)); 
-        this.router.navigate(['blogs']);
+        this.location.back();
     
       })
    
 
     },
     responseError => {
-      this.toastrService.error(responseError.error, 'Hata', {
+      this.toastrService.error(responseError.error.Message, 'Hata', {
 
       });
     })
@@ -136,7 +133,7 @@ export class AddblogpageComponent {
           localStorage.setItem('userinfo', JSON.stringify(userInfo));
         }
         localStorage.setItem('projectsData', JSON.stringify(response.data)); 
-        this.router.navigate(['projects']);
+        this.location.back();
        });
     },
     responseError => {
@@ -155,11 +152,9 @@ export class AddblogpageComponent {
     this.router.navigate([`blogs`]);
   }
   cancel() {
-    this.router.navigate(['projects']);
+    this.location.back();
   }
-  cancelb() {
-    this.router.navigate(['blogs']);
-  }
+
   ngOnDestroy(): void {
     localStorage.removeItem('PhotoUrl'); 
   }

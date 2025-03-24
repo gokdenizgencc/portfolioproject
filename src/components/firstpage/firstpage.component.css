@@ -63,7 +63,16 @@ input[type="text"] {
 button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  background-color: #007bff;
+  background-color: #006400;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+button:hover {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #19751c;
   color: white;
   border: none;
   cursor: pointer;

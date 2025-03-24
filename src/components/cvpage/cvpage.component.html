@@ -6,17 +6,17 @@
 
   <div class="cv-header">
     <div class="profile-image">
-      <img [src]="userinfo?.profilePhoto" alt="Profil">
+      <img [src]="userinfo?.profilePhoto || 'default-profile.png'" alt="Profil">
     </div>
     <div class="header-text">
-      <h1>{{userinfo?.userInfos?.fullName}}</h1>
-      <h2>{{userinfo?.userInfos?.profession}}</h2>
+      <h1>{{userinfo?.userInfos?.fullName || '-'}}</h1>
+      <h2>{{userinfo?.userInfos?.profession || '-'}}</h2>
       <div class="contact-info">
-        <span><i class="fas fa-envelope"></i> {{userinfo?.email}}</span>
-        <span><i class="fas fa-phone"></i> +90 {{userinfo?.userInfos?.phone}}</span>
-        <span><i class="fas fa-map-marker-alt"></i> {{userinfo?.userInfos?.livingLocation}}</span>
+        <span><i class="fas fa-envelope"></i> {{userinfo?.email || '-'}}</span>
+        <span><i class="fas fa-phone"></i> +90 {{userinfo?.userInfos?.phone || '-'}}</span>
+        <span><i class="fas fa-map-marker-alt"></i> {{userinfo?.userInfos?.livingLocation || '-'}}</span>
       </div>
-      <p class="about">{{userinfo?.userInfos?.bio}}</p>
+      <p class="about">{{userinfo?.userInfos?.bio || '-'}}</p>
     </div>
   </div>
 
@@ -25,25 +25,25 @@
       <!-- Deneyim -->
       <div class="cv-section">
         <h3 class="section-title">Deneyim</h3>
-        <div class="content-item" *ngFor="let exp of userinfo?.workExperiences">
+        <div class="content-item" *ngFor="let exp of userinfo?.workExperiences || []">
           <div class="content-header">
-            <div class="content-title">{{exp.role}}</div>
+            <div class="content-title">{{exp.role || '-'}}</div>
             <div class="content-subtitle">
-              {{exp.companyName}} | {{exp.startDate | date: 'YYYY'}} - {{exp.finalDate | date: 'YYYY'}}
+              {{exp.companyName || '-'}} | {{exp.startDate ? (exp.startDate | date: 'yyyy') : '-'}} - {{exp.finalDate ? (exp.finalDate | date: 'yyyy') : '-'}}
             </div>
           </div>
-          <div class="content-desc">{{exp.shortWorkDefination}}</div>
+          <div class="content-desc">{{exp.shortWorkDefination || '-'}}</div>
         </div>
       </div>
 
       <!-- Eğitim -->
       <div class="cv-section">
         <h3 class="section-title">Eğitim</h3>
-        <div class="content-item" *ngFor="let edu of userinfo?.educationInfo">
+        <div class="content-item" *ngFor="let edu of userinfo?.educationInfo || []">
           <div class="content-header">
-            <div class="content-title">{{edu.department}}</div>
+            <div class="content-title">{{edu.department || '-'}}</div>
             <div class="content-subtitle">
-              {{edu.universityName}} | {{edu.startDate | date: 'YYYY'}} - {{edu.finishDate | date: 'YYYY'}}
+              {{edu.universityName || '-'}} | {{edu.startDate ? (edu.startDate | date: 'yyyy') : '-'}} - {{edu.finishDate ? (edu.finishDate | date: 'yyyy') : '-'}}
             </div>
           </div>
         </div>
@@ -54,13 +54,13 @@
       <!-- Yetenekler -->
       <div class="cv-section">
         <h3 class="section-title">Yetenekler</h3>
-        <div class="skill-item" *ngFor="let skill of userinfo?.skills">
+        <div class="skill-item" *ngFor="let skill of userinfo?.skills || []">
           <div class="skill-info">
-            <span class="skill-name">{{skill.name}}</span>
-            <span class="skill-percentage">{{skill.proficiency}}%</span>
+            <span class="skill-name">{{skill.name || '-'}}</span>
+            <span class="skill-percentage">{{skill.proficiency || '0'}}%</span>
           </div>
           <div class="skill-bar">
-            <div class="skill-level" [style.width.%]="skill.proficiency"></div>
+            <div class="skill-level" [style.width.%]="skill.proficiency || 0"></div>
           </div>
         </div>
       </div>
@@ -68,14 +68,14 @@
       <!-- Sertifikalar -->
       <div class="cv-section">
         <h3 class="section-title">Sertifikalar</h3>
-        <div class="content-item" *ngFor="let cerf of userinfo?.certificates">
+        <div class="content-item" *ngFor="let cerf of userinfo?.certificates || []">
           <div class="content-header">
-            <div class="content-title">{{cerf.title}}</div>
+            <div class="content-title">{{cerf.title || '-'}}</div>
             <div class="content-subtitle">
-              {{cerf.institution}} | {{cerf.dateReceived | date: 'dd.MM.yyyy'}}
+              {{cerf.institution || '-'}} | {{cerf.dateReceived ? (cerf.dateReceived | date: 'dd.MM.yyyy') : '-'}}
             </div>
           </div>
-          <a href="{{cerf.certificateUrl}}" class="social-link">
+          <a *ngIf="cerf.certificateUrl" [href]="cerf.certificateUrl" class="social-link">
             <i class="fas fa-certificate"></i>
           </a>
         </div>
@@ -84,9 +84,9 @@
       <!-- Diller -->
       <div class="cv-section">
         <h3 class="section-title">Diller</h3>
-        <div class="language-item" *ngFor="let lang of userinfo?.foreignLanguage">
-          <span class="language-name">{{lang.language}}:</span>
-          <span class="language-level">{{lang.rating}}</span>
+        <div class="language-item" *ngFor="let lang of userinfo?.foreignLanguage || []">
+          <span class="language-name">{{lang.language || '-'}}:</span>
+          <span class="language-level">{{lang.rating || '-'}}</span>
         </div>
       </div>
     </div>

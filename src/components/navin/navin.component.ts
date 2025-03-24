@@ -9,6 +9,7 @@ import { AuthService } from '../../services/auth.service';
 import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
 import { UserinfoService } from '../../services/userinfo.service';
 import { UserSearchResultDto } from '../../models/UserSearchResultDto';
+import { UserAllInfo } from '../../models/userAllInfo';
 
 @Component({
   selector: 'app-navin',
@@ -24,11 +25,13 @@ export class NavinComponent {
   searchTerm = '';
   searchResults: UserSearchResultDto[] = [];
   showDropdown = false;
+  userinfo:UserAllInfo;
   private searchTerms = new Subject<string>();
   constructor(private userService:UserService,private authService:AuthService,private router:Router,private httpClient:HttpClient,private userInfoService:UserinfoService){
   
     }
   ngOnInit():void{
+    this.getinfo();
     this.searchTerms.pipe(
       debounceTime(300),
       
@@ -65,6 +68,22 @@ export class NavinComponent {
   );
  
   }
+  getinfo() {
+    const storedUserInfo = localStorage.getItem('userinfo');
+
+    if (storedUserInfo) {
+      this.userinfo = JSON.parse(storedUserInfo);
+
+    } else {
+      this.userService.getAllUserİnformartion().subscribe(
+        (response) => {
+          this.userinfo = response.data;
+          localStorage.setItem('userinfo', JSON.stringify(this.userinfo)); 
+        },
+ 
+      );
+    }
+  }
   search(term: string): void {
     this.searchTerm = term;
     this.searchTerms.next(term);
@@ -90,5 +109,10 @@ export class NavinComponent {
 
       window.location.reload();
     });
+  }
+  navigatecv(userinfo:UserAllInfo){
+        this.userService.setUserAllInfoData(userinfo)
+        this.router.navigate([`/cvpage/${userinfo.userInfos.nickName}`]);
+    
   }
 }

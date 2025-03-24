@@ -1,148 +1,247 @@
-.add-blog-container {
+
+:root {
+  --primary: #3f51b5;
+  --primary-light: #757de8;
+  --primary-dark: #002984;
+  --secondary: #ff4081;
+  --secondary-light: #ff79b0;
+  --secondary-dark: #c60055;
+  --text-light: #f8f9fa;
+  --text-dark: #343a40;
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-800: #343a40;
+  --success: #4caf50;
+  --danger: #f44336;
+  --border-radius: 8px;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+  --transition: all 0.3s ease;
+}
+
+/* Container and layout */
+.container {
+  display: flex;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 2rem 1rem;
+  background-color: var(--gray-100);
+}
+
+.form-wrapper {
+  width: 100%;
   max-width: 800px;
-  margin: 2rem auto;
+  background-color: white;
+  border-radius: var(--border-radius);
+  /* Belirgin gölge efekti */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
   padding: 2rem;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.page-title {
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primary);
   text-align: center;
-  color: #333;
-  margin-bottom: 1.5rem;
+  position: relative;
 }
 
-.blog-form {
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 60px;
+  height: 4px;
+  background-color: var(--primary-light);
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+
+.form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-.form-group {
+.input-group {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
 
-.form-group label {
-  font-weight: bold;
-  color: #444;
-  margin-bottom: 0.5rem;
+.input-group label {
+  font-weight: 600;
+  color: var(--gray-800);
+  font-size: 0.9rem;
 }
 
-.form-group input[type="text"],
-.form-group textarea {
+.input-group input,
+.input-group textarea {
   width: 100%;
-  padding: 0.8rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--gray-300);
+  border-radius: var(--border-radius);
   font-size: 1rem;
-  transition: border-color 0.3s;
+  transition: var(--transition);
+  background-color: var(--gray-100);
 }
 
-.form-group input[type="text"]:focus,
-.form-group textarea:focus {
-  border-color: #007bff;
+.input-group input:focus,
+.input-group textarea:focus {
+  border-color: var(--primary);
   outline: none;
+  box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.2);
 }
 
-.image-preview {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-top: 1rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+  color: var(--gray-500);
 }
 
-.form-actions {
+/* Media upload area */
+.media-upload {
+  margin: 0.5rem 0;
+}
+
+.upload-area {
   display: flex;
-  justify-content: space-between;
-}
-
-.submit-btn, .cancel-btn {
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.submit-btn {
-  background-color: #28a745;
-}
-
-.submit-btn:hover {
-  background-color: #218838;
-}
-
-.cancel-btn {
-  background-color: #dc3545;
-}
-
-.cancel-btn:hover {
-  background-color: #c82333;
-}
-.image-upload-container {
-  display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-}
-
-.image-upload-box {
+  justify-content: center;
   width: 100%;
   height: 200px;
-  border: 2px dashed #ccc;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border: 2px dashed var(--gray-400);
+  border-radius: var(--border-radius);
   cursor: pointer;
-  transition: border-color 0.3s;
-  position: relative;
+  transition: var(--transition);
+  background-color: var(--gray-100);
   overflow: hidden;
-  background-color: #f8f9fa;
+  position: relative;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.image-upload-box:hover {
-  border-color: #007bff;
+.upload-area:hover {
+  border-color: var(--primary);
+  background-color: rgba(63, 81, 181, 0.05);
 }
 
-/* Seçim yapılmadığında görünen "Resim Seç" yazısı */
+.upload-icon {
+  font-size: 2.5rem;
+  color: var(--gray-500);
+  margin-bottom: 1rem;
+}
+
 .upload-text {
   font-size: 1rem;
-  font-weight: bold;
-  color: #666;
-  transition: opacity 0.3s;
+  color: var(--gray-500);
+  font-weight: 500;
 }
 
-/* Resim seçildiğinde ekrana çıkan overlay (karartılı efekt) */
-.upload-overlay {
+.has-image {
+  border-style: solid;
+  border-color: var(--primary-light);
+}
+
+
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+}
+
+.preview-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Hafif karartma efekti */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
+  opacity: 0;
+  transition: var(--transition);
 }
-
-/* "Fotoğraf Yüklendi" mesajı */
-.upload-success-text {
-  color: white;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-/* Resim önizleme */
-.image-preview {
+.preview-container {
+  position: relative;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
+}
+.preview-container:hover .preview-overlay {
+  opacity: 1;
+}
+
+.change-image-text {
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Action buttons */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.95rem;
+  /* Buton gölge efekti */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.btn i {
+  font-size: 1rem;
+}
+
+
+
+.btn-secondary {
+  background-color: white;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+
+.btn-secondary:hover {
+  background-color: var(--danger);
+  color: #1a1a1a;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .form-wrapper {
+    padding: 1.5rem;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+  }
+  
+  .upload-area {
+    height: 160px;
+  }
+  
+  .btn {
+    padding: 0.6rem 1.2rem;
+  }
 }

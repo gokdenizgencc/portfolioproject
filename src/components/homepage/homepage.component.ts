@@ -95,7 +95,12 @@ export class HomepageComponent {
       );
     }
   }
-
+  goaddproject(){
+    this.router.navigate([`projects/add`]);
+  }
+  goaddblog(){
+    this.router.navigate([`blogs/add`]);
+  }
   truncate(content: string, wordLimit: number = 10): string {
     const words = content.split(' ');
     if (words.length > wordLimit) {
@@ -106,22 +111,22 @@ export class HomepageComponent {
   getProfileImage(photoUrl: string): string {
     return photoUrl ? photoUrl : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
   }
-  goBlock(blogs:Blog[]){
-    this.blogService.setBlogsData(blogs);
-    this.router.navigate(["blogs"]);
+  goBlock(userinfo:UserAllInfo){
+    this.blogService.setBlogsData(userinfo.blogs);
+    this.router.navigate([`blogs/${userinfo.userInfos.nickName}`]);
   }
   goToBlog(blog:Blog){
   
     this.blogService.setBlogData(blog);
-    this.router.navigate([`/blogs/${blog.blogId}`]);
+    this.router.navigate([`/blog/${blog.blogId}`]);
   }
   goToProject(project:ProjectDto){
     this.projectService.setProjectData(project);
-    this.router.navigate([`/projects/${project.projectId}`]);
+    this.router.navigate([`/project/${project.projectId}`]);
   }
-  goProject(projects:ProjectDto[]){
-    this.projectService.setProjectsData(projects);
-    this.router.navigate(["projects"]);
+  goProject(userinfo:UserAllInfo){
+    this.projectService.setProjectsData(userinfo.projects);
+    this.router.navigate([`projects/${userinfo.userInfos.nickName}`]);
   }
   goToInfo(userinfo:UserAllInfo){
     this.userService.setUserAllInfoData(userinfo)
