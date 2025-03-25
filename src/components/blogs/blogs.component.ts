@@ -18,6 +18,7 @@ import { ProjectWithPastPhotoDto } from '../../models/projectWithPastPhotoDto';
 import { BlogDto } from '../../models/blogDto';
 import { DeleteConfirmDialogBlog } from '../delete-confirm-dialog-blog/delete-confirm-dialog-blog.component';
 import { Location } from '@angular/common';
+import { UserSearchResultDto } from '../../models/UserSearchResultDto';
 @Component({
   selector: 'app-blogs',
   standalone: true,
@@ -26,14 +27,18 @@ import { Location } from '@angular/common';
   styleUrl: './blogs.component.css'
 })
 export class BlogsComponent {
+  userinfo:UserAllInfo| null = null;
   blogs: Blog[] | null = null;
   projectss:ProjectDto[] | null = null;
   dataLoaded:Boolean
   projects:ProjectWithPhotoDto[];
   pasttitle:string| null = null;
+  userinfof:UserAllInfo| null = null;;
   isBlogPage: boolean = false; 
+  username: string;
+      private userSearchResultDto: UserSearchResultDto | null = null;
     constructor(private location: Location,private blogService:BlogService,private projectService:ProjectService,
-      private toastrService:ToastrService,private router:Router,private activatedRoute: ActivatedRoute,public dialog: MatDialog,private changeDetectorRef: ChangeDetectorRef){
+      private toastrService:ToastrService,private router:Router,private activatedRoute: ActivatedRoute,public dialog: MatDialog,private changeDetectorRef: ChangeDetectorRef,private userService:UserService){
   
     }
   ngOnInit():void{
@@ -66,10 +71,95 @@ export class BlogsComponent {
       }
     });
   }
+  private GetData() {
+    const savedCurrentUserInfo = this.getUserInfoDataFromStorage();
+    if (savedCurrentUserInfo) {
+      this.userinfof = savedCurrentUserInfo;
+    } else {
+      this.userinfof = this.userService.getUserAllInfoData();
+      if (this.userinfof) {
+        this.setUserInfoData(this.userinfof);
+      }
+    }
+     if (this.username && this.username === this.userinfof?.userInfos.nickName) {
+      const savedOwnInfo = this.getUserInfoDataFromStorage();
+      if (savedOwnInfo) {
+        this.userinfo = savedOwnInfo;
+        this.dataLoaded = true;
+      } else {
+        this.userinfo = this.userService.getUserAllInfoData();
+        if (this.userinfo) {
+          this.setUserInfoData(this.userinfo);
+        }
+        this.dataLoaded = true;
+      }
+    }
+
+    else if (this.userSearchResultDto = this.userService.getUserAllInfoDataOther()) {
+      this.getinfoother();
+    }
+
+  
+
+    else if (this.username && this.userinfof && this.username !== this.userinfof.userInfos.nickName) {
+      const savedOtherInfo = this.getUserInfoDataFromStorageOt();
+      if (savedOtherInfo && savedOtherInfo.userInfos.nickName === this.username) {
+        this.userinfo = savedOtherInfo;
+        this.dataLoaded = true;
+      }
+
+      else {
+        this.getinfoByName(this.username);
+      }
+    }
+
+    else if (this.username) {
+      this.getinfoByName(this.username);
+    }
+  }
   setBlogsData(blog: Blog[]): void {
     localStorage.setItem('blogsData', JSON.stringify(blog));  
   }
-
+  getUserInfoDataFromStorage(): UserAllInfo | null {
+    const userAllInfoData = localStorage.getItem('userinfo');
+    return userAllInfoData ? JSON.parse(userAllInfoData) : null;
+  }
+  getinfoother(){
+    this.userService.getAllUserİnformartionOther(this.userSearchResultDto!.userId).subscribe(
+      (response) => {
+        this.userinfo = response.data;
+        this.dataLoaded = true;
+        localStorage.setItem('userinfoo', JSON.stringify(this.userinfo)); // Veriyi localStorage'a kaydet
+      },
+      (responseError) => {
+        this.toastrService.error(responseError.error.Message, 'Hata', {});
+      }
+    );
+  }
+  getinfoByName(name:string) {
+ 
+    this.userService.getAllUserİnformartionByNickName(name).subscribe(
+      (response) => {
+        this.userinfo = response.data;
+        this.dataLoaded = true;
+        localStorage.setItem('userinfoo', JSON.stringify(this.userinfo)); // Veriyi localStorage'a kaydet
+      },
+      (responseError) => {
+        this.toastrService.error(responseError.error.Message, 'Hata', {});
+      }
+    );
+  
+}
+  getUserInfoDataFromStorageOt(): UserAllInfo | null {
+    const userAllInfoData = localStorage.getItem('userinfoo');
+    return userAllInfoData ? JSON.parse(userAllInfoData) : null;
+  }
+  setUserInfoData(userAllInfo: UserAllInfo): void {
+    localStorage.setItem('userinfo', JSON.stringify(userAllInfo));  
+  }
+  setUserInfoDataOt(userAllInfo: UserAllInfo): void {
+    localStorage.setItem('userinfoo', JSON.stringify(userAllInfo));  
+  }
   getBlogsDataFromStorage(): Blog[] | null {
     const blogData = localStorage.getItem('blogsData');
     return blogData ? JSON.parse(blogData) : null;

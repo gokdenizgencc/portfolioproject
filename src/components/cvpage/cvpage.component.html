@@ -22,7 +22,7 @@
 
   <div class="cv-columns">
     <div class="cv-left-column">
-      <!-- Deneyim -->
+
       <div class="cv-section">
         <h3 class="section-title">Deneyim</h3>
         <div class="content-item" *ngFor="let exp of userinfo?.workExperiences || []">
@@ -36,7 +36,7 @@
         </div>
       </div>
 
-      <!-- Eğitim -->
+ 
       <div class="cv-section">
         <h3 class="section-title">Eğitim</h3>
         <div class="content-item" *ngFor="let edu of userinfo?.educationInfo || []">
@@ -47,11 +47,21 @@
             </div>
           </div>
         </div>
+        
       </div>
+
+      <div class="cv-section">
+        <h3 class="section-title">Diller</h3>
+        <div class="language-item" *ngFor="let lang of userinfo?.foreignLanguage || []">
+          <span class="language-name">{{lang.language || '-'}}:</span>
+          <span class="language-level">{{lang.rating || '-'}}</span>
+        </div>
+      </div>
+      
     </div>
 
     <div class="cv-right-column">
-      <!-- Yetenekler -->
+
       <div class="cv-section">
         <h3 class="section-title">Yetenekler</h3>
         <div class="skill-item" *ngFor="let skill of userinfo?.skills || []">
@@ -65,7 +75,7 @@
         </div>
       </div>
 
-      <!-- Sertifikalar -->
+
       <div class="cv-section">
         <h3 class="section-title">Sertifikalar</h3>
         <div class="content-item" *ngFor="let cerf of userinfo?.certificates || []">
@@ -81,19 +91,14 @@
         </div>
       </div>
 
-      <!-- Diller -->
-      <div class="cv-section">
-        <h3 class="section-title">Diller</h3>
-        <div class="language-item" *ngFor="let lang of userinfo?.foreignLanguage || []">
-          <span class="language-name">{{lang.language || '-'}}:</span>
-          <span class="language-level">{{lang.rating || '-'}}</span>
-        </div>
-      </div>
+      <button class="mid-btn" (click)="goBlock(userinfo!)">Bloglar</button>
+      <button class="mid-btn" (click)="goProject(userinfo!)">Projeler</button>
     </div>
+    
   </div>
+  
 </div>
 
-<!-- Yüklenme durumu -->
 <ng-template #loadingTemplate>
   <div *ngIf="!dataLoaded" class="loading-container">
     <span class="sr-only">Yükleniyor...</span>

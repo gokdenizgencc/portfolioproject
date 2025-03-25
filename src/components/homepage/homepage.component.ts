@@ -111,10 +111,7 @@ export class HomepageComponent {
   getProfileImage(photoUrl: string): string {
     return photoUrl ? photoUrl : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
   }
-  goBlock(userinfo:UserAllInfo){
-    this.blogService.setBlogsData(userinfo.blogs);
-    this.router.navigate([`blogs/${userinfo.userInfos.nickName}`]);
-  }
+ 
   goToBlog(blog:Blog){
   
     this.blogService.setBlogData(blog);
@@ -127,6 +124,10 @@ export class HomepageComponent {
   goProject(userinfo:UserAllInfo){
     this.projectService.setProjectsData(userinfo.projects);
     this.router.navigate([`projects/${userinfo.userInfos.nickName}`]);
+  }
+  goBlock(userinfo:UserAllInfo){
+    this.blogService.setBlogsData(userinfo.blogs);
+    this.router.navigate([`blogs/${userinfo.userInfos.nickName}`]);
   }
   goToInfo(userinfo:UserAllInfo){
     this.userService.setUserAllInfoData(userinfo)

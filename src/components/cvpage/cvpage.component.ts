@@ -7,6 +7,8 @@ import { UserAllInfo } from '../../models/userAllInfo';
 import { UserService } from '../../services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserSearchResultDto } from '../../models/UserSearchResultDto';
+import { BlogService } from '../../services/blog.service';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-cvpage',
@@ -22,7 +24,7 @@ export class CvpageComponent {
      isOwnPage: boolean = false;
      dataLoaded=false;
      private userSearchResultDto: UserSearchResultDto | null = null;
-      constructor(private userService:UserService,private router:Router,private route: ActivatedRoute,private toastrService:ToastrService,){
+      constructor(private userService:UserService,private router:Router,private route: ActivatedRoute,private toastrService:ToastrService,private blogService:BlogService,private projectService:ProjectService){
       }
     ngOnInit():void{
       this.route.paramMap.subscribe(params => {
@@ -154,6 +156,14 @@ export class CvpageComponent {
     this.router.navigate([`userinfo/${userinfo.userInfos.nickName}`]);
   }
 
+  goProject(userinfo:UserAllInfo){
+    this.projectService.setProjectsData(userinfo.projects);
+    this.router.navigate([`projects/${userinfo.userInfos.nickName}`]);
+  }
+  goBlock(userinfo:UserAllInfo){
+    this.blogService.setBlogsData(userinfo.blogs);
+    this.router.navigate([`blogs/${userinfo.userInfos.nickName}`]);
+  }
   
 
 }
