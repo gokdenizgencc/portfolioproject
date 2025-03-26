@@ -22,7 +22,6 @@ body {
   padding: 0 1.5rem;
 }
 
-/* Header Styles */
 .header {
   display: flex;
   justify-content: space-between;
@@ -34,6 +33,9 @@ body {
   font-size: 1.75rem;
   font-weight: 700;
   margin: 0;
+  text-align: center;
+  flex-grow: 1;  /* Başlığın genişlemesini sağlar, böylece ortada kalır */
+  text-align: center;
 }
 
 .back-btn, .add-btn {

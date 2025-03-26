@@ -25,7 +25,7 @@ import { ForeignLanguageDto } from '../../models/foreignLanguageDto';
 import { ForeignLanguages } from '../../models/foreignLanguage';
 import { UserSearchResultDto } from '../../models/UserSearchResultDto';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-userinfo',
   standalone: true,
@@ -56,7 +56,7 @@ export class UserinfoComponent {
     backupForeignLanguages: ForeignLanguages[] | null = null;
     backupCertificates: Certificate[] | null = null;
      private userSearchResultDto: UserSearchResultDto | null = null;
-      constructor(private userService:UserService,private activatedRoute:ActivatedRoute,private toastrService:ToastrService,
+      constructor(private userService:UserService,private location: Location,private activatedRoute:ActivatedRoute,private toastrService:ToastrService,
         private router:Router,private userinfoService:UserinfoService,private educationInfoService:EducationInfoService,
         private certificateService:CertificateService,private workExperienceService:WorkExperienceService,
         private foreignLanguageService:ForeignLanguageService,private route: ActivatedRoute){
@@ -324,6 +324,7 @@ export class UserinfoComponent {
       } else {
 
         const userInfoApplication: UserInfoApplicantDto = {
+          userInfoId:userInfo.userInfoId,
           livingLocation: userInfo.livingLocation,
           nationality: userInfo.nationality,
           nationalityId: userInfo.nationalityId,
@@ -340,7 +341,7 @@ export class UserinfoComponent {
             localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
           },
           responseError => {
-            this.toastrService.error(responseError.error.Message, 'Hata');
+            this.toastrService.error(responseError.error.message, 'Hata');
     
             // Eğer hata alırsak eski verilere geri dönüyoruz
             this.userinfo!.userInfos!.livingLocation = this.backupUserInfo.livingLocation;
@@ -597,15 +598,13 @@ export class UserinfoComponent {
     localStorage.setItem('userinfo', JSON.stringify(userAllInfo));  
   }
   gomain(){
-
-    this.router.navigate([`homepage`]);
+    this.location.back();
   }
   getUserInfoDataFromStorage(): UserAllInfo | null {
     const userAllInfoData = localStorage.getItem('userinfo');
     return userAllInfoData ? JSON.parse(userAllInfoData) : null;
   }
   ngOnDestroy(): void {
-    localStorage.removeItem('userinfo'); 
     localStorage.removeItem('userinfoo'); 
   }
 }

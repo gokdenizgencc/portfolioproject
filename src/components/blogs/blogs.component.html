@@ -5,7 +5,7 @@
         <i class="fas fa-arrow-left"></i>
       </button>
       <h2 class="page-title">Blog</h2>
-      <button class="add-btn" (click)="navigateAdd()">
+      <button *ngIf="!otherinfo" class="add-btn" (click)="navigateAdd()">
         <i class="fas fa-plus"></i> Blog Ekle
       </button>
     </div>
@@ -13,10 +13,10 @@
     <div class="content-grid">
       <div *ngFor="let blog of blogs" class="card">
         <div class="card-actions">
-          <button class="action-btn delete-btn" (click)="openDeleteDialogForBlog(blog)">
+          <button *ngIf="!otherinfo" class="action-btn delete-btn" (click)="openDeleteDialogForBlog(blog)">
             <i class="fa-solid fa-trash"></i>
           </button>
-          <button class="action-btn edit-btn" (click)="goedit(blog)">
+          <button *ngIf="!otherinfo" class="action-btn edit-btn" (click)="goedit(blog)">
             <i class="fa-solid fa-pen"></i>
           </button>
         </div>
@@ -43,11 +43,11 @@
   
   <ng-template #showProjects>
     <div class="header">
-      <button class="back-btn" (click)="gomain()">
+      <button  class="back-btn" (click)="gomain()">
         <i class="fas fa-arrow-left"></i>
       </button>
       <h2 class="page-title">Projeler</h2>
-      <button class="add-btn" (click)="navigateAddd()">
+      <button *ngIf="!otherinfo" class="add-btn" (click)="navigateAddd()">
         <i class="fas fa-plus"></i> Proje Ekle
       </button>
     </div>
@@ -55,10 +55,10 @@
     <div class="content-grid">
       <div *ngFor="let project of projectss" class="card">
         <div class="card-actions">
-          <button class="action-btn delete-btn" (click)="openDeleteDialog(project)">
+          <button *ngIf="!otherinfo" class="action-btn delete-btn" (click)="openDeleteDialog(project)">
             <i class="fa-solid fa-trash"></i>
           </button>
-          <button class="action-btn edit-btn" (click)="goeditp(project)">
+          <button *ngIf="!otherinfo" class="action-btn edit-btn" (click)="goeditp(project)">
             <i class="fa-solid fa-pen"></i>
           </button>
         </div>

@@ -66,15 +66,12 @@ export class CvpageComponent {
       this.getinfoother();
     }
 
-  
-
     else if (this.username && this.userinfof && this.username !== this.userinfof.userInfos.nickName) {
       const savedOtherInfo = this.getUserInfoDataFromStorageOt();
       if (savedOtherInfo && savedOtherInfo.userInfos.nickName === this.username) {
         this.userinfo = savedOtherInfo;
         this.dataLoaded = true;
       }
-
       else {
         this.getinfoByName(this.username);
       }
@@ -113,7 +110,6 @@ export class CvpageComponent {
     }
     getinfo() {
       const storedUserInfo = localStorage.getItem('userinfo');
-  
       if (storedUserInfo) {
         this.userinfo = JSON.parse(storedUserInfo);
         this.dataLoaded = true;
@@ -131,7 +127,6 @@ export class CvpageComponent {
       }
     }
     getinfoByName(name:string) {
- 
         this.userService.getAllUserİnformartionByNickName(name).subscribe(
           (response) => {
             this.userinfo = response.data;
@@ -142,17 +137,14 @@ export class CvpageComponent {
             this.toastrService.error(responseError.error.Message, 'Hata', {});
           }
         );
-      
     }
     ngOnDestroy(): void {
       localStorage.removeItem('userinfoo');
     }
   gomain(){
-
     this.router.navigate([`homepage`]);
   }
   gouserinfo(userinfo:UserAllInfo){
-
     this.router.navigate([`userinfo/${userinfo.userInfos.nickName}`]);
   }
 

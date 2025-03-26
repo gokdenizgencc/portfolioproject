@@ -31,10 +31,12 @@ export class BlogsComponent {
   blogs: Blog[] | null = null;
   projectss:ProjectDto[] | null = null;
   dataLoaded:Boolean
+  firstSegment:string;
   projects:ProjectWithPhotoDto[];
   pasttitle:string| null = null;
   userinfof:UserAllInfo| null = null;;
   isBlogPage: boolean = false; 
+  otherinfo: boolean = false;
   username: string;
       private userSearchResultDto: UserSearchResultDto | null = null;
     constructor(private location: Location,private blogService:BlogService,private projectService:ProjectService,
@@ -42,9 +44,17 @@ export class BlogsComponent {
   
     }
   ngOnInit():void{
+
     this.activatedRoute.url.subscribe(urlSegment => {
-      const firstSegment = urlSegment[0]?.path; 
-      if (firstSegment === 'blogs') {
+       this.firstSegment = urlSegment[0]?.path;
+      this.username=urlSegment[1]?.path; 
+      const savedCurrentUserInfo = this.getUserInfoDataFromStorage();
+      if (savedCurrentUserInfo) {
+        this.userinfo = savedCurrentUserInfo;
+      }
+      const isOwnProfile = this.username === this.userinfo?.userInfos?.nickName;
+
+      if (this.firstSegment === 'blogs') {
         this.isBlogPage = true;
         const savedBlog = this.getBlogsDataFromStorage();
         if (savedBlog) {
@@ -53,7 +63,18 @@ export class BlogsComponent {
      
           this.blogs = this.blogService.getBlogsData();
           if (this.blogs) {
-            this.setBlogsData(this.blogs); 
+            if(isOwnProfile){
+  
+              this.setBlogsData(this.blogs); 
+            }
+            else{
+              this.otherinfo=true;
+              this.setBlogsData(this.blogs); 
+            }
+      
+          }
+          else{
+            this.GetData()
           }
         }
       } else {
@@ -65,55 +86,42 @@ export class BlogsComponent {
      
           this.projectss = this.projectService.getProjectsData();
           if (this.projectss) {
-            this.setProjectsData(this.projectss); 
+            if(isOwnProfile){
+       
+              this.setProjectsData(this.projectss); 
+        
+            }
+            else{
+              this.otherinfo=true;
+              this.setProjectsData(this.projectss);
+            }
+        
+          }
+          else{
+            this.GetData()
           }
         }
       }
     });
   }
   private GetData() {
-    const savedCurrentUserInfo = this.getUserInfoDataFromStorage();
-    if (savedCurrentUserInfo) {
-      this.userinfof = savedCurrentUserInfo;
-    } else {
-      this.userinfof = this.userService.getUserAllInfoData();
-      if (this.userinfof) {
-        this.setUserInfoData(this.userinfof);
-      }
-    }
-     if (this.username && this.username === this.userinfof?.userInfos.nickName) {
-      const savedOwnInfo = this.getUserInfoDataFromStorage();
-      if (savedOwnInfo) {
-        this.userinfo = savedOwnInfo;
-        this.dataLoaded = true;
-      } else {
-        this.userinfo = this.userService.getUserAllInfoData();
-        if (this.userinfo) {
-          this.setUserInfoData(this.userinfo);
-        }
-        this.dataLoaded = true;
-      }
-    }
 
-    else if (this.userSearchResultDto = this.userService.getUserAllInfoDataOther()) {
-      this.getinfoother();
-    }
-
-  
-
-    else if (this.username && this.userinfof && this.username !== this.userinfof.userInfos.nickName) {
+    if (this.username && this.userinfof && this.username !== this.userinfof.userInfos.nickName) {
       const savedOtherInfo = this.getUserInfoDataFromStorageOt();
       if (savedOtherInfo && savedOtherInfo.userInfos.nickName === this.username) {
         this.userinfo = savedOtherInfo;
         this.dataLoaded = true;
+        this.otherinfo=true;
       }
 
       else {
+        this.otherinfo=true;
         this.getinfoByName(this.username);
       }
     }
 
     else if (this.username) {
+      this.otherinfo=true;
       this.getinfoByName(this.username);
     }
   }
@@ -124,23 +132,20 @@ export class BlogsComponent {
     const userAllInfoData = localStorage.getItem('userinfo');
     return userAllInfoData ? JSON.parse(userAllInfoData) : null;
   }
-  getinfoother(){
-    this.userService.getAllUserİnformartionOther(this.userSearchResultDto!.userId).subscribe(
-      (response) => {
-        this.userinfo = response.data;
-        this.dataLoaded = true;
-        localStorage.setItem('userinfoo', JSON.stringify(this.userinfo)); // Veriyi localStorage'a kaydet
-      },
-      (responseError) => {
-        this.toastrService.error(responseError.error.Message, 'Hata', {});
-      }
-    );
-  }
   getinfoByName(name:string) {
  
     this.userService.getAllUserİnformartionByNickName(name).subscribe(
       (response) => {
-        this.userinfo = response.data;
+        if (this.firstSegment === 'blogs') {
+          this.otherinfo=true;
+          this.blogs = response.data.blogs;
+          this.setBlogsData(this.blogs); 
+        }
+        else{
+          this.otherinfo=true;
+          this.projectss=response.data.projects
+          this.setProjectsData(this.projectss); 
+        }
         this.dataLoaded = true;
         localStorage.setItem('userinfoo', JSON.stringify(this.userinfo)); // Veriyi localStorage'a kaydet
       },
@@ -150,19 +155,13 @@ export class BlogsComponent {
     );
   
 }
-  getUserInfoDataFromStorageOt(): UserAllInfo | null {
-    const userAllInfoData = localStorage.getItem('userinfoo');
-    return userAllInfoData ? JSON.parse(userAllInfoData) : null;
-  }
-  setUserInfoData(userAllInfo: UserAllInfo): void {
-    localStorage.setItem('userinfo', JSON.stringify(userAllInfo));  
-  }
-  setUserInfoDataOt(userAllInfo: UserAllInfo): void {
-    localStorage.setItem('userinfoo', JSON.stringify(userAllInfo));  
-  }
   getBlogsDataFromStorage(): Blog[] | null {
     const blogData = localStorage.getItem('blogsData');
     return blogData ? JSON.parse(blogData) : null;
+  }
+  getUserInfoDataFromStorageOt(): UserAllInfo | null {
+    const userAllInfoData = localStorage.getItem('userinfoo');
+    return userAllInfoData ? JSON.parse(userAllInfoData) : null;
   }
   openDeleteDialog(project: Project): void {
     const dialogRef = this.dialog.open(DeleteConfirmDialog);
@@ -296,6 +295,7 @@ export class BlogsComponent {
       localStorage.removeItem('blogsData');
       localStorage.removeItem('projectsData');
     }
+    
   }
   goedit(blog:Blog){
     this.blogService.setBlogData(blog);
