@@ -19,6 +19,7 @@ import { BlogDto } from '../../models/blogDto';
 import { DeleteConfirmDialogBlog } from '../delete-confirm-dialog-blog/delete-confirm-dialog-blog.component';
 import { Location } from '@angular/common';
 import { UserSearchResultDto } from '../../models/UserSearchResultDto';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-blogs',
   standalone: true,
@@ -39,7 +40,7 @@ export class BlogsComponent {
   otherinfo: boolean = false;
   username: string;
       private userSearchResultDto: UserSearchResultDto | null = null;
-    constructor(private location: Location,private blogService:BlogService,private projectService:ProjectService,
+    constructor(private location: Location,private authService:AuthService,private blogService:BlogService,private projectService:ProjectService,
       private toastrService:ToastrService,private router:Router,private activatedRoute: ActivatedRoute,public dialog: MatDialog,private changeDetectorRef: ChangeDetectorRef,private userService:UserService){
   
     }
@@ -52,13 +53,17 @@ export class BlogsComponent {
       if (savedCurrentUserInfo) {
         this.userinfo = savedCurrentUserInfo;
       }
-      const isOwnProfile = this.username === this.userinfo?.userInfos?.nickName;
+      var result=this.authService.decodejwtusername();
+      const isOwnProfile = this.username === result;
 
       if (this.firstSegment === 'blogs') {
         this.isBlogPage = true;
         const savedBlog = this.getBlogsDataFromStorage();
         if (savedBlog) {
           this.blogs = savedBlog; 
+          if(isOwnProfile==false){
+            this.otherinfo=true;
+          }
         } else {
      
           this.blogs = this.blogService.getBlogsData();
@@ -81,7 +86,9 @@ export class BlogsComponent {
         const savedBlog = this.getProjectsDataFromStorage();
         if (savedBlog) {
           this.projectss = savedBlog; 
-          
+          if(isOwnProfile==false){
+            this.otherinfo=true;
+          }
         } else {
      
           this.projectss = this.projectService.getProjectsData();
@@ -106,9 +113,9 @@ export class BlogsComponent {
   }
   private GetData() {
 
-    if (this.username && this.userinfof && this.username !== this.userinfof.userInfos.nickName) {
+    if (this.username && this.userinfof && this.username !== this.userinfof.username) {
       const savedOtherInfo = this.getUserInfoDataFromStorageOt();
-      if (savedOtherInfo && savedOtherInfo.userInfos.nickName === this.username) {
+      if (savedOtherInfo && savedOtherInfo.username === this.username) {
         this.userinfo = savedOtherInfo;
         this.dataLoaded = true;
         this.otherinfo=true;

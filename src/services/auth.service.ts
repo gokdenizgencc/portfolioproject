@@ -17,6 +17,7 @@ import { RegisterModel } from '../models/registerModel';
 export class AuthService {
   apiUrl="http://localhost:46772/api/auth/";
   id:number;
+  user:string;
   constructor(private httpClient:HttpClient,@Inject(DOCUMENT) private document: Document,private toastrService:ToastrService,  private router:Router) {
     const localStorage = document.defaultView?.localStorage;
    }
@@ -34,6 +35,13 @@ export class AuthService {
     const nameIdentifier = decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
     this.id = nameIdentifier !== null ? parseInt(nameIdentifier, 10) : 0;
     return this.id;
+  }
+  decodejwtusername(){
+    const token=localStorage.getItem('token')!;
+    const decoded:any  = jwtDecode(token);
+    const username = decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+    this.user = username !== null ? username : 0;
+    return this.user;
   }
   getIntFromLocalStorage(key: string, defaultValue: number = 0): string |null {
     if (typeof window !== 'undefined' && localStorage) { // Tarayıcıda çalıştığını kontrol et

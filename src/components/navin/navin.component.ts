@@ -112,7 +112,7 @@ export class NavinComponent {
   }
   navigatecv(userinfo:UserAllInfo){
         this.userService.setUserAllInfoData(userinfo)
-        this.router.navigate([`/cvpage/${userinfo.userInfos.nickName}`]);
+        this.router.navigate([`/cvpage/${userinfo.username}`]);
     
   }
 }

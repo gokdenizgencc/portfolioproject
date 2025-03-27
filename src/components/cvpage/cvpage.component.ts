@@ -32,11 +32,6 @@ export class CvpageComponent {
         this.GetData();
       });
     
-    
-
-  
-    
-  
     }
   private GetData() {
     const savedCurrentUserInfo = this.getUserInfoDataFromStorage();
@@ -48,7 +43,7 @@ export class CvpageComponent {
         this.setUserInfoData(this.userinfof);
       }
     }
-     if (this.username && this.username === this.userinfof?.userInfos.nickName) {
+     if (this.username && this.username === this.userinfof?.username) {
       const savedOwnInfo = this.getUserInfoDataFromStorage();
       if (savedOwnInfo) {
         this.userinfo = savedOwnInfo;
@@ -66,9 +61,9 @@ export class CvpageComponent {
       this.getinfoother();
     }
 
-    else if (this.username && this.userinfof && this.username !== this.userinfof.userInfos.nickName) {
+    else if (this.username && this.userinfof && this.username !== this.userinfof.username) {
       const savedOtherInfo = this.getUserInfoDataFromStorageOt();
-      if (savedOtherInfo && savedOtherInfo.userInfos.nickName === this.username) {
+      if (savedOtherInfo && savedOtherInfo.username === this.username) {
         this.userinfo = savedOtherInfo;
         this.dataLoaded = true;
       }
@@ -145,16 +140,16 @@ export class CvpageComponent {
     this.router.navigate([`homepage`]);
   }
   gouserinfo(userinfo:UserAllInfo){
-    this.router.navigate([`userinfo/${userinfo.userInfos.nickName}`]);
+    this.router.navigate([`userinfo/${userinfo.username}`]);
   }
 
   goProject(userinfo:UserAllInfo){
     this.projectService.setProjectsData(userinfo.projects);
-    this.router.navigate([`projects/${userinfo.userInfos.nickName}`]);
+    this.router.navigate([`projects/${userinfo.username}`]);
   }
   goBlock(userinfo:UserAllInfo){
     this.blogService.setBlogsData(userinfo.blogs);
-    this.router.navigate([`blogs/${userinfo.userInfos.nickName}`]);
+    this.router.navigate([`blogs/${userinfo.username}`]);
   }
   
 

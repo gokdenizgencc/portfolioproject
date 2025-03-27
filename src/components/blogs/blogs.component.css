@@ -52,9 +52,6 @@ body {
   gap: 0.5rem;
 }
 
-.back-btn {
-  padding: 0.6rem 1rem;
-}
 
 .back-btn:hover, .add-btn:hover {
   background-color: var(--secondary-color);
@@ -217,7 +214,6 @@ body {
   
   .header {
     flex-wrap: wrap;
-    gap: 1rem;
   }
   
   .page-title {

@@ -13,7 +13,7 @@ import { ForeignLanguages } from "./foreignLanguage";
 import { UserInfos } from "./userInfo";
 
 export interface UserAllInfo {
-  name: string;
+  username:string;
   profilePhoto:string;
   github:string;
   linkedIn:string;

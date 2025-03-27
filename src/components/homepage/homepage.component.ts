@@ -123,18 +123,18 @@ export class HomepageComponent {
   }
   goProject(userinfo:UserAllInfo){
     this.projectService.setProjectsData(userinfo.projects);
-    this.router.navigate([`projects/${userinfo.userInfos.nickName}`]);
+    this.router.navigate([`projects/${userinfo.username}`]);
   }
   goBlock(userinfo:UserAllInfo){
     this.blogService.setBlogsData(userinfo.blogs);
-    this.router.navigate([`blogs/${userinfo.userInfos.nickName}`]);
+    this.router.navigate([`blogs/${userinfo.username}`]);
   }
   goToInfo(userinfo:UserAllInfo){
     this.userService.setUserAllInfoData(userinfo)
-    this.router.navigate([`userinfo/${userinfo.userInfos.nickName}`]);
+    this.router.navigate([`userinfo/${userinfo.username}`]);
   }
   goToCv(userinfo:UserAllInfo){
     this.userService.setUserAllInfoData(userinfo)
-    this.router.navigate([`/cvpage/${userinfo.userInfos.nickName}`]);
+    this.router.navigate([`/cvpage/${userinfo.username}`]);
   }
 }

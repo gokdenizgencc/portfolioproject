@@ -14,12 +14,5 @@ import { LoginComponent } from "../components/login/login.component";
 })
 export class AppComponent {
   title:string = 'portfolioproject';
-  @HostListener('window:beforeunload', ['$event'])
-  clearLocalStorage(event: Event): void {
-    const token = localStorage.getItem('token'); // Token'u sakla
-    localStorage.clear(); // Tüm localStorage'ı temizle
-    if (token) {
-      localStorage.setItem('token', token); // Token'u geri yükle
-    }
-  }
+
 }

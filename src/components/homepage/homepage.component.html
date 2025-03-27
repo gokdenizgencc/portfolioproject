@@ -6,7 +6,7 @@
 <div *ngIf="dataLoaded" class="profile-container">
   <div class="profile-left">
   <img src="{{userinfo.profilePhoto}}" alt="Profil Resmi" class="profile-image">
-    <h2 class="user-name">{{userinfo.userInfos.nickName}}</h2>
+    <h2 class="user-name">{{userinfo.username}}</h2>
 
     <button (click)="goToInfo(userinfo)" class="action-button">Kullanıcı Bilgileri</button>
 

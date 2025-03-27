@@ -78,7 +78,7 @@ export class UserinfoComponent {
           this.setUserInfoData(this.userinfof);
         }
       }
-       if (this.username && this.username === this.userinfof?.userInfos.nickName) {
+       if (this.username && this.username === this.userinfof?.username) {
         const savedOwnInfo = this.getUserInfoDataFromStorage();
         if (savedOwnInfo) {
           this.userinfo = savedOwnInfo;
@@ -101,9 +101,9 @@ export class UserinfoComponent {
   
     
   
-      else if (this.username && this.userinfof && this.username !== this.userinfof.userInfos.nickName) {
+      else if (this.username && this.userinfof && this.username !== this.userinfof.username) {
         const savedOtherInfo = this.getUserInfoDataFromStorageOt();
-        if (savedOtherInfo && savedOtherInfo.userInfos.nickName === this.username) {
+        if (savedOtherInfo && savedOtherInfo.username === this.username) {
           this.userinfo = savedOtherInfo;
           this.dataLoaded = true;
           this.otherinfo=true;
@@ -334,6 +334,7 @@ export class UserinfoComponent {
         this.userinfoService.UpdateUserInfoApplicant(userInfoApplication).subscribe(
           response => {
             this.toastrService.info(response.message);
+            
             this.userinfo!.userInfos!.livingLocation = userInfo.livingLocation;
             this.userinfo!.userInfos!.nationality = userInfo.nationality;
             this.userinfo!.userInfos!.nationalityId = userInfo.nationalityId;
@@ -342,8 +343,6 @@ export class UserinfoComponent {
           },
           responseError => {
             this.toastrService.error(responseError.error.message, 'Hata');
-    
-            // Eğer hata alırsak eski verilere geri dönüyoruz
             this.userinfo!.userInfos!.livingLocation = this.backupUserInfo.livingLocation;
             this.userinfo!.userInfos!.nationality = this.backupUserInfo.nationality;
             this.userinfo!.userInfos!.nationalityId = this.backupUserInfo.nationalityId;

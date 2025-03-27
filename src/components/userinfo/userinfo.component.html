@@ -69,7 +69,7 @@
       <div class="about-section">
         <div class="header">
           <h3>Başvuru Bilgileri</h3>
-          <button   (click)="toggleEditinfo(userinfo!.userInfos)" class="edit-btn" >          {{ isInfo ? 'Kaydet' : 'Düzenle' }}</button>
+          <button *ngIf="!otherinfo"  (click)="toggleEditinfo(userinfo!.userInfos)" class="edit-btn" >          {{ isInfo ? 'Kaydet' : 'Düzenle' }}</button>
         </div>
   
         <div class="education">
