@@ -52,7 +52,11 @@ export class BlogComponent {
     });
 
   }
-
+  openProjectUrl() {
+    if (this.project?.projectUrl?.trim()) {
+      window.open(this.project.projectUrl, '_blank');
+    }
+  }
   setBlogData(blog: Blog): void {
     localStorage.setItem('blogData', JSON.stringify(blog));  
   }

@@ -115,4 +115,14 @@ export class NavinComponent {
         this.router.navigate([`/cvpage/${userinfo.username}`]);
     
   }
+  navigateProject(userinfo:UserAllInfo){
+    this.userService.setUserAllInfoData(userinfo)
+    this.router.navigate([`/projects/${userinfo.username}`]);
+
+}
+navigateBlog(userinfo:UserAllInfo){
+  this.userService.setUserAllInfoData(userinfo)
+  this.router.navigate([`/blogs/${userinfo.username}`]);
+
+}
 }

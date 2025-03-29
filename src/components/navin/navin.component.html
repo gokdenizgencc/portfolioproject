@@ -15,8 +15,9 @@
                   aria-label="Search"
                   [(ngModel)]="searchTerm"
                   (input)="search(searchTerm)"
+                  autocomplete="off"
                   name="search">
-                <button type="button" class="join-buttonn"><i class="fas fa-search"></i></button>
+                <button type="button" class="join-buttonm"><i class="fas fa-search"></i></button>
                 
             
                 <div *ngIf="showDropdown && searchResults.length > 0" class="search-dropdown">
@@ -36,9 +37,10 @@
                 </div>
             </form>
         </div>
-        <button class="join-button"><i class="fa-solid fa-code-branch"></i></button>
+        <button class="join-button" (click)="navigateProject(userinfo)"><i class="fa-solid fa-code-branch"></i></button>
         <button class="join-button" (click)="navigatecv(userinfo)"><i class="fa-solid fa-file"></i></button>
-        <button class="join-button" (click)="logout()"><i class="fa-solid fa-sign-out-alt"></i></button>
+        <button class="join-button" (click)="navigateBlog(userinfo)"><i class="fa-solid fa-pen-to-square"></i></button>
+        <button class="join-buttonz" (click)="logout()"><i class="fa-solid fa-sign-out-alt"></i></button>
     </div>
 </nav>
 <router-outlet></router-outlet>

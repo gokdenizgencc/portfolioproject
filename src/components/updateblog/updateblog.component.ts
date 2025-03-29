@@ -21,6 +21,7 @@ import { Location } from '@angular/common';
 })
 export class UpdateblogComponent {
    isUploading = false; 
+   isValidUrl: boolean = true;
       userinfo:UserAllInfo;
     selectedFile:File |null=null;
     blog: Blog | null = null;
@@ -114,6 +115,9 @@ export class UpdateblogComponent {
         localStorage.removeItem('blogData'); 
         localStorage.removeItem('projectData'); 
       }
+
+
+
     submitBlog() {
       this.blog!.blogPhoto=localStorage.getItem("PhotoUrl")?? this.blog?.blogPhoto!;
       const blogDto: BlogDto = {
@@ -145,39 +149,48 @@ export class UpdateblogComponent {
         });
       })
     }
-  submitProject() {
-
-    const projectWithPhoto: ProjectWithPastPhotoDto = {
-      projectId: this.project!.projectId,
-      userId: this.project!.userId,
-      title: this.project!.title,
-      description: this.project!.description,
-      projectUrl: this.project!.projectUrl!,
-      createdAt: new Date(),
-      projectPhotoUrl: localStorage.getItem("PhotoUrl") ?? this.project!.photosUrls[0].projectPhotoUrl!,
-      pastProjectTitle: this.pasttitle!,
-    };
+    submitProject() {
+      if (!this.isValidGithubUrl(this.project!.projectUrl)) {
+        this.toastrService.error('Lütfen geçerli bir GitHub linki girin!', 'Hata');
+        return; // Hatalı URL varsa işlemi durdur
+      }
     
-    this.projectService.updateproject(projectWithPhoto).subscribe(response=>{
-      this.toastrService.info(response.message);
-      this.projectService.getProjectByUserId().subscribe(response=>{
-        const storedUserInfo = localStorage.getItem('userinfo');
-        if (storedUserInfo) {
-          let userInfo: UserAllInfo = JSON.parse(storedUserInfo);   
-          userInfo.projects = response.data;
-          localStorage.setItem('userinfo', JSON.stringify(userInfo));
-        }
-        localStorage.setItem('projectsData', JSON.stringify(response.data)); 
-        this.location.back();
-       });
-    },
-    responseError => {
-      this.toastrService.error(responseError.error, 'Hata', {
-
+      const projectWithPhoto: ProjectWithPastPhotoDto = {
+        projectId: this.project!.projectId,
+        userId: this.project!.userId,
+        title: this.project!.title,
+        description: this.project!.description,
+        projectUrl: this.project!.projectUrl!,
+        createdAt: new Date(),
+        projectPhotoUrl: localStorage.getItem("PhotoUrl") ?? this.project!.photosUrls[0].projectPhotoUrl!,
+        pastProjectTitle: this.pasttitle!,
+      };
+    
+      this.projectService.updateproject(projectWithPhoto).subscribe(response => {
+        this.toastrService.info(response.message);
+        this.projectService.getProjectByUserId().subscribe(response => {
+          const storedUserInfo = localStorage.getItem('userinfo');
+          if (storedUserInfo) {
+            let userInfo: UserAllInfo = JSON.parse(storedUserInfo);
+            userInfo.projects = response.data;
+            localStorage.setItem('userinfo', JSON.stringify(userInfo));
+          }
+          localStorage.setItem('projectsData', JSON.stringify(response.data));
+          this.location.back();
+        });
+      },
+      responseError => {
+        this.toastrService.error(responseError.error, 'Hata');
       });
-    })
+    }
+    
+    // GitHub URL doğrulama fonksiyonu
+    isValidGithubUrl(url: string | undefined): boolean {
+      if (!url) return false;
+      const regex = /^https:\/\/github\.com\/.*/;
+      return regex.test(url);
+    }
 
-  }
     gomain(){
 
 

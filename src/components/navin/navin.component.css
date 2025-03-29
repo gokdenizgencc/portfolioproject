@@ -133,7 +133,47 @@ nav {
     background-color: #ffffff;
     border: 1.5px solid #000000;
 }
+.join-buttonm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: #000000;
+  border: 1.5px solid #000000;
+  border-radius: 0.5em;
+  padding: 0.35rem 0.7rem;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  transition: all 0.3s ease;
+}
 
+.join-buttonm:hover {
+  color: #131418;
+  background-color: #ffffff;
+  border: 1.5px solid #000000;
+}
+.join-buttonz {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: #000000;
+  border: 1.5px solid #000000;
+  border-radius: 0.5em;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left:3.5rem;
+
+  transition: all 0.3s ease;
+}
+
+.join-buttonz:hover {
+  color: #131418;
+  background-color: #ffffff;
+  border: 1.5px solid #000000;
+}
 /* Responsive styling */
 @media (max-width: 768px) {
     .join-button {

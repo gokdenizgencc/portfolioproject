@@ -101,7 +101,7 @@ export class HomepageComponent {
   goaddblog(){
     this.router.navigate([`blogs/add`]);
   }
-  truncate(content: string, wordLimit: number = 10): string {
+  truncate(content: string, wordLimit: number = 7): string {
     const words = content.split(' ');
     if (words.length > wordLimit) {
       return words.slice(0, wordLimit).join(' ') + '...';

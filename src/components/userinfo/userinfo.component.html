@@ -81,7 +81,8 @@
           <div class="education-item">
             <h4>Cep Telefonu</h4>
             <p *ngIf="!isInfo">{{userinfo?.userInfos?.phone?? "-"}}</p>
-            <textarea  *ngIf="isInfo" type="text" [(ngModel)]="userinfo!.userInfos!.phone" class="input-salary" rows="1"></textarea>
+            <input *ngIf="isInfo" [(ngModel)]="userinfo!.userInfos!.phone"
+            class="input-salary" type="number" />
           </div>
           <div class="education-item">
             <h4>Uyruk</h4>
@@ -91,7 +92,8 @@
           <div class="education-item">
             <h4>T.C. Kimlik No(isteğe bağlı)</h4>
             <p  *ngIf="!isInfo">{{userinfo?.userInfos?.nationalityId?? "-"}}</p>
-            <textarea  *ngIf="isInfo" type="text" [(ngModel)]="userinfo!.userInfos!.nationalityId" class="input-salary" rows="1"></textarea>
+            <input *ngIf="isInfo" [(ngModel)]="userinfo!.userInfos!.nationalityId"
+            class="input-salary" type="number" />
           </div>
         </div>
         <button *ngIf="isInfo" (click)="cancelEdit()"  class="edit-btnt"  >

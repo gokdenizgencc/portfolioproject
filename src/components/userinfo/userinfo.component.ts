@@ -261,8 +261,9 @@ export class UserinfoComponent {
     toggleEdit() {
       if (!this.isEditing) {
         this.backupUserInfoD = {
+          userInfoId:this.userinfo!.userInfos.userInfoId,
           bio: this.userinfo?.userInfos.bio || '',
-          salaryException: this.userinfo?.userInfos.salaryException || '',
+          salaryException: this.userinfo?.userInfos.salaryException?.toString() || '',
           skills: this.userinfo?.skills ? [...this.userinfo.skills] : [],
           fullName:this.userinfo?.userInfos.fullName,
           profession:this.userinfo?.userInfos.profession
@@ -270,6 +271,7 @@ export class UserinfoComponent {
       } else {
  
         const userInfoAbout: UserInfoAboutDto = {
+          userInfoId:this.userinfo!.userInfos.userInfoId,
           bio: this.userinfo?.userInfos.bio,
           salaryException: this.userinfo?.userInfos.salaryException?.toString(),
           skills: this.userinfo?.skills,
@@ -327,8 +329,8 @@ export class UserinfoComponent {
           userInfoId:userInfo.userInfoId,
           livingLocation: userInfo.livingLocation,
           nationality: userInfo.nationality,
-          nationalityId: userInfo.nationalityId,
-          phone: userInfo.phone
+          nationalityId: userInfo.nationalityId?.toString(),
+          phone: userInfo.phone?.toString()
         };
     
         this.userinfoService.UpdateUserInfoApplicant(userInfoApplication).subscribe(
@@ -337,8 +339,8 @@ export class UserinfoComponent {
             
             this.userinfo!.userInfos!.livingLocation = userInfo.livingLocation;
             this.userinfo!.userInfos!.nationality = userInfo.nationality;
-            this.userinfo!.userInfos!.nationalityId = userInfo.nationalityId;
-            this.userinfo!.userInfos!.phone = userInfo.phone;
+            this.userinfo!.userInfos!.nationalityId = userInfo.nationalityId?.toString();
+            this.userinfo!.userInfos!.phone = userInfo.phone?.toString();
             localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
           },
           responseError => {
@@ -417,6 +419,7 @@ export class UserinfoComponent {
       } else {
 
         const userInfoPersonal: UserInfoPersonalDto = {
+          userInfoId:userInfo.userInfoId,
           smoke: userInfo.smoke,
           birthDate: userInfo.birthDate,
           birthPlace: userInfo.birthplace,

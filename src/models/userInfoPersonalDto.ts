@@ -1,4 +1,5 @@
 export interface UserInfoPersonalDto {
+    userInfoId:number;
     gender?: string;
     militaryServiceInfo?: string;
     birthPlace?: string;

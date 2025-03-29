@@ -60,6 +60,7 @@
       <div class="input-group">
         <label for="title">Başlık</label>
         <input type="text" id="title" [(ngModel)]="project!.title" name="title" required placeholder="Proje başlığını girin" />
+
       </div>
       
       <div class="media-upload">
@@ -85,10 +86,25 @@
           </div>
         </label>
       </div>
+      <div class="input-group">
+        <label for="title">Github Linki</label>
+        <input
+          type="text"
+          id="githublink"
+          [(ngModel)]="project!.projectUrl"
+          name="githublink"
+          required
+          placeholder="Github linkini girin"
+          #githubLink="ngModel"
+          [ngClass]="{'is-invalid': githubLink.invalid && githubLink.touched}"
+          (ngModelChange)="isValidGithubUrl(project?.projectUrl)"
+        />
+        <span *ngIf="!isValidUrl">Geçerli bir GitHub linki girin!</span>
+      </div>
       
       <div class="input-group">
         <label for="description">Açıklama</label>
-        <textarea id="description" [(ngModel)]="project!.description" name="description" rows="6" required placeholder="Proje açıklamasını buraya yazın..."></textarea>
+        <textarea id="description" [(ngModel)]="project!.description" name="description" rows="3" required placeholder="Proje açıklamasını buraya yazın..."></textarea>
       </div>
       
       <div class="form-actions">
