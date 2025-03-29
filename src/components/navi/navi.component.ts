@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CartSummaryComponent } from "../cart-summary/cart-summary.component";
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 @Component({

@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { UserComponent } from '../components/user/user.component';
-import { UserAddComponent } from '../components/user-add/user-add.component';
 import { LoginComponent } from '../components/login/login.component';
 import { loginGuard } from '../guards/login.guard';
 import { HomepageComponent } from '../components/homepage/homepage.component';
@@ -32,12 +30,9 @@ export const routes: Routes = [
         {path: 'blogs/add', component: AddblogpageComponent , canActivate: [loginGuard]},
         {path: 'projects/add', component: AddblogpageComponent , canActivate: [loginGuard]},
         {path: 'homepage', component: HomepageComponent, canActivate: [loginGuard]},
-        {path: 'users/project/:userId', component: UserComponent, canActivate: [loginGuard]},
-        {path: 'users', component: UserComponent, canActivate: [loginGuard]},
         {path: 'blogs/:username', component: BlogsComponent, canActivate: [loginGuard]},
         { path: 'blog/:id', component: BlogComponent, canActivate: [loginGuard] },
         {path: 'projects/:username', component: BlogsComponent, canActivate: [loginGuard]},
-
         {path: 'project/:id', component: BlogComponent, canActivate: [loginGuard]},
         {path: 'userinfo/:username', component: UserinfoComponent, canActivate: [loginGuard]},
         {path: 'editblog/:id', component: UpdateblogComponent, canActivate: [loginGuard]},

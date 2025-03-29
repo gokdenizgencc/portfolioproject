@@ -245,7 +245,7 @@
 
 .language-item {
   display: flex;
-  justify-content: space-between;
+
   margin-bottom: 5px;
 }
 
@@ -257,6 +257,7 @@
 .language-level {
   color: var(--primary-color);
   font-size: 12px;
+  margin-left: 10px;
 }
 
 @media print {

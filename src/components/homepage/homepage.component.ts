@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NaviComponent } from '../navi/navi.component';
-import { ProjectComponent } from '../project/project.component';
 import { LoginComponent } from '../login/login.component';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UserAllInfo } from '../../models/userAllInfo';
@@ -30,20 +29,39 @@ export class HomepageComponent {
   id:number;
   isEditing: boolean = false;
   socialLinks:SocialLink[];
+  isValidGitHub: boolean = true;
+isValidLinkedIn: boolean = true;
+private originalGithub: string = "";
+private originalWebsite: string = "";
+private originalLinkedIn: string = "";
 
   dataLoaded=false;
-    constructor(private userService:UserService,private projectService:ProjectService,
-      private activatedRoute:ActivatedRoute,private toastrService:ToastrService,private router:Router,private blogService:BlogService,
-      private authService:AuthService,private socialLinkService:SocialLinkService){
+    constructor(private userService:UserService,
+      private activatedRoute:ActivatedRoute,private toastrService:ToastrService,private router:Router,private blogService:BlogService,private projectService:ProjectService,
+      private socialLinkService:SocialLinkService){
     }
   ngOnInit():void{
     this.getinfo();
 
   }
  
+  startEditing() {
+   
+    this.originalGithub = this.userinfo.github;
+    this.originalWebsite = this.userinfo.website;
+    this.originalLinkedIn = this.userinfo.linkedIn;
   
+    this.isEditing = true;
+  }
   saveLinks(github: string, website: string, linkedIn: string) {
-    // socialLinks içindeki her platformu güncelle
+
+    this.validateLinks(); 
+  
+    if (!this.isValidGitHub || !this.isValidLinkedIn) {
+      this.toastrService.error('Lütfen geçerli bir link girin.', 'Hata');
+      return; 
+    }
+  
     this.userinfo.socialLinks.forEach(link => {
       if (link.platform === 'Github') {
         link.url = github;  
@@ -54,7 +72,7 @@ export class HomepageComponent {
       }
     });
   
-    // API çağrısını gönder
+    
     const socialLinkDto: SocialLinkDto = {
       userId: 0,
       socialLinks: this.userinfo.socialLinks
@@ -75,7 +93,21 @@ export class HomepageComponent {
   
     this.isEditing = false;
   }
+  cancelEditing() {
+
+    this.userinfo.github = this.originalGithub;
+    this.userinfo.website = this.originalWebsite;
+    this.userinfo.linkedIn = this.originalLinkedIn;
   
+    this.isEditing = false;
+  }
+  validateLinks() {
+    const githubRegex = /^https:\/\/github\.com\/.*/;
+    const linkedInRegex = /^https:\/\/(www\.)?linkedin\.com\/.*/;
+  
+    this.isValidGitHub = !this.userinfo.github || githubRegex.test(this.userinfo.github);
+    this.isValidLinkedIn = !this.userinfo.linkedIn || linkedInRegex.test(this.userinfo.linkedIn);
+  }
   getinfo() {
     const storedUserInfo = localStorage.getItem('userinfo');
 

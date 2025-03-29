@@ -75,14 +75,14 @@ export class UpdateblogComponent {
         return;
       }
     
-      // Dosyanın önizlemesi için FileReader kullan
+      
       const reader = new FileReader();
       reader.onload = () => {
-        this.previewUrl = reader.result as string; // Base64 formatında önizleme için ata
+        this.previewUrl = reader.result as string; 
       };
       reader.readAsDataURL(this.selectedFile);
     
-      // Yükleme işlemini başlat
+      
       this.isUploading = true;
     
       this.photoService.uploadImage(this.selectedFile).subscribe(response => {
@@ -152,7 +152,7 @@ export class UpdateblogComponent {
     submitProject() {
       if (!this.isValidGithubUrl(this.project!.projectUrl)) {
         this.toastrService.error('Lütfen geçerli bir GitHub linki girin!', 'Hata');
-        return; // Hatalı URL varsa işlemi durdur
+        return; 
       }
     
       const projectWithPhoto: ProjectWithPastPhotoDto = {
@@ -184,21 +184,12 @@ export class UpdateblogComponent {
       });
     }
     
-    // GitHub URL doğrulama fonksiyonu
+   
     isValidGithubUrl(url: string | undefined): boolean {
-      if (!url) return false;
+      if (!url || url.trim() === "") return true; 
       const regex = /^https:\/\/github\.com\/.*/;
       return regex.test(url);
     }
-
-    gomain(){
-
-
-    }
-    goblog(){
-
-
-    } 
     cancel() {
       this.location.back();
     }

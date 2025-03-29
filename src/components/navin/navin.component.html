@@ -1,46 +1,40 @@
 <nav *ngIf="isUserLoggedIn" id="navbar-user">
     <div class="left-section">
-        <div class="logo">
-            <img src="https://cdn-icons-png.flaticon.com/512/6588/6588143.png" alt="Logo Image" width="40" height="40">
-        </div>
-        <div class="logo-text">PortfolioMaker</div>
+      <div class="logo">
+        <img src="https://cdn-icons-png.flaticon.com/512/6588/6588143.png" alt="Logo Image" width="40" height="40">
+      </div>
+      <div class="logo-text">PortfolioMaker</div>
     </div>
+  
+    <div class="middle-section">
+      <button class="nav-button" (click)="navigateHomepage(userinfo)"><i class="fa-solid fa-house"></i></button>
+      <button class="nav-button" (click)="navigateProject(userinfo)"><i class="fa-solid fa-code-branch"></i></button>
+      <button class="nav-button" (click)="navigatecv(userinfo)"><i class="fa-solid fa-file"></i></button>
+      <button class="nav-button" (click)="navigateBlog(userinfo)"><i class="fa-solid fa-pen-to-square"></i></button>
+    </div>
+  
     <div class="right-section">
-        <div class="search position-relative">
-            <form class="form-inline">
-                <input 
-                  class="form-control custom-focus" 
-                  type="search" 
-                  placeholder="Takma İsim" 
-                  aria-label="Search"
-                  [(ngModel)]="searchTerm"
-                  (input)="search(searchTerm)"
-                  autocomplete="off"
-                  name="search">
-                <button type="button" class="join-buttonm"><i class="fas fa-search"></i></button>
-                
-            
-                <div *ngIf="showDropdown && searchResults.length > 0" class="search-dropdown">
-                    <div 
-                      *ngFor="let info of searchResults" 
-                      class="search-item"
-                      (click)="navigateToProfile(info)">
-            
-                        <div class="user-info">
-                            <div class="user-nickname">{{info.nickName}}</div>
-              
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="showDropdown && searchTerm.length >= 2 && searchResults.length === 0" class="search-dropdown no-results">
-                    Sonuç bulunamadı
-                </div>
-            </form>
-        </div>
-        <button class="join-button" (click)="navigateProject(userinfo)"><i class="fa-solid fa-code-branch"></i></button>
-        <button class="join-button" (click)="navigatecv(userinfo)"><i class="fa-solid fa-file"></i></button>
-        <button class="join-button" (click)="navigateBlog(userinfo)"><i class="fa-solid fa-pen-to-square"></i></button>
-        <button class="join-buttonz" (click)="logout()"><i class="fa-solid fa-sign-out-alt"></i></button>
+      <div class="search-container">
+        <form class="search-form">
+          <input
+            class="form-control search-input"
+            type="search"
+            placeholder="Kullanıcı Ara"
+            [(ngModel)]="searchTerm"
+            (input)="search(searchTerm)"
+            autocomplete="off"
+            name="search">
+          <div *ngIf="showDropdown && searchResults.length > 0" class="search-dropdown">
+            <div *ngFor="let info of searchResults" class="search-item" (click)="navigateToProfile(info)">
+              <div class="user-nickname">{{ info.nickName }}</div>
+            </div>
+          </div>
+          <div *ngIf="showDropdown && searchTerm.length >= 2 && searchResults.length === 0" class="search-dropdown no-results">
+            Sonuç bulunamadı
+          </div>
+        </form>
+      </div>
+      <button class="nav-button logout-button" (click)="logout()"><i class="fa-solid fa-sign-out-alt"></i></button>
     </div>
-</nav>
-<router-outlet></router-outlet>
+  </nav>
+  <router-outlet></router-outlet>

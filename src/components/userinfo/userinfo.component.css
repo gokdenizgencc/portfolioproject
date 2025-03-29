@@ -133,6 +133,7 @@
   font-size: 14px;
   font-weight: 500;
   transition: all 0.2s ease;
+  margin-left: 1%;
   box-shadow: 0 2px 4px rgba(0, 118, 255, 0.2);
 }
 

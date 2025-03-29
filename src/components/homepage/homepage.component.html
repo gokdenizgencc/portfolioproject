@@ -11,7 +11,7 @@
     <button (click)="goToInfo(userinfo)" class="action-button">Kullanıcı Bilgileri</button>
 
     <div class="social-media-links">
-        <i *ngIf="!isEditing" class="fas fa-edit edit-icon" (click)="isEditing = true"></i>
+        <i *ngIf="!isEditing" class="fas fa-edit edit-icon" (click)="startEditing()"></i>
 
         <a *ngIf="userinfo.github?.trim()  && !isEditing " href="{{userinfo.github}}" class="social-link">
             <i class="fab fa-github"></i> GitHub
@@ -32,10 +32,9 @@
 
             <div class="button-group">
                 <button class="action-button save" (click)="saveLinks(userinfo.github, userinfo.website, userinfo.linkedIn)">Kaydet</button>
-                <button class="action-button cancel" (click)="isEditing = false">İptal</button>
+                <button class="action-button cancel" (click)="cancelEditing()">İptal</button>
             </div>
         </div>
-        <!--<button (click)="goToCv(userinfo)" class="action-button">CV'ye Git</button>-->
     </div>
   </div>
   

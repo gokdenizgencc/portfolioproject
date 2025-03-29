@@ -10,6 +10,8 @@ import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
 import { UserinfoService } from '../../services/userinfo.service';
 import { UserSearchResultDto } from '../../models/UserSearchResultDto';
 import { UserAllInfo } from '../../models/userAllInfo';
+import { BlogService } from '../../services/blog.service';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-navin',
@@ -27,7 +29,8 @@ export class NavinComponent {
   showDropdown = false;
   userinfo:UserAllInfo;
   private searchTerms = new Subject<string>();
-  constructor(private userService:UserService,private authService:AuthService,private router:Router,private httpClient:HttpClient,private userInfoService:UserinfoService){
+  constructor(private userService:UserService,private authService:AuthService,private router:Router,private httpClient:HttpClient,
+    private userInfoService:UserinfoService,private blogService:BlogService,private projectService:ProjectService,){
   
     }
   ngOnInit():void{
@@ -45,7 +48,7 @@ export class NavinComponent {
           return [];
         }
         this.showDropdown = true;
-        // API'nize uygun URL'yi kullanın
+       
         return this.userInfoService.SearchByNickname(term);
       })
     ).subscribe(results => {
@@ -116,13 +119,20 @@ export class NavinComponent {
     
   }
   navigateProject(userinfo:UserAllInfo){
-    this.userService.setUserAllInfoData(userinfo)
-    this.router.navigate([`/projects/${userinfo.username}`]);
+        this.projectService.setProjectsData(userinfo.projects);
+        this.router.navigate([`projects/${userinfo.username}`]);
 
 }
 navigateBlog(userinfo:UserAllInfo){
+
+    this.blogService.setBlogsData(userinfo.blogs);
+    this.router.navigate([`blogs/${userinfo.username}`]);
+
+
+}
+navigateHomepage(userinfo:UserAllInfo){
   this.userService.setUserAllInfoData(userinfo)
-  this.router.navigate([`/blogs/${userinfo.username}`]);
+  this.router.navigate([`/homepage`]);
 
 }
 }
