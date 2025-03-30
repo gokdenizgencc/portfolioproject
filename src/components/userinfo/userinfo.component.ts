@@ -26,6 +26,7 @@ import { ForeignLanguages } from '../../models/foreignLanguage';
 import { UserSearchResultDto } from '../../models/UserSearchResultDto';
 import { MatDialogModule } from '@angular/material/dialog';
 import { Location } from '@angular/common';
+import { PhotoService } from '../../services/photo.service';
 @Component({
   selector: 'app-userinfo',
   standalone: true,
@@ -55,11 +56,16 @@ export class UserinfoComponent {
     backupWorkExperiences: WorkExperience[] | null = null;
     backupForeignLanguages: ForeignLanguages[] | null = null;
     backupCertificates: Certificate[] | null = null;
+    selectedPhoto: string | null = null; 
+    selectedFile:File |null=null;
+    previewUrl: string | ArrayBuffer | null = null;
+    isUploading = false; 
+showEditIcon: boolean = false;  
      private userSearchResultDto: UserSearchResultDto | null = null;
       constructor(private userService:UserService,private location: Location,private activatedRoute:ActivatedRoute,private toastrService:ToastrService,
         private router:Router,private userinfoService:UserinfoService,private educationInfoService:EducationInfoService,
         private certificateService:CertificateService,private workExperienceService:WorkExperienceService,
-        private foreignLanguageService:ForeignLanguageService,private route: ActivatedRoute){
+        private foreignLanguageService:ForeignLanguageService,private route: ActivatedRoute,private photoService:PhotoService){
       }
     ngOnInit():void{
       this.route.paramMap.subscribe(params => {
@@ -121,6 +127,40 @@ export class UserinfoComponent {
       }
       
     }
+    openFilePicker() {
+      const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+      fileInput.click();
+    }
+    
+    onFileSelected(event: any): void {
+      this.selectedFile = event.target.files[0];
+    
+      if (!this.selectedFile) {
+        console.error("Dosya seçilmedi!");
+        return;
+      }
+    
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result as string;  
+        this.userinfo!.profilePhoto = this.previewUrl; // Yeni fotoğrafı göster
+      };
+      reader.readAsDataURL(this.selectedFile);
+    
+      this.isUploading = true;
+    
+      this.photoService.uploadImage(this.selectedFile).subscribe(response => {
+        if (response && response.data && response.data.url) {
+          localStorage.setItem("PhotoUrl", response.data.url);
+          this.userinfo!.profilePhoto = response.data.url; // Fotoğraf yüklendiğinde güncelle
+        }
+        this.isUploading = false;
+      }, error => {
+        console.error("Fotoğraf yüklenirken hata oluştu:", error);
+        this.isUploading = false;
+      });
+    }
+    
     getUserInfoDataFromStorageOt(): UserAllInfo | null {
       const userAllInfoData = localStorage.getItem('userinfoo');
       return userAllInfoData ? JSON.parse(userAllInfoData) : null;
@@ -266,7 +306,8 @@ export class UserinfoComponent {
           salaryException: this.userinfo?.userInfos.salaryException?.toString() || '',
           skills: this.userinfo?.skills ? [...this.userinfo.skills] : [],
           fullName:this.userinfo?.userInfos.fullName,
-          profession:this.userinfo?.userInfos.profession
+          profession:this.userinfo?.userInfos.profession,
+          photoUrl:this.userinfo?.profilePhoto
         };
       } else {
  
@@ -276,7 +317,8 @@ export class UserinfoComponent {
           salaryException: this.userinfo?.userInfos.salaryException?.toString(),
           skills: this.userinfo?.skills,
           profession:this.userinfo?.userInfos.profession,
-          fullName:this.userinfo?.userInfos.fullName
+          fullName:this.userinfo?.userInfos.fullName,
+          photoUrl:localStorage.getItem("PhotoUrl")!
         };
     
         this.userinfoService.UpdateUserInfoAbout(userInfoAbout).subscribe(
@@ -287,6 +329,7 @@ export class UserinfoComponent {
             this.userinfo!.userInfos!.salaryException = response.data.salaryException;
             this.userinfo!.userInfos.profession=response.data.profession;
             this.userinfo!.userInfos.fullName=response.data.fullName;
+            this.userinfo!.profilePhoto!=response.data.photoUrl;
             localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
           },
           responseError => {

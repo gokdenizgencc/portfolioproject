@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 import { ProjectDto } from '../../models/projectDto';
 import { ProjectService } from '../../services/project.service';
 import { Location } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+import { UserAllInfo } from '../../models/userAllInfo';
 
 @Component({
   selector: 'app-blog',
@@ -20,11 +22,18 @@ export class BlogComponent {
   project: ProjectDto| null = null;
   safeUrl: SafeUrl;
   isBlogPage: boolean = false; 
-  constructor(private location: Location,private route: ActivatedRoute,private router:Router, private blogService: BlogService,private sanitizer: DomSanitizer,private activatedRoute: ActivatedRoute,private projectService:ProjectService) {}
+  username: string;
+   userinfo:UserAllInfo| null = null;
+  constructor(private location: Location,private authService:AuthService,private route: ActivatedRoute,private router:Router, private blogService: BlogService,private sanitizer: DomSanitizer,private activatedRoute: ActivatedRoute,private projectService:ProjectService) {}
 
   ngOnInit(): void {
     this.activatedRoute.url.subscribe(urlSegment => {
       const firstSegment = urlSegment[0]?.path; 
+      this.username=urlSegment[1]?.path; 
+      const savedCurrentUserInfo = this.getUserInfoDataFromStorage();
+      if (savedCurrentUserInfo) {
+        this.userinfo = savedCurrentUserInfo;
+      }
       if (firstSegment === 'blog') {
         this.isBlogPage = true;
         const savedBlog = this.getBlogDataFromStorage();
@@ -83,4 +92,8 @@ export class BlogComponent {
   goblog(){
     this.location.back();
   }
+    getUserInfoDataFromStorage(): UserAllInfo | null {
+      const userAllInfoData = localStorage.getItem('userinfo');
+      return userAllInfoData ? JSON.parse(userAllInfoData) : null;
+    }
 }

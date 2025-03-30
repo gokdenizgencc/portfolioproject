@@ -30,7 +30,7 @@ body {
 }
 
 .page-title {
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 700;
   margin: 0;
   text-align: center;
@@ -69,7 +69,7 @@ body {
 .card {
   position: relative;
   background-color: white;
-  border-radius: var(--border-radius);
+  border-radius: 15px;
   overflow: hidden;
   box-shadow: var(--shadow);
   transition: var(--transition);
@@ -79,8 +79,10 @@ body {
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--hover-shadow);
+
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+
 }
 
 .card-actions {
@@ -143,6 +145,7 @@ body {
 .card-content {
   padding: 1.5rem;
   display: flex;
+  border-radius: 20px;
   flex-direction: column;
   flex-grow: 1;
 }

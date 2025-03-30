@@ -7,11 +7,13 @@
     </div>
   
     <div class="middle-section">
-      <button class="nav-button" (click)="navigateHomepage(userinfo)"><i class="fa-solid fa-house"></i></button>
-      <button class="nav-button" (click)="navigateProject(userinfo)"><i class="fa-solid fa-code-branch"></i></button>
-      <button class="nav-button" (click)="navigatecv(userinfo)"><i class="fa-solid fa-file"></i></button>
-      <button class="nav-button" (click)="navigateBlog(userinfo)"><i class="fa-solid fa-pen-to-square"></i></button>
+      <span class="nav-link" (click)="navigateHomepage(userinfo)">Anasayfa</span>
+      <span class="nav-link" (click)="navigateProject(userinfo)">Projeler</span>
+      <span class="nav-link" (click)="navigateBlog(userinfo)">Bloglar</span>
+      <span class="nav-link" (click)="navigatecv(userinfo)">Özgeçmiş</span>
+
     </div>
+    
   
     <div class="right-section">
       <div class="search-container">

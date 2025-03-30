@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { NaviComponent } from '../navi/navi.component';
-import { LoginComponent } from '../login/login.component';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UserAllInfo } from '../../models/userAllInfo';
 import {  ToastrService } from 'ngx-toastr';
@@ -8,7 +6,6 @@ import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { BlogService } from '../../services/blog.service';
 import { Blog } from '../../models/blog';
-import { AuthService } from '../../services/auth.service';
 import { ProjectService } from '../../services/project.service';
 import { ProjectDto } from '../../models/projectDto';
 import { FormsModule } from '@angular/forms';

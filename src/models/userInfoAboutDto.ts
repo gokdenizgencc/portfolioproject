@@ -7,4 +7,5 @@ export interface UserInfoAboutDto {
     profession?:string;
     fullName?:string;
     skills?: Skill[];
+    photoUrl?:string;
 }

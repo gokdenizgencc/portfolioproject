@@ -19,20 +19,27 @@
   min-height: 86%;
   box-sizing: border-box;
 }
-.back-btn {
-    display: block;
-    padding: 0.5rem 1.5rem;
-    background-color:  #000;;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s;
-    font-size: 1rem;
-    font-weight: bold;
-    margin-bottom: 1%;
-  }
+.back-btn, .add-btn {
+  background-color: var(--primary-color);
+  color: black;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  font-size: 20px;
+  font-weight: bold;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+
+.back-btn:hover, .add-btn:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+}
   .right-btn {
     display: block;
     padding: 0.5rem 1.5rem;
@@ -63,9 +70,7 @@
     margin-bottom: 6%;
     margin-left: 36%;
   }
-  .back-btn:hover {
-    background-color: #555;
-  }
+ 
   .button-row {
     display: flex;
     justify-content: space-between; /* Butonları sağa ve sola yerleştirir */

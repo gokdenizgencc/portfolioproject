@@ -5,7 +5,24 @@
       <button class="back-btn" (click)=" gomain()" >←</button>
       <div class="cardd">
         
-        <img class="profile-img" src="{{userinfo?.profilePhoto}}" alt="Profil Resmi">
+        <div class="profile-container">
+          <img 
+            class="profile-img" 
+            [src]="userinfo?.profilePhoto || previewUrl || 'https://i.pinimg.com/736x/09/21/fc/0921fc87aa989330b8d403014bf4f340.jpg'" 
+            alt="Profil Resmi">
+          
+          <div *ngIf="isEditing" class="edit-overlay" (click)="fileInput.click()">
+            <i class="edit-icon">✎</i>
+          </div>
+        
+          <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" hidden>
+        </div>
+        
+
+        
+        
+
+        
         <div class="name" *ngIf="!isEditing">{{userinfo?.userInfos?.fullName}}</div>
   
         <div class="text" *ngIf="!isEditing">{{userinfo?.userInfos?.profession}}</div>
@@ -18,8 +35,8 @@
       <div class="about-section">
         <div class="header">
           <h3>Hakkında</h3>
-          <button *ngIf="!otherinfo" class="edit-btn" (click)="toggleEdit()">
-            {{ isEditing ? 'Kaydet' : 'Düzenle' }}
+          <button *ngIf="!otherinfo" class="edit-btn" (click)="toggleEdit()" [disabled]="isUploading">
+            {{ isUploading ? 'Yükleniyor...' : (isEditing ? 'Kaydet' : 'Düzenle') }}
           </button>
         </div>
       

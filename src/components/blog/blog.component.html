@@ -26,9 +26,7 @@
         class="blog-image"
       />
     </div>
-    <button *ngIf="project?.projectUrl?.trim()" (click)="openProjectUrl()" class="backc-btn">
-      <i class="fab fa-github"></i> GitHub
-    </button>
+    <span *ngIf="project?.projectUrl?.trim()" class="nav-link" (click)="openProjectUrl()">Kaynak kod</span>
     <div class="line"></div>
 
     <p class="blog-content">{{ project?.description }}</p>

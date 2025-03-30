@@ -262,7 +262,7 @@ export class BlogsComponent {
 
   goToBlogDetail(blog: Blog){
     this.blogService.setBlogData(blog);
-    this.router.navigate([`/blog/${blog.blogId}`]);
+    this.router.navigate([`/blogs/${this.username}/${blog.blogId}`]);
   }
   getProject(){
     this.projectService.getProjectWithDetail().subscribe(response=>{
@@ -278,7 +278,7 @@ export class BlogsComponent {
   }
   goToProject(project:ProjectDto){
     this.projectService.setProjectData(project);
-    this.router.navigate([`/project/${project.projectId}`]);
+    this.router.navigate([`/projects/${this.username}/${project.projectId}`]);
   }
   navigateAdd(){
     this.router.navigate([`blogs/add`]);
