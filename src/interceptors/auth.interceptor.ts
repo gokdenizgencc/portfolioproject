@@ -5,32 +5,19 @@ import { request } from 'http';
 import { catchError, throwError } from 'rxjs';
 
 export const AuthInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn) => {
-  let token: string | null = null;
-  const router = inject(Router);
-  try {
-    // localStorage kontrolü
-    token = typeof localStorage !== 'undefined' ? localStorage.getItem('token') : null;
-  } catch (error) {
-    console.warn('localStorage is not available:', error);
-  }
+  const clonedRequest = req.clone({
+    withCredentials: true,  // HttpOnly Cookie'nin backend'e otomatik gitmesi için
+  });
 
-  // Token mevcutsa isteği klonla ve Authorization başlığı ekle
-  const newRequest = token
-    ? req.clone({
-        headers: req.headers.set('Authorization', `Bearer ${token}`),
-      })
-    : req;
+  return next(clonedRequest).pipe(
+    catchError((error: HttpErrorResponse) => {
+      const router = inject(Router);
 
-    return next(newRequest).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 401 ||error.status==403) {
-          localStorage.removeItem('token');
-          router.navigate(['/login']);
-        } else if (error.status === 500) {
-  
-        }
-        return throwError(() => error);
-      })
-    );
-    
+      if (error.status === 401 || error.status === 403) {
+        router.navigate(['/login']);
+      }
+
+      return throwError(() => error);
+    })
+  );
 };

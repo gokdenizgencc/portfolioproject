@@ -4,8 +4,9 @@ import { inject, PLATFORM_ID } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { isPlatformBrowser } from '@angular/common';
 import { map } from 'rxjs';
-export const loginGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService);
+
+export const loguGuard: CanActivateFn = (route, state) => {
+ const authService = inject(AuthService);
   const router = inject(Router);
   const toasterService = inject(ToastrService);
   const platformId = inject(PLATFORM_ID);
@@ -18,8 +19,8 @@ export const loginGuard: CanActivateFn = (route, state) => {
           return true; 
         } else {
 
-          router.navigate(['login']);
-          toasterService.info("Sisteme giriş yapmalısınız");
+          router.navigate(['homepage']);
+
           return false;
         }
       })

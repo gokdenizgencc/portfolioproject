@@ -6,12 +6,13 @@ import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
 import { AuthService } from '../../services/auth.service';
-import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Observable, Subject, switchMap } from 'rxjs';
 import { UserinfoService } from '../../services/userinfo.service';
 import { UserSearchResultDto } from '../../models/UserSearchResultDto';
 import { UserAllInfo } from '../../models/userAllInfo';
 import { BlogService } from '../../services/blog.service';
 import { ProjectService } from '../../services/project.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-navin',
@@ -21,7 +22,7 @@ import { ProjectService } from '../../services/project.service';
   styleUrl: './navin.component.css'
 })
 export class NavinComponent {
-  isUserLoggedIn: boolean = false;
+
   user:User
   id:number;
   searchTerm = '';
@@ -30,11 +31,13 @@ export class NavinComponent {
   userinfo:UserAllInfo;
   private searchTerms = new Subject<string>();
   constructor(private userService:UserService,private authService:AuthService,private router:Router,private httpClient:HttpClient,
-    private userInfoService:UserinfoService,private blogService:BlogService,private projectService:ProjectService,){
-  
+    private userInfoService:UserinfoService,private blogService:BlogService,private projectService:ProjectService,    private toastrService: ToastrService,){
+
     }
   ngOnInit():void{
+    
     this.getinfo();
+ 
     this.searchTerms.pipe(
       debounceTime(300),
       
@@ -54,7 +57,6 @@ export class NavinComponent {
     ).subscribe(results => {
       this.searchResults = results.data;
     });
-    this.islogin()
     this.getid()
 
   }
@@ -102,15 +104,15 @@ export class NavinComponent {
   route(){
     this.router.navigate(["login"]); 
   }
-  islogin(){
-    this.isUserLoggedIn= this.authService.isAuthenticated();
-  }
 
-  logout(){
-    localStorage.clear();
-    this.router.navigate(['']).then(() => {
-
-      window.location.reload();
+  logout() {
+    this.authService.logout().subscribe(success => {
+      if (success) {
+        this.router.navigate([""]);
+        this.toastrService.success("Çıkış gerçekleşti");
+      } else {
+        this.toastrService.error("Çıkış yaparken bir hata oluştu.");
+      }
     });
   }
   navigatecv(userinfo:UserAllInfo){

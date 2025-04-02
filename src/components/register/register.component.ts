@@ -25,7 +25,6 @@ export class RegisterComponent {
   
   ngOnInit(): void {
     this.createRegisterForm();
-    this.authService.checklogin();
   }
   
   createRegisterForm() {

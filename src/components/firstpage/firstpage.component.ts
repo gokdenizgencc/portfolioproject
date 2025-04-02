@@ -11,12 +11,11 @@ import { AuthService } from '../../services/auth.service';
 export class FirstpageComponent {
   showImage: boolean = false;
 constructor( private authService:AuthService){
-
+  this.authService.checklogin();
 }
 
 
   ngOnInit(){
-      this.authService.checklogin();
   }
   @HostListener('window:scroll', [])
   onScroll(): void {

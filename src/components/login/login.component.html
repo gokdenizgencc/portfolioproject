@@ -26,7 +26,10 @@
       <input formControlName="email" type="email" placeholder="E-posta" />
       <input formControlName="password" type="password" placeholder="Şifre" />
       <a>Şifrenizi mi unuttunuz?</a>
-      <button (click)="login()" [disabled]="isButtonDisabled">Giriş Yap</button>
+      <button (click)="login()" [disabled]="isButtonDisabled">
+        <span *ngIf="!isLoading">Giriş Yap</span>
+        <span *ngIf="isLoading">Giriş Yapılıyor...</span>
+      </button>
 
     </form>
   </div>

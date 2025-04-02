@@ -21,7 +21,7 @@ export class UserinfoService {
 
       UpdateUserInfoApplicant(userInfoApplientDto:UserInfoApplicantDto):Observable<ResponseModel>{
              let path=this.apiUrl+"UserInfo/UpdateUserInfoApplicant";
-             return this.httpClient.post<SingleResponseModel<ResponseModel>>(path,userInfoApplientDto);
+             return this.httpClient.post<ResponseModel>(path,userInfoApplientDto, { withCredentials: true });
       }
       UpdateUserInfoAbout(userInfoAboutDto:UserInfoAboutDto):Observable<SingleResponseModel<UserInfoAboutDto>>{
         let path=this.apiUrl+"UserInfo/UpdateUserInfoAbout";

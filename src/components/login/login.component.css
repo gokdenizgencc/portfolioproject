@@ -55,19 +55,28 @@ button {
 	text-transform: uppercase;
 	transition: transform 80ms ease-in;
 }
-
-button:active {
-	transform: scale(0.95);
-}
-
-button:focus {
-	outline: none;
-}
-
-button.ghost {
-	background-color: transparent;
-	border-color: #FFFFFF;
-}
+button.loading {
+	opacity: 0.7;
+	cursor: not-allowed;
+  }
+  
+  /* Yükleme ikonu ekleyelim */
+  button.loading::after {
+	content: "";
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	margin-left: 8px;
+	border: 2px solid white;
+	border-radius: 50%;
+	border-top-color: transparent;
+	animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+  }
 
 form {
 	background-color: #FFFFFF;

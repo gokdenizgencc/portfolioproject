@@ -22,7 +22,7 @@ import { SocialLink } from '../../models/socialLink';
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent {
-  userinfo:UserAllInfo;
+
   id:number;
   isEditing: boolean = false;
   socialLinks:SocialLink[];
@@ -31,7 +31,7 @@ isValidLinkedIn: boolean = true;
 private originalGithub: string = "";
 private originalWebsite: string = "";
 private originalLinkedIn: string = "";
-
+userinfo:UserAllInfo;
   dataLoaded=false;
     constructor(private userService:UserService,
       private activatedRoute:ActivatedRoute,private toastrService:ToastrService,private router:Router,private blogService:BlogService,private projectService:ProjectService,
@@ -116,7 +116,7 @@ private originalLinkedIn: string = "";
         (response) => {
           this.userinfo = response.data;
           this.dataLoaded = true;
-          localStorage.setItem('userinfo', JSON.stringify(this.userinfo)); // Veriyi localStorage'a kaydet
+          localStorage.setItem('userinfo', JSON.stringify(this.userinfo));
         },
         (responseError) => {
           this.toastrService.error(responseError.error.Message, 'Hata', {});

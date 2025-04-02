@@ -12,15 +12,17 @@ import { UserinfoComponent } from '../components/userinfo/userinfo.component';
 import { AddblogpageComponent } from '../components/addblogpage/addblogpage.component';
 import { UpdateblogComponent } from '../components/updateblog/updateblog.component';
 import { CvpageComponent } from '../components/cvpage/cvpage.component';
+import { loguGuard } from '../guards/logu.guard';
 
 export const routes: Routes = [
-    {path: "login", component: LoginComponent},
-    {path: "register", component: RegisterComponent},
+    {path: "login", component: LoginComponent, canActivate: [loguGuard]},
+    {path: "register", component: RegisterComponent, canActivate: [loguGuard]},
+    
     {
       path: '',
       component: NaviComponent, 
       children: [
-        {path: "", component: FirstpageComponent},  // Kök yol için varsayılan rota
+        {path: "", component: FirstpageComponent, canActivate: [loguGuard]},  // Kök yol için varsayılan rota
       ]
     },
     {
