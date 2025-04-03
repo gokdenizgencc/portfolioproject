@@ -52,9 +52,39 @@ body {
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
-
-  margin: 10px;
+  margin-top: 85px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-left: 2%;
+  margin-right: 2%;
+  height: 530px;
 }
+.profile-left:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.profile-left h4 {
+
+  font-size: 18px;
+  color: #333;
+  font-weight: 600;
+}
+
+.profile-left p {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  flex-grow: 1;
+}
+
+
+
+
+
 
 .profile-image {
   width: 150px;
@@ -168,12 +198,13 @@ body {
 .project {
   flex: 1 1 250px;
   background-color: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
+
   padding: 20px;
   margin-bottom: 15px;
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
   max-width: 300px;
   height: 200px;
   flex-direction: column;

@@ -45,18 +45,35 @@
   font-weight: bold;
 }
 .nav-link {
-  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* İçeriği ortalar */
+  gap: 8px; /* İkon ile metin arasındaki boşluk */
+  font-size: 18px;
   font-weight: 600;
   color: #222;
   cursor: pointer;
   position: relative;
   transition: color 0.3s ease, transform 0.2s ease;
+  text-align: center; /* Metni ortalar */
+  width: fit-content; /* İçeriğe göre genişlik ayarlar */
+  margin: 0 auto; /* Ortalamak için */
+}
+
+.nav-link i {
+  font-size: 22px; /* İkon boyutunu ayarla */
 }
 
 .nav-link:hover {
-  color:#555;
+  color: #555;
   transform: translateY(-2px);
 }
+
+.nav-link:hover i {
+  color: #000;
+}
+
+
 .backc-btn:hover {
   background-color: #555;
 }

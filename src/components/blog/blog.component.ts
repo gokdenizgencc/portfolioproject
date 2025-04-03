@@ -34,7 +34,7 @@ export class BlogComponent {
       if (savedCurrentUserInfo) {
         this.userinfo = savedCurrentUserInfo;
       }
-      if (firstSegment === 'blog') {
+      if (firstSegment === 'blogs') {
         this.isBlogPage = true;
         const savedBlog = this.getBlogDataFromStorage();
         if (savedBlog) {

@@ -3,7 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { inject, PLATFORM_ID } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { isPlatformBrowser } from '@angular/common';
-import { map } from 'rxjs';
+import { map, of, tap } from 'rxjs';
 
 export const loguGuard: CanActivateFn = (route, state) => {
  const authService = inject(AuthService);
@@ -12,20 +12,15 @@ export const loguGuard: CanActivateFn = (route, state) => {
   const platformId = inject(PLATFORM_ID);
 
   if (isPlatformBrowser(platformId)) {
-    // `isAuthenticate()` fonksiyonunun döndürdüğü `Observable<boolean>`'a abone olmalıyız
     return authService.isAuthenticate().pipe(
-      map(isAuthenticated => {
+      tap(isAuthenticated => {
         if (isAuthenticated) {
-          return true; 
-        } else {
-
-          router.navigate(['homepage']);
-
-          return false;
+          router.navigate(['homepage']); 
         }
-      })
+      }),
+      map(isAuthenticated => !isAuthenticated) // Giriş yapmamışsa true, yapmışsa false döndür
     );
   } else {
-    return false; // Eğer platform browser değilse, false döndür
+    return of(false); // Eğer platform browser değilse, erişimi engelle
   }
 };

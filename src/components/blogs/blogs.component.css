@@ -61,7 +61,7 @@ body {
 /* Grid Layout */
 .content-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
   gap: 2rem;
 }
 
@@ -149,6 +149,64 @@ body {
   flex-direction: column;
   flex-grow: 1;
 }
+
+.languages {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+
+
+.project-links {
+  margin-top: 10px;
+}
+
+.github-link {
+  font-size: 30px; 
+  color: #333;
+  margin-bottom: 15px;
+  transition: color 0.3s ease;
+  text-decoration: none; /* Alt çizgiyi kaldırır */
+}
+
+.github-link:hover {
+  color: #000;
+}
+.title-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Title ile GitHub ikonu arasındaki mesafe */
+}
+
+.card-content {
+  padding: 1.5rem;
+  display: flex;
+  border-radius: 20px;
+  flex-direction: column;
+  flex-grow: 1;
+  position: relative; /* GitHub ikonunun konumlandırılması için gerekli */
+}
+
+.languages {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.language {
+  background-color: #f3f3f3;
+  color: #333;
+  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+  border: 1px solid #ddd;
+}
+
+
 
 .card-title {
   font-size: 1.25rem;

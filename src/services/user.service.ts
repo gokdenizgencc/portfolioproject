@@ -45,6 +45,10 @@ export class UserService {
     let path="http://localhost:46772/api/Users/getById"
     return this.httpClient.get<SingleResponseModel<User>>(path);
   }
+  getUserOwnprofile(usenrame:string):Observable<ResponseModel>{ 
+    let path="http://localhost:46772/api/Users/isOwnProfile/"+usenrame;
+    return this.httpClient.get<ResponseModel>(path);
+  }
     setUserAllInfoData(userAllInfo: UserAllInfo): void {
       this.userAllInfo=userAllInfo
     }

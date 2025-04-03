@@ -26,7 +26,9 @@
         class="blog-image"
       />
     </div>
-    <span *ngIf="project?.projectUrl?.trim()" class="nav-link" (click)="openProjectUrl()">Kaynak kod</span>
+    <span *ngIf="project?.projectUrl?.trim()" class="nav-link" (click)="openProjectUrl()">
+      <i class="fab fa-github"></i> Kaynak Kod
+    </span>
     <div class="line"></div>
 
     <p class="blog-content">{{ project?.description }}</p>

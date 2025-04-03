@@ -38,7 +38,14 @@ export class BlogsComponent {
   userinfof:UserAllInfo| null = null;;
   isBlogPage: boolean = false; 
   otherinfo: boolean = false;
+  isownprof:boolean=false;
   username: string;
+  projectsa = {
+    title: "Örnek Proje",
+    description: "Bu bir açıklama örneğidir.",
+    projectUrl: "https://github.com/kullanici/proje",
+    languages: ["TypeScript", "HTML", "CSS", "Angular"], // Kullanılan diller
+  };
       private userSearchResultDto: UserSearchResultDto | null = null;
     constructor(private location: Location,private authService:AuthService,private blogService:BlogService,private projectService:ProjectService,
       private toastrService:ToastrService,private router:Router,private activatedRoute: ActivatedRoute,public dialog: MatDialog,private changeDetectorRef: ChangeDetectorRef,private userService:UserService){
@@ -53,62 +60,65 @@ export class BlogsComponent {
       if (savedCurrentUserInfo) {
         this.userinfo = savedCurrentUserInfo;
       }
-      var result=this.authService.decodejwtusername();
-      const isOwnProfile = this.username === result;
-
-      if (this.firstSegment === 'blogs') {
-        this.isBlogPage = true;
-        const savedBlog = this.getBlogsDataFromStorage();
-        if (savedBlog) {
-          this.blogs = savedBlog; 
-          if(isOwnProfile==false){
-            this.otherinfo=true;
-          }
-        } else {
-     
-          this.blogs = this.blogService.getBlogsData();
-          if (this.blogs) {
-            if(isOwnProfile){
-  
-              this.setBlogsData(this.blogs); 
-            }
-            else{
+      this.userService.getUserOwnprofile(this.username).subscribe(result=>{
+        this.isownprof= result.success
+        if (this.firstSegment === 'blogs') {
+          this.isBlogPage = true;
+          const savedBlog = this.getBlogsDataFromStorage();
+          if (savedBlog) {
+            this.blogs = savedBlog; 
+            if(this.isownprof==false){
               this.otherinfo=true;
-              this.setBlogsData(this.blogs); 
             }
-      
-          }
-          else{
-            this.GetData()
-          }
-        }
-      } else {
-        const savedBlog = this.getProjectsDataFromStorage();
-        if (savedBlog) {
-          this.projectss = savedBlog; 
-          if(isOwnProfile==false){
-            this.otherinfo=true;
-          }
-        } else {
-     
-          this.projectss = this.projectService.getProjectsData();
-          if (this.projectss) {
-            if(isOwnProfile){
+          } else {
        
-              this.setProjectsData(this.projectss); 
+            this.blogs = this.blogService.getBlogsData();
+            if (this.blogs) {
+              if(this.isownprof){
+    
+                this.setBlogsData(this.blogs); 
+              }
+              else{
+                this.otherinfo=true;
+                this.setBlogsData(this.blogs); 
+              }
         
             }
             else{
-              this.otherinfo=true;
-              this.setProjectsData(this.projectss);
+              this.GetData()
             }
-        
           }
-          else{
-            this.GetData()
+        } else {
+          const savedBlog = this.getProjectsDataFromStorage();
+          if (savedBlog) {
+            this.projectss = savedBlog; 
+            if(this.isownprof==false){
+              this.otherinfo=true;
+            }
+          } else {
+       
+            this.projectss = this.projectService.getProjectsData();
+            if (this.projectss) {
+              if(this.isownprof){
+         
+                this.setProjectsData(this.projectss); 
+          
+              }
+              else{
+                this.otherinfo=true;
+                this.setProjectsData(this.projectss);
+              }
+          
+            }
+            else{
+              this.GetData()
+            }
           }
         }
-      }
+      });
+ 
+
+    
     });
   }
   private GetData() {

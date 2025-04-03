@@ -144,11 +144,11 @@ userinfo:UserAllInfo;
   goToBlog(blog:Blog){
   
     this.blogService.setBlogData(blog);
-    this.router.navigate([`/blog/${blog.blogId}`]);
+    this.router.navigate([`/blogs/${this.userinfo.username}/${blog.blogId}`]);
   }
   goToProject(project:ProjectDto){
     this.projectService.setProjectData(project);
-    this.router.navigate([`/project/${project.projectId}`]);
+    this.router.navigate([`/projects/${this.userinfo.username}/${project.projectId}`]);
   }
   goProject(userinfo:UserAllInfo){
     this.projectService.setProjectsData(userinfo.projects);
